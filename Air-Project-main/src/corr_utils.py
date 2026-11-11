@@ -11,9 +11,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
+import data_paths
+import eda_utils
 from eda_utils import (CITIES, SEASON_ORDER, ACCENT, NEUTRAL, ROOT, FIGS, vn, load, provenance, set_style)  # noqa: F401
 
-WEATHER_FILE = ROOT / "data" / "processed" / "weather_daily_8cities.csv"
+# Bảng thời tiết theo ngày mà NB05/NB06 đọc. Mặc định là baseline đã commit (`data/processed/weather_daily_8cities.csv`);
+# muốn đọc output mới của NB04 thì đặt biến môi trường AIR_WEATHER_DAILY (xem `data_paths.py`). File nào được đọc đều
+# được in kèm sha256 ở `load_with_weather`, để không có chuyện NB04 ghi nơi mới mà bước sau lặng lẽ đọc bản cũ.
+WEATHER_FILE = data_paths.weather_daily_path()
 WX = ["temp_mean", "humidity_mean", "wind_speed_mean", "blh_mean", "precip_sum", "pressure_mean"]
 WX_LABEL = {"temp_mean": "Nhiệt độ TB", "humidity_mean": "Độ ẩm TB", "wind_speed_mean": "Tốc độ gió TB",
             "blh_mean": "Lớp biên khí quyển TB", "precip_sum": "Lượng mưa", "pressure_mean": "Áp suất"}
@@ -28,6 +33,8 @@ MIN_HEAVY = 100          # quy ước C1 của notebook 03: chỉ thành phố c
 def load_with_weather(verbose=True):
     """eda_utils.load() rồi ghép 6 biến thời tiết chính. Trả về (eda, win, START, END), mỗi bảng có thêm cột thời tiết."""
     eda, win, start, end = load(verbose=verbose)
+    data_paths.record_input("bảng chất lượng không khí đã làm sạch", eda_utils.DATA, quiet=not verbose)
+    data_paths.record_input("thời tiết theo ngày", WEATHER_FILE, quiet=not verbose)
     w = pd.read_csv(WEATHER_FILE, parse_dates=["Date"])
     w["City"] = pd.Categorical(w.City, categories=CITIES, ordered=True)
     keep = ["City", "Date"] + WX + ["rain_day", "blh_min"]

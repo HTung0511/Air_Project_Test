@@ -1,10 +1,17 @@
-pandas
-numpy
-matplotlib
-seaborn
-scipy
-scikit-learn
-statsmodels
-jupyter
-requests
-statsmodels
+# Thư viện dùng trực tiếp, ghim đúng phiên bản đã kiểm trên Python 3.11.2 (vòng sửa 2).
+# Danh sách đầy đủ kể cả thư viện phụ thuộc: requirements-lock.txt (nên cài từ file đó để tái lập đúng môi trường).
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1
+scikit-learn==1.9.1
+statsmodels==0.15.0
+matplotlib==3.11.2
+seaborn==0.13.2          # tác giả khai báo; hiện không notebook hay file src nào import
+requests==2.34.2         # chỉ dùng khi tải thời tiết ở chế độ online (AIR_WEATHER_MODE=online)
+# Chạy notebook không cần giao diện (tools/run_notebook.py, tools/run_chain.py) và kiểm thử
+nbclient==0.11.0
+nbformat==5.11.1
+ipykernel==7.4.0
+pytest==9.2.0
+# Tuỳ chọn, để mở notebook tương tác; KHÔNG nằm trong môi trường đã kiểm nên không ghim:
+#   pip install jupyter
