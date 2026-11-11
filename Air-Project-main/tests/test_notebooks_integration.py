@@ -2,13 +2,15 @@
 
 Điều được kiểm (handoff DEV-01 mục 6-7, DEV-02 mục 7; RA-DEC-02 mục 5):
   * NB04 chạy trọn từ cache, không thử kết nối lần nào, ghi output MỚI ra `outputs/nb04/`, không đổi file nào trong `data/`.
+  * NB04 với cache hỏng (8 kiểu hỏng) và mạng tắt: dừng với lỗi nêu thành phố, file, lý do; không ghi output nào.
   * NB05 và NB06 đọc đúng file thời tiết được chỉ định (đường dẫn + sha256 được ghi lại), không lặng lẽ quay về baseline.
   * NB06 thật sự dùng đường dự báo từ raw (không chỉ có hàm mới mà không gọi), và các con số thực nghiệm được đối chiếu thật:
     sửa một con số trong notebook thì notebook dừng với lỗi.
   * Chạy lại cho ra ĐÚNG output đã commit trong notebook: NB01, NB02, NB03, NB05 (nhánh hồi cứu/EDA, không sửa ở vòng 2) và
     NB04, NB06 (output do Dev chạy ở môi trường đã ghim). So output dạng chữ từng ô và số hình; không so điểm ảnh.
-Các test này chậm (tổng khoảng 3-4 phút): `python -m pytest -m "not notebook"` để bỏ qua.
+Các test này chậm (tổng khoảng 5 phút): `python -m pytest -m "not notebook"` để bỏ qua.
 """
+import gzip
 import json
 import os
 import shutil
@@ -112,6 +114,59 @@ def test_nb04_writes_new_outputs_and_leaves_data_untouched(chain_new_weather):
         assert cells["abs_lech"].max() <= 0.01 + 1e-9
         frac = cells["tb_chua_lam_tron"] * 100 - (cells["tb_chua_lam_tron"] * 100).apply(__import__("math").floor)
         assert ((frac - 0.5).abs() <= 1e-6).all()                                                     # mọi ô lệch nằm đúng biên x,xx5 của trung bình chưa làm tròn
+
+
+# ----------------------------------------------------------------------------- NB04 với cache hỏng, mạng tắt (handoff DEV-01 mục 4 và 6)
+def _cache(proj, city):
+    return proj / "data" / "raw" / "weather" / f"openmeteo_{city}_hourly.csv.gz"
+
+
+def _rewrite(path, fn):
+    df = fn(pd.read_csv(path))
+    with gzip.open(path, "wt", newline="") as f:
+        df.to_csv(f, index=False)
+
+
+def _half(path):
+    b = path.read_bytes()
+    path.write_bytes(b[: len(b) // 2])
+
+
+# (tên ca, cách làm hỏng cache trong BẢN SAO, các chuỗi phải có trong thông báo lỗi)
+BROKEN_CACHE_CASES = [
+    ("thiếu 1 cache", lambda p: _cache(p, "delhi").unlink(), ["Delhi", "openmeteo_delhi_hourly.csv.gz", "không có file"]),
+    ("thiếu cả 8 cache", lambda p: [f.unlink() for f in (p / "data" / "raw" / "weather").glob("openmeteo_*_hourly.csv.gz")],
+     ["Delhi", "Gurugram", "Lucknow", "Jaipur", "Bengaluru", "Amritsar", "Chennai", "Hyderabad", "không có file"]),
+    ("cụt 24 giờ cuối", lambda p: _rewrite(_cache(p, "lucknow"), lambda d: d.iloc[:-24]), ["Lucknow", "thiếu 24 giờ", "2020-07-01"]),
+    ("thiếu cột lớp biên", lambda p: _rewrite(_cache(p, "jaipur"), lambda d: d.drop(columns="boundary_layer_height")),
+     ["Jaipur", "thiếu cột: boundary_layer_height"]),
+    ("đổi tên một cột bắt buộc", lambda p: _rewrite(_cache(p, "chennai"), lambda d: d.rename(columns={"temperature_2m": "temp"})),
+     ["Chennai", "thiếu cột: temperature_2m"]),
+    ("trùng giờ", lambda p: _rewrite(_cache(p, "amritsar"), lambda d: pd.concat([d, d.iloc[-24:]], ignore_index=True)),
+     ["Amritsar", "24 giờ bị trùng"]),
+    ("gzip hỏng", lambda p: _half(_cache(p, "hyderabad")), ["Hyderabad", "không đọc được file"]),
+    ("cache kết thúc sớm", lambda p: _rewrite(_cache(p, "bengaluru"), lambda d: d[d["time"] <= "2019-12-31T23:00"]),
+     ["Bengaluru", "thiếu 4392 giờ", "2020-01-01"]),
+]
+
+
+@pytest.mark.parametrize("name, damage, expect", BROKEN_CACHE_CASES, ids=[c[0] for c in BROKEN_CACHE_CASES])
+def test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing(tmp_path, name, damage, expect):
+    """Chạy THẬT notebook 04 trên bản sao có cache hỏng, mạng tắt: notebook phải dừng với lỗi nêu đúng thành phố, file và lý do;
+    không thử kết nối, không ghi output nào (kể cả output dở), không đụng tới `data/`."""
+    proj = tmp_path / "proj"
+    shutil.copytree(ROOT, proj, ignore=SKIP)
+    damage(proj)
+    before = {p.relative_to(proj).as_posix(): data_paths.sha256_file(p) for p in sorted((proj / "data").rglob("*")) if p.is_file()}
+    code, res = run_one(proj, "04_weather_merge.ipynb", tmp_path / "exec")
+    assert code == 1 and res["status"] == "error" and res["cells_executed"] < res["code_cells"]
+    assert res["network_attempts"] == 0                                                              # offline: không thử tải thay
+    for s in expect:
+        assert s in res["error_tail"], f"thông báo lỗi thiếu '{s}': {res['error_tail'][-600:]}"
+    assert "WeatherOfflineError" in res["error_tail"] or "WeatherCacheError" in res["error_tail"]
+    assert not (proj / "outputs").exists()                                                            # không có output hoàn chỉnh giả, không có output dở
+    after = {p.relative_to(proj).as_posix(): data_paths.sha256_file(p) for p in sorted((proj / "data").rglob("*")) if p.is_file()}
+    assert after == before                                                                            # cache hỏng không bị "sửa", baseline không bị ghi
 
 
 # ----------------------------------------------------------------------------- nối NB04 -> NB05/NB06 (RA-DEC-02 mục 5)

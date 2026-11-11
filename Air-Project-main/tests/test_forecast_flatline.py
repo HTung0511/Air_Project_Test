@@ -84,6 +84,28 @@ def test_zero_run_of_length_1_to_4_mid_series(n_zero, expect_value, expect_flat)
     assert same(value, expect_value) and flat == expect_flat
 
 
+A_, B_ = 61.1, 62.2
+SNAPSHOT_EXAMPLES = [   # (chuỗi raw theo ngày, giá trị as-of mong đợi của từng ngày, vì sao) - viết tay từ RA-DEC-02 mục 4 và RA-DEC-03 mục 2-3
+    ([A_, 0, 0, 0, B_], [A_, 0, 0, NAN, B_], "ngày 1-2 giữ 0 (hàng đã phát hành); ngày 3 che cả chuỗi nên không còn nguồn trong 2 ngày"),
+    ([A_, 0, 0, NAN, 0, B_], [A_, 0, 0, 0, 0, B_], "chuỗi không nối qua NaN; ô NaN được điền từ số 0 hợp lệ liền trước"),
+    ([A_, 0, 0, 0, NAN, NAN, B_], [A_, 0, 0, NAN, NAN, NAN, B_], "số 0 đã che không làm nguồn điền cho các ngày sau"),
+    ([A_, 0, 0, 0, 0, B_], [A_, 0, 0, NAN, NAN, B_], "ngày 3 và ngày 4 đều bị che"),
+    ([A_, NAN, NAN, NAN, B_], [A_, A_, A_, NAN, B_], "điền tối đa 2 ngày; ngày thứ 3 để trống, không lấy B, không nội suy"),
+    ([0, 0, 0, 0, 1.11], [0, 0, NAN, NAN, 1.11], "chuỗi 0 ở ngay đầu chuỗi, không có giá trị nào trước đó"),
+    ([A_, 0, B_], [A_, 0, B_], "một ngày 0 đơn lẻ: giữ"),
+    ([A_, 0, 0, B_], [A_, 0, 0, B_], "hai ngày 0: giữ cả hai"),
+]
+
+
+@pytest.mark.parametrize("raw, expect, why", SNAPSHOT_EXAMPLES, ids=[e[2][:40] for e in SNAPSHOT_EXAMPLES])
+def test_handwritten_snapshot_examples_from_the_ra_decisions(raw, expect, why):
+    value, lag, flat = asof(raw)
+    assert same(value, expect), why
+    assert same(oracle_prefix(raw), expect), "trọng tài 'đúng nghĩa đen' cũng phải ra kỳ vọng viết tay"
+    for t in range(len(raw)):                                # hàng của ngày t không đổi khi chưa có các ngày sau t
+        assert same(asof(raw[:t + 1])[0][-1:], [expect[t]]), f"hàng ngày {t + 1} đổi khi có thêm ngày sau: {why}"
+
+
 def test_zero_run_at_series_start():
     value, lag, flat = asof([0, 0, 0, 0, 2])
     assert same(value, [0, 0, NAN, NAN, 2]) and flat == [False, False, True, True, False] and lag == [0, 0, -1, -1, 0]
