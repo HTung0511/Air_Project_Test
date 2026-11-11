@@ -29,7 +29,9 @@ BASE_DAILY_SHA = data_paths.sha256_file(data_paths.BASELINE_WEATHER_DAILY)
 
 
 def clean_env():
-    env = {k: v for k, v in os.environ.items() if not k.startswith("AIR_")}
+    """Môi trường cho tiến trình chạy notebook: như một người kiểm gọi lệnh từ shell. Bỏ mọi biến AIR_* và bỏ MPLBACKEND (conftest
+    đặt MPLBACKEND=Agg cho unit test; nếu để lọt vào kernel thì notebook đã chạy không còn hình nhúng)."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith("AIR_") and k != "MPLBACKEND"}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     return env
 
@@ -95,6 +97,7 @@ def test_nb04_writes_new_outputs_and_leaves_data_untouched(chain_new_weather):
     assert all(r["path"].startswith("outputs/nb04/") and r["kind"].startswith("KHÔNG phải baseline") for r in outs.values())
     assert (run_dir / "proj" / "outputs" / "nb04" / "nb04_manifest.json").is_file()
     assert summary["data_files_changed_in_copy"] == [] and summary["data_files_changed_in_repo"] == []   # kể cả trong bản sao, data/ còn nguyên
+    assert summary["files_changed_in_repo"] == []                                                     # repo gốc không bị đổi file nào khi chạy chuỗi
     new = pd.read_csv(run_dir / "proj" / "outputs" / "nb04" / "weather_daily_8cities.csv")
     base = pd.read_csv(data_paths.BASELINE_WEATHER_DAILY)
     assert list(new.columns) == list(base.columns) and len(new) == len(base) and new["blh_mean"].notna().all()
@@ -124,6 +127,10 @@ def test_weather_override_pointing_nowhere_stops_the_notebook(tmp_path):
     assert code == 1 and res["status"] == "error" and res["cells_executed"] <= 1
     assert "khong_co.csv" in res["error_tail"] and "FileNotFoundError" in res["error_tail"]
     assert not (proj / "outputs").exists()                                                            # không có output "hoàn chỉnh giả"
+    # Notebook trong repo có output đã commit; bản đã chạy của lần chạy LỖI này không được còn output cũ nào của các ô chưa chạy tới.
+    cells = [c for c in json.loads(Path(res["executed_copy"]).read_text(encoding="utf-8"))["cells"] if c["cell_type"] == "code"]
+    assert [c.get("execution_count") for c in cells[1:]] == [None] * (len(cells) - 1) and not any(c["outputs"] for c in cells[1:])
+    assert any(o.get("output_type") == "error" for o in cells[0]["outputs"])                          # ô Setup mang đúng lỗi của lần chạy này
 
 
 # ----------------------------------------------------------------------------- NB06 (F01)
@@ -134,6 +141,9 @@ def test_nb06_really_runs_on_the_forecast_path_from_raw(nb06_baseline):
     ins = records(summary, "06", "input")
     assert ins[0]["path"] == "data/raw/city_day.csv" and ins[0]["kind"] == "raw đã commit"            # file đầu tiên được đọc là RAW
     assert not any(r["path"].endswith("air_quality_8cities_weather.csv") for r in ins)                 # bảng ghép hồi cứu không còn là đầu vào
+    assert summary["files_changed_in_repo"] == []
+    # trong reports/ NB06 chỉ ghi 5 hình model_0x của chính nó (ở môi trường đã ghim, hình tạo lại trùng từng byte nên danh sách rỗng)
+    assert all(Path(k).parent.as_posix() == "reports/figures" and Path(k).name.startswith("model_0") for k in summary["report_files_rewritten_in_copy"])
     out = run_dir / "proj" / "outputs" / "nb06"
     run = json.loads((out / "nb06_run_summary.json").read_text(encoding="utf-8"))
     n = run["cohort"]["n"]
@@ -271,8 +281,12 @@ def test_retrospective_notebooks_still_reproduce_the_committed_outputs(chain_all
     gốc: `pipeline.py` (guard NEW-002) và `corr_utils.py` (đường dẫn thời tiết) đã sửa nhưng hành vi trên dữ liệu đầy đủ không đổi."""
     code, summary, run_dir = chain_all_six
     assert code == 0 and summary["ok"], [(s["notebook"], s["status"], s["error_tail"]) for s in summary["steps"]]
-    assert summary["data_files_changed_in_repo"] == [] and summary["unexpected_changes_in_copy"] == []
+    assert summary["files_changed_in_repo"] == [] and summary["unexpected_changes_in_copy"] == []
     assert [s["notebook"][:2] for s in summary["steps"]] == ["01", "02", "03", "04", "05", "06"]
+    # Trong reports/, thứ duy nhất được ghi lại với nội dung khác là HÌNH (khác do môi trường vẽ; không so điểm ảnh ở đây).
+    # Các bảng và log mà nhánh hồi cứu ghi ra (bảng điểm nghi lỗi, log làm sạch...) phải trùng từng byte với bản đã commit.
+    rewritten = summary["report_files_rewritten_in_copy"]
+    assert all(k.startswith("reports/figures/") and k.endswith(".png") for k in rewritten), sorted(rewritten)
     for s in summary["steps"]:
         assert s["status"] == "ok" and s["cells_executed"] == s["code_cells"] and s["network_attempts"] == 0
         if s["notebook"][:2] in ("04", "06"):

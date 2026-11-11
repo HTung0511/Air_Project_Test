@@ -20,8 +20,10 @@ Kết quả trong `<work>/<name>/`:
   executed/             các notebook đã chạy, có output
   provenance.jsonl      mỗi dòng: một file đã đọc hoặc đã ghi (bước nào, đường dẫn, sha256)
   environment.txt       phiên bản Python, hệ điều hành, `pip freeze`
-  chain_summary.json    lệnh, mã thoát, thời gian, trạng thái từng bước; sha256 của mã nguồn đã chạy; baseline có bị đổi không
-Mã thoát: 0 nếu mọi bước chạy trọn và không file baseline nào trong bản sao bị đổi ngoài dự kiến; ngược lại 1.
+  chain_summary.json    lệnh, mã thoát, thời gian, trạng thái từng bước; sha256 của mã nguồn đã chạy; file nào trong `data/` của
+                        bản sao bị đổi; file nào trong `reports/` của bản sao được notebook ghi lại (hình, bảng) kèm sha256
+                        trước/sau; và repo gốc có bị đổi file nào không
+Mã thoát: 0 nếu mọi bước chạy trọn, không file nào trong `data/` của bản sao bị đổi ngoài dự kiến và repo gốc không bị đổi; ngược lại 1.
 """
 import argparse
 import hashlib
@@ -52,7 +54,8 @@ def sha256_file(path, chunk=1 << 20):
     return h.hexdigest()
 
 
-def tree_hashes(root, sub):
+def tree_hashes(root, sub=""):
+    """{đường dẫn tương đối: sha256} của mọi file dưới `root/sub` (bỏ các thư mục trong SKIP_DIRS)."""
     base = Path(root) / sub
     return {str(p.relative_to(root)).replace(os.sep, "/"): sha256_file(p) for p in sorted(base.rglob("*"))
             if p.is_file() and not (set(p.relative_to(root).parts) & SKIP_DIRS)}
@@ -104,7 +107,8 @@ def main():
     (run_dir / "environment.txt").write_text("\n".join(env_txt), encoding="utf-8")
 
     data_before = tree_hashes(proj, "data")
-    repo_data_before = tree_hashes(PROJECT, "data")
+    reports_before = tree_hashes(proj, "reports")
+    repo_before = tree_hashes(PROJECT)                          # toàn bộ dự án gốc: sau khi chạy phải còn nguyên từng byte
     source = {**tree_hashes(proj, "src"), **tree_hashes(proj, "tools"), **tree_hashes(proj, "tests/netguard"),
               **{f"notebooks/{p.name}": sha256_file(p) for p in sorted((proj / "notebooks").glob("*.ipynb"))}}
     prov = run_dir / "provenance.jsonl"
@@ -138,7 +142,12 @@ def main():
     allowed = {f for s in steps for f in WRITABLE_BY.get(s, [])}
     changed = sorted(k for k in set(data_before) | set(data_after) if data_before.get(k) != data_after.get(k))
     unexpected = [k for k in changed if k not in allowed]
-    repo_changed = sorted(k for k, v in tree_hashes(PROJECT, "data").items() if repo_data_before.get(k) != v)
+    repo_after = tree_hashes(PROJECT)
+    repo_changed_all = sorted(k for k in set(repo_before) | set(repo_after) if repo_before.get(k) != repo_after.get(k))
+    repo_changed = [k for k in repo_changed_all if k.startswith("data/")]
+    # hình và bảng trong reports/ mà notebook ghi lại TRONG BẢN SAO (save_fig, bảng điểm nghi lỗi...): ghi sha256 trước/sau để đối chiếu
+    reports_rewritten = {k: {"before": reports_before.get(k), "after": v} for k, v in tree_hashes(proj, "reports").items()
+                         if reports_before.get(k) != v}
 
     records = [json.loads(l) for l in prov.read_text(encoding="utf-8").splitlines()] if prov.exists() else []
     for r in records:                                           # đường dẫn tương đối so với bản sao cho dễ đọc
@@ -154,13 +163,16 @@ def main():
                "steps": results, "inputs_and_outputs_recorded": records,
                "new_outputs": outputs, "source_sha256": source,
                "data_files_changed_in_copy": changed, "unexpected_changes_in_copy": unexpected,
-               "data_files_changed_in_repo": repo_changed,
-               "ok": not failed and not unexpected and not repo_changed}
+               "report_files_rewritten_in_copy": reports_rewritten,
+               "data_files_changed_in_repo": repo_changed, "files_changed_in_repo": repo_changed_all,
+               "ok": not failed and not unexpected and not repo_changed_all}
     (run_dir / "chain_summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\nTóm tắt: {run_dir / 'chain_summary.json'}")
     print(f"  các bước: " + ", ".join(f"{r['notebook']}={r['status']}" for r in results))
     print(f"  file trong data/ của bản sao bị đổi: {changed or 'không'}" + (f" (NGOÀI DỰ KIẾN: {unexpected})" if unexpected else ""))
-    print(f"  file trong data/ của repo gốc bị đổi: {repo_changed or 'không'}")
+    print(f"  file trong reports/ của bản sao được notebook ghi lại với nội dung khác: {len(reports_rewritten)}"
+          + (f" ({', '.join(Path(k).name for k in sorted(reports_rewritten))})" if reports_rewritten else ""))
+    print(f"  file của repo gốc bị đổi trong lúc chạy: {repo_changed_all or 'không'}")
     for r in records:
         if r["direction"] == "input" and r["role"] == "thời tiết theo ngày":
             print(f"  [{r['run']}] đọc thời tiết theo ngày: {r['path']} | sha256 {r['sha256'][:16]} | {r['kind']}")

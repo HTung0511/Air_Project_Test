@@ -1,6 +1,7 @@
 """Chạy một notebook bằng nbclient trong một thư mục dự án (thường là BẢN SAO), ghi bản đã chạy ra nơi khác và in tóm tắt JSON.
 
-Notebook gốc không bị sửa. Mã thoát 0 nếu chạy trọn, 1 nếu có ô lỗi.
+Notebook gốc không bị sửa. Output có sẵn trong notebook bị xoá trước khi chạy, nên bản đã chạy chỉ chứa output của lần chạy này
+(kể cả khi dừng giữa chừng). Mã thoát 0 nếu chạy trọn, 1 nếu có ô lỗi.
 
 Dùng:
   python tools/run_notebook.py <project_root> <notebook.ipynb> [--out DIR] [--timeout S] [--block-network] [--env K=V ...]
@@ -33,6 +34,12 @@ def run(project_root, name, out_dir=None, timeout=3000, block_network=False, env
     out_dir = Path(out_dir).resolve() if out_dir else root / "notebooks" / "_executed"
     out_dir.mkdir(parents=True, exist_ok=True)
     nb = nbformat.read(src, as_version=4)
+    # Xoá output và số thứ tự chạy có sẵn trong notebook TRƯỚC khi chạy: nếu notebook dừng giữa chừng, bản đã chạy chỉ được chứa
+    # output của LẦN CHẠY NÀY, không được còn output cũ (đã commit) của các ô chưa chạy tới.
+    for c in nb.cells:
+        if c.cell_type == "code":
+            c.outputs, c.execution_count = [], None
+            c.metadata.pop("execution", None)
 
     saved = dict(os.environ)
     net_log = out_dir / (Path(name).stem + ".net_attempts.log")
