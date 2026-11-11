@@ -93,7 +93,7 @@ def test_nb04_runs_to_the_end_offline_from_cache(chain_new_weather):
 def test_nb04_writes_new_outputs_and_leaves_data_untouched(chain_new_weather):
     code, summary, run_dir = chain_new_weather
     outs = {Path(r["path"]).name: r for r in records(summary, "04", "output")}
-    assert set(outs) == {"weather_daily_8cities.csv", "air_quality_8cities_weather.csv"}
+    assert set(outs) == {"weather_daily_8cities.csv", "air_quality_8cities_weather.csv", "nb04_vs_committed_cells.csv", "nb04_vs_committed_summary.csv"}
     assert all(r["path"].startswith("outputs/nb04/") and r["kind"].startswith("KHÔNG phải baseline") for r in outs.values())
     assert (run_dir / "proj" / "outputs" / "nb04" / "nb04_manifest.json").is_file()
     assert summary["data_files_changed_in_copy"] == [] and summary["data_files_changed_in_repo"] == []   # kể cả trong bản sao, data/ còn nguyên
@@ -102,6 +102,16 @@ def test_nb04_writes_new_outputs_and_leaves_data_untouched(chain_new_weather):
     base = pd.read_csv(data_paths.BASELINE_WEATHER_DAILY)
     assert list(new.columns) == list(base.columns) and len(new) == len(base) and new["blh_mean"].notna().all()
     assert outs["weather_daily_8cities.csv"]["sha256"] == data_paths.sha256_file(run_dir / "proj" / "outputs" / "nb04" / "weather_daily_8cities.csv")
+    # Dung sai không thay cho việc liệt kê: mọi ô khác bản đã commit được lưu thành file, và danh sách đó khớp với phép so trực tiếp hai bảng.
+    cells = pd.read_csv(run_dir / "proj" / "outputs" / "nb04" / "nb04_vs_committed_cells.csv")
+    num = [c for c in base.columns if c not in ("City", "Date", "rain_day", "wind_dir_8")]
+    n_diff = int(((new[num] - base[num]).abs() > 1e-9).to_numpy().sum()) + int((new[["rain_day", "wind_dir_8"]] != base[["rain_day", "wind_dir_8"]]).to_numpy().sum())
+    assert (new[["City", "Date"]] == base[["City", "Date"]]).all().all() and len(cells) == n_diff
+    assert cells["trong_dung_sai"].all() and set(cells["cot"]) <= {"temp_mean", "pressure_mean", "wind_speed_mean"}
+    if len(cells):
+        assert cells["abs_lech"].max() <= 0.01 + 1e-9
+        frac = cells["tb_chua_lam_tron"] * 100 - (cells["tb_chua_lam_tron"] * 100).apply(__import__("math").floor)
+        assert ((frac - 0.5).abs() <= 1e-6).all()                                                     # mọi ô lệch nằm đúng biên x,xx5 của trung bình chưa làm tròn
 
 
 # ----------------------------------------------------------------------------- nối NB04 -> NB05/NB06 (RA-DEC-02 mục 5)
@@ -158,6 +168,19 @@ def test_nb06_really_runs_on_the_forecast_path_from_raw(nb06_baseline):
     assert run["rò rỉ từ raw"]["số ngày cắt"] >= 20
     mae_l3 = (preds.loc[preds["split"] == "test", "y"] - preds.loc[preds["split"] == "test", "Ridge L3"]).abs().mean()
     assert abs(mae_l3 - run["test"]["Ridge L3"]["MAE"]) < 1e-9                                        # chỉ số trong tóm tắt tính lại được từ file dự đoán
+    # Mọi khoá mẫu và mọi ô bị che được lưu thành file (RA-DEC-02 mục 2 và 3): đối chiếu lại với raw bằng pandas thuần.
+    keys = pd.read_csv(out / "nb06_cohort_keys.csv", parse_dates=["Date", "Date_target"])
+    assert len(keys) == sum(n.values()) and not keys.duplicated(["City", "Date"]).any()
+    assert (keys["Date_target"] == keys["Date"] + pd.Timedelta(days=1)).all()
+    assert (keys["AQI"].to_numpy() == raw.reindex(pd.MultiIndex.from_arrays([keys["City"], keys["Date"]])).to_numpy()).all()
+    assert (keys["y"].to_numpy() == raw.reindex(pd.MultiIndex.from_arrays([keys["City"], keys["Date_target"]])).to_numpy()).all()
+    assert int((~keys["co_o_duong_hoi_cuu"]).sum()) == run["cohort"]["chỉ có ở đường dự báo"]
+    masked = pd.read_csv(out / "nb06_masked_cells.csv", parse_dates=["Date"])
+    assert len(masked) == run["che và điền chất ô nhiễm"]["số ô bị che"] and set(masked["cot_raw"]) <= set(run["che và điền chất ô nhiễm"]["cột áp quy tắc số 0 treo"])
+    full = pd.read_csv(data_paths.RAW_FILE, usecols=["City", "Date", "CO"], parse_dates=["Date"]).set_index(["City", "Date"])["CO"]
+    for back in (0, 1, 2):                                                                            # ô CO bị che: raw của ngày t, t-1, t-2 đều đúng bằng 0
+        m = masked[masked["cot_raw"] == "CO"]
+        assert (full.reindex(pd.MultiIndex.from_arrays([m["City"], m["Date"] - pd.Timedelta(days=back)])).to_numpy() == 0).all()
     d = evidence_dir()
     if d is not None:
         for f in sorted(out.iterdir()):

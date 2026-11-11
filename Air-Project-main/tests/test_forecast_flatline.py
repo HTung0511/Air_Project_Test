@@ -306,3 +306,45 @@ def test_short_series_and_fully_missing_pollutant():
     assert np.isnan(f["pressure_dev"]).all() and np.isnan(f["d_pressure"].iloc[0])
     one = feats(tiny_raw([("Delhi", "2019-01-01", 100, 0.0)]))
     assert len(one) == 1 and one["co_0"].iloc[0] == 0.0
+
+
+# ----------------------------------------------------------------------------- ghi lại mọi lần che và điền thực tế (RA-DEC-02 mục 3)
+def test_masking_log_lists_every_masked_cell_and_every_fill_source():
+    """Một chuỗi viết tay: 4, 0, 0, 0, 0, NaN, 7, NaN, NaN, NaN, 0. Bảng tóm tắt và danh sách ô bị che phải đúng từng ô."""
+    days = pd.date_range("2018-03-01", periods=12)
+    co = [4, 0, 0, 0, 0, NAN, 7, NAN, NAN, NAN, 0, 5]
+    raw = tiny_raw([("Delhi", d, 100 + i, v) for i, (d, v) in enumerate(zip(days, co))])
+    ds = F.build_forecast_dataset(raw, tiny_weather(raw), verbose=False, start=days[0], end=days[-1])
+    assert len(ds) == 11 and (ds["split"] == "train").all()                   # 11 cặp (t, t+1), nhãn là AQI của ngày lịch kế tiếp
+    row = F.masking_summary(ds).loc[("co_0", "CO", "train")]
+    # ngày:        1  2  3  4  5  6    7  8  9  10   11
+    # nguồn (lag): 0  0  0  -1 -1 -1   0  1  2  -1   0      (ngày 4, 5: số 0 bị che; ngày 6: thiếu, hai ngày trước là số 0 đã che)
+    assert ds["co_0_lag"].tolist() == [0, 0, 0, -1, -1, -1, 0, 1, 2, -1, 0]
+    assert row["số mẫu"] == 11 and row["che số 0 treo tại t"] == 2 and row["giá trị dùng là số 0"] == 3      # ngày 2, 3 và 11 giữ số 0
+    assert [row[c] for c in F.SOURCE_COLS] == [5, 1, 1, 4] and sum(row[c] for c in F.SOURCE_COLS) == row["số mẫu"]
+    cells = F.masked_cells(ds, raw)
+    assert cells["Date"].tolist() == [days[3], days[4]] and cells["cot_raw"].tolist() == ["CO", "CO"]
+    assert cells["gia_tri_raw"].tolist() == [0.0, 0.0] and cells["chuoi_0_den_t"].tolist() == [3, 4]          # độ dài chuỗi TÍNH ĐẾN t
+    assert cells["nguon_dien"].tolist() == [-1, -1] and cells["gia_tri_nguon"].isna().all()
+    other = F.masking_summary(ds).drop(index="co_0", level="đặc trưng")
+    assert (other["che số 0 treo tại t"] == 0).all() and (other[F.SOURCE_COLS[0]] == other["số mẫu"]).all()   # các chất khác: không che, không điền
+
+
+def test_masking_log_on_real_data_matches_a_direct_count_from_raw(raw8, ds_new):
+    """Trên dữ liệu thật: số ô bị che đếm lại THẲNG từ raw bằng vòng lặp thuần Python (không qua `asof_pollutant`) phải bằng bảng tóm tắt;
+    mỗi mẫu có đúng một nguồn; ô bị che không bao giờ được điền."""
+    tab, cells = F.masking_summary(ds_new), F.masked_cells(ds_new, raw8)
+    assert (tab[F.SOURCE_COLS].sum(axis=1) == tab["số mẫu"]).all() and len(cells) == int(tab["che số 0 treo tại t"].sum())
+    assert (cells["gia_tri_raw"] == 0).all() and (cells["chuoi_0_den_t"] >= F.FLATLINE_MIN_RUN).all() and (cells["nguon_dien"] == -1).all()
+    keys = set(zip(ds_new["City"].astype(str), ds_new["Date"]))
+    expect = []
+    for col in F.FLATLINE_COLS:
+        for city, x in raw8.groupby("City"):
+            run = 0
+            for d, v in zip(x["Date"], x[col]):
+                run = run + 1 if v == 0 else 0                                # NaN == 0 là False: ngày thiếu làm đứt chuỗi
+                if run >= F.FLATLINE_MIN_RUN and (city, d) in keys:
+                    expect.append((col, city, d, run))
+    got = list(zip(cells["cot_raw"], cells["City"], cells["Date"], cells["chuoi_0_den_t"]))
+    assert sorted(got) == sorted(expect) and len(expect) > 0
+    assert set(cells["cot_raw"]) == {"CO"}                                    # snapshot hiện có: chỉ CO có số 0 trong raw

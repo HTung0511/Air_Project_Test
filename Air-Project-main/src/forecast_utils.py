@@ -303,6 +303,55 @@ def build_forecast_dataset(raw=None, weather=None, verbose=True, start=None, end
     return out
 
 
+# ----------------------------------------------------------------------------- ghi lại mọi lần che và điền thực tế
+SOURCE_COLS = ["dùng giá trị ngày t", "điền từ t-1", "điền từ t-2", "không có nguồn (imputer của train)"]
+
+
+def masking_summary(ds):
+    """Mọi lần CHE và ĐIỀN thực tế trên 5 đặc trưng chất ô nhiễm của một bảng mẫu (do `build_forecast_dataset` dựng), theo tập.
+
+    Mỗi mẫu rơi vào đúng một trong bốn nguồn (SOURCE_COLS): giá trị raw của chính ngày t; điền từ t-1; điền từ t-2; không có
+    nguồn hợp lệ trong 3 ngày đó (đặc trưng là NaN, để imputer CHỈ fit trên train điền, kèm cột báo thiếu).
+    "che số 0 treo tại t": mẫu mà giá trị raw của ngày t là số 0 bị che vì, tính đến hết t, đã có >= FLATLINE_MIN_RUN ngày 0 liên
+    tiếp. "giá trị dùng là số 0": số 0 KHÔNG bị che (ngày thứ nhất/thứ hai của một chuỗi 0, hoặc chuỗi ngắn), giữ nguyên là 0.
+    """
+    rows = []
+    for f, col in POLL_SOURCE.items():
+        for s in ["train", "test", "lockdown"]:
+            x = ds[ds["split"] == s]
+            lag = x[f + "_lag"].to_numpy()
+            rows.append({"đặc trưng": f, "cột raw": col, "tập": s, "số mẫu": len(x),
+                         "che số 0 treo tại t": int(x[f + "_flat"].sum()), "giá trị dùng là số 0": int((x[f] == 0).sum()),
+                         SOURCE_COLS[0]: int((lag == 0).sum()), SOURCE_COLS[1]: int((lag == 1).sum()),
+                         SOURCE_COLS[2]: int((lag == 2).sum()), SOURCE_COLS[3]: int((lag == -1).sum())})
+    return pd.DataFrame(rows).set_index(["đặc trưng", "cột raw", "tập"])
+
+
+def masked_cells(ds, raw=None):
+    """Danh sách TỪNG ô bị che vì số 0 treo trong một bảng mẫu. Mỗi dòng: khoá (City, Date = ngày t), tập, cột raw, giá trị raw của
+    ngày t, độ dài chuỗi số 0 kết thúc tại t (đếm lại từ raw, chỉ nhìn về trước), nguồn điền (0/1/2 = số ngày lùi; -1 = không có)
+    và giá trị raw của ngày nguồn. Với quy tắc hiện tại, giá trị raw luôn là 0 và chuỗi luôn >= FLATLINE_MIN_RUN."""
+    raw = load_raw() if raw is None else prepare_raw(raw)
+    r = raw.sort_values(["City", "Date"]).reset_index(drop=True)
+    parts = []
+    for f, col in POLL_SOURCE.items():
+        run = np.zeros(len(r), dtype=np.int64)
+        for _, ix in r.groupby("City", sort=False).indices.items():
+            run[ix] = trailing_zero_run(r[col].to_numpy()[ix])
+        look = r[["City", "Date"]].assign(gia_tri_raw=r[col].to_numpy(), chuoi_0_den_t=run)
+        x = ds.loc[ds[f + "_flat"].to_numpy(), ["City", "Date", "split", f + "_lag"]].rename(columns={f + "_lag": "nguon_dien"})
+        x["City"] = x["City"].astype(str)
+        x.insert(3, "cot_raw", col)
+        x = x.merge(look, on=["City", "Date"], how="left", validate="1:1")
+        src = x[["City"]].assign(Date=x["Date"] - pd.to_timedelta(x["nguon_dien"].clip(lower=0), unit="D"))
+        val = src.merge(look[["City", "Date", "gia_tri_raw"]], on=["City", "Date"], how="left")["gia_tri_raw"].to_numpy()
+        x["gia_tri_nguon"] = np.where(x["nguon_dien"].to_numpy() >= 0, val, np.nan)
+        parts.append(x)
+    cols = ["City", "Date", "split", "cot_raw", "gia_tri_raw", "chuoi_0_den_t", "nguon_dien", "gia_tri_nguon"]
+    out = pd.concat(parts, ignore_index=True)[cols] if parts else pd.DataFrame(columns=cols)
+    return out.sort_values(["cot_raw", "City", "Date"]).reset_index(drop=True)
+
+
 # ----------------------------------------------------------------------------- phép thử rò rỉ đi từ raw
 def perturb_after(raw, weather, cut, seed=0):
     """Bản sao của raw và thời tiết trong đó MỌI giá trị sau ngày `cut` bị làm nhiễu mạnh: nhân hệ số ngẫu nhiên, và ở raw còn
