@@ -1,0 +1,33 @@
+mua,City,n_nang,n_conlai,ratio_PM25
+Hè (3–5),Delhi,128,148,1.777
+Hè (3–5),Gurugram,72,195,1.823
+Hè (3–5),Lucknow,112,164,1.786
+Hè (3–5),Jaipur,10,266,
+Hè (3–5),Bengaluru,1,259,
+Hè (3–5),Amritsar,7,247,
+Hè (3–5),Chennai,2,274,
+Hè (3–5),Hyderabad,0,276,
+Mưa (6–9),Delhi,35,340,1.819
+Mưa (6–9),Gurugram,83,278,2.531
+Mưa (6–9),Lucknow,21,360,
+Mưa (6–9),Jaipur,8,357,
+Mưa (6–9),Bengaluru,0,382,
+Mưa (6–9),Amritsar,13,287,
+Mưa (6–9),Chennai,3,377,
+Mưa (6–9),Hyderabad,0,384,
+Sau mưa (10–11),Delhi,157,26,
+Sau mưa (10–11),Gurugram,147,34,2.022
+Sau mưa (10–11),Lucknow,148,35,2.288
+Sau mưa (10–11),Jaipur,63,119,1.623
+Sau mưa (10–11),Bengaluru,0,183,
+Sau mưa (10–11),Amritsar,66,77,2.824
+Sau mưa (10–11),Chennai,17,166,
+Sau mưa (10–11),Hyderabad,1,176,
+Đông (12–2),Delhi,244,27,
+Đông (12–2),Gurugram,193,68,2.1
+Đông (12–2),Lucknow,235,36,2.268
+Đông (12–2),Jaipur,40,230,1.796
+Đông (12–2),Bengaluru,1,270,
+Đông (12–2),Amritsar,29,229,
+Đông (12–2),Chennai,12,259,
+Đông (12–2),Hyderabad,0,271,

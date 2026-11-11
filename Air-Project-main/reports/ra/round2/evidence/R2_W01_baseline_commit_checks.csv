@@ -1,0 +1,73 @@
+bo,tieu_chi,mong_doi,thuc_te,dat,ghi_chu
+baseline_commit,số giờ lịch mỗi thành phố (tính từ lịch),48384,48384,True,
+baseline_commit,"Delhi: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Delhi: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Delhi: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Delhi: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Delhi: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Gurugram: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Gurugram: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Gurugram: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Gurugram: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Gurugram: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Lucknow: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Lucknow: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Lucknow: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Lucknow: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Lucknow: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Jaipur: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Jaipur: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Jaipur: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Jaipur: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Jaipur: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Bengaluru: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Bengaluru: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Bengaluru: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Bengaluru: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Bengaluru: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Amritsar: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Amritsar: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Amritsar: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Amritsar: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Amritsar: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Chennai: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Chennai: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Chennai: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Chennai: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Chennai: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,"Hyderabad: lưới giờ liên tục đúng lịch, không trùng",True,True,True,48384 dòng; trùng 0
+baseline_commit,Hyderabad: có cột boundary_layer_height và không trống,True,True,True,
+baseline_commit,Hyderabad: ô trống ở 6 biến lõi,0,0,True,
+baseline_commit,Hyderabad: giờ nóng nhất trung bình nằm trong 12–16h (thời gian trong cache là giờ địa phương),True,True,True,giờ nóng nhất = 14h; nếu chuỗi là UTC đỉnh sẽ rơi khoảng 7–10h
+baseline_commit,Hyderabad: mọi ngày đủ 24 giờ,True,True,True,
+baseline_commit,số file cache đọc được,8,8,True,
+baseline_commit,bảng ngày kỳ vọng: số hàng (8 × 2.016),16128,16128,True,
+baseline_commit,"số ô trung bình nằm đúng biên x,xx5 (tính bằng số nguyên)",—,—,True,temp_mean 1335; humidity_mean 2598; pressure_mean 1305; wind_speed_mean 674; blh_mean 2660
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] số hàng,16128,16128,True,
+baseline_commit,"[bảng ngày cần kiểm so với kỳ vọng độc lập] khóa (City, Date) trùng",0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] tên và thứ tự cột,"City,Date,temp_mean,temp_min,temp_max,humidity_mean,pressure_mean,wind_speed_mean,wind_speed_max,wind_u,wind_v,precip_sum,blh_mean,blh_min,rain_day,wind_dir_8","City,Date,temp_mean,temp_min,temp_max,humidity_mean,pressure_mean,wind_speed_mean,wind_speed_max,wind_u,wind_v,precip_sum,blh_mean,blh_min,rain_day,wind_dir_8",True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] khóa khớp bảng kỳ vọng,True,True,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] temp_mean: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] temp_min: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] temp_max: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] humidity_mean: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] pressure_mean: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] wind_speed_mean: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] wind_speed_max: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] wind_u: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] wind_v: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] precip_sum: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] blh_mean: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] blh_min: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] rain_day: ô trống,0,0,True,
+baseline_commit,[bảng ngày cần kiểm so với kỳ vọng độc lập] wind_dir_8: ô trống,0,0,True,
+baseline_commit,bảng ngày: ô vi phạm quy tắc dung sai (mọi cột),0,0,True,"temp_mean: khác 677, đúng biên 677, vi phạm 0; humidity_mean: khác 1270, đúng biên 1270, vi phạm 0; pressure_mean: khác 626, đúng biên 626, vi phạm 0; wind_speed_mean: khác 323, đúng biên 323, vi phạm 0; blh_mean: khác 1316, đúng biên 1316, vi phạm 0"
+baseline_commit,[so với file đã commit],—,—,True,bảng cần kiểm chính là file đã commit; bỏ qua phép so này
+baseline_commit,bảng gộp: kích thước,14056x54,14056x54,True,
+baseline_commit,"bảng gộp: khóa (City, Date) trùng",0,0,True,
+baseline_commit,"bảng gộp: 40 cột đầu là 40 cột của bảng sạch, đúng thứ tự",True,True,True,
+baseline_commit,bảng gộp: thứ tự hàng trùng bảng sạch,True,True,True,
+baseline_commit,bảng gộp: ô khác bảng sạch ở 40 cột chất lượng không khí,0,0,True,
+baseline_commit,bảng gộp: 14 cột thời tiết,"temp_mean,temp_min,temp_max,humidity_mean,pressure_mean,wind_speed_mean,wind_speed_max,wind_u,wind_v,precip_sum,blh_mean,blh_min,rain_day,wind_dir_8","temp_mean,temp_min,temp_max,humidity_mean,pressure_mean,wind_speed_mean,wind_speed_max,wind_u,wind_v,precip_sum,blh_mean,blh_min,rain_day,wind_dir_8",True,
+baseline_commit,bảng gộp: ô thời tiết thiếu,0,0,True,
+baseline_commit,bảng gộp: ô thời tiết khác bảng ngày cùng khóa,0,0,True,

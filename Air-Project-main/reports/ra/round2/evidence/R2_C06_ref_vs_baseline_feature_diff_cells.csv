@@ -1,0 +1,64 @@
+City,Date,split,dac_trung,gia_tri_cu,gia_tri_tham_chieu,loai
+Bengaluru,2017-07-09,train,aqi_1,,4.68213,cũ trống → tham chiếu có số
+Jaipur,2018-02-07,train,aqi_1,,5.72031,cũ trống → tham chiếu có số
+Bengaluru,2017-07-10,train,aqi_2,,4.68213,cũ trống → tham chiếu có số
+Gurugram,2017-07-11,train,aqi_2,,6.27099,cũ trống → tham chiếu có số
+Gurugram,2017-08-01,train,aqi_2,,6.17794,cũ trống → tham chiếu có số
+Jaipur,2018-02-08,train,aqi_2,,5.72031,cũ trống → tham chiếu có số
+Bengaluru,2017-07-09,train,aqi_wk,4.6386,4.64599,khác giá trị
+Bengaluru,2017-07-10,train,aqi_wk,4.54116,4.56608,khác giá trị
+Bengaluru,2017-07-11,train,aqi_wk,4.56226,4.58327,khác giá trị
+Bengaluru,2017-07-12,train,aqi_wk,4.54754,4.57127,khác giá trị
+Bengaluru,2017-07-13,train,aqi_wk,4.49088,4.52541,khác giá trị
+Bengaluru,2017-07-14,train,aqi_wk,4.4613,4.50166,khác giá trị
+Bengaluru,2017-07-15,train,aqi_wk,4.4328,4.47245,khác giá trị
+Gurugram,2017-07-11,train,aqi_wk,5.84586,5.93048,khác giá trị
+Gurugram,2017-07-12,train,aqi_wk,5.93331,5.99811,khác giá trị
+Gurugram,2017-07-13,train,aqi_wk,6.05491,6.09432,khác giá trị
+Gurugram,2017-08-01,train,aqi_wk,5.4958,5.71456,khác giá trị
+Gurugram,2017-08-02,train,aqi_wk,5.30206,5.54908,khác giá trị
+Gurugram,2017-08-03,train,aqi_wk,5.16479,5.42127,khác giá trị
+Gurugram,2017-08-04,train,aqi_wk,5.05752,5.35344,khác giá trị
+Gurugram,2017-08-05,train,aqi_wk,4.65966,5.12595,khác giá trị
+Jaipur,2018-02-07,train,aqi_wk,5.09375,5.21105,khác giá trị
+Jaipur,2018-02-08,train,aqi_wk,5.17521,5.27373,khác giá trị
+Jaipur,2018-02-09,train,aqi_wk,5.20401,5.29617,khác giá trị
+Jaipur,2018-02-10,train,aqi_wk,5.17803,5.27593,khác giá trị
+Jaipur,2018-02-11,train,aqi_wk,5.19481,5.28899,khác giá trị
+Jaipur,2018-02-12,train,aqi_wk,5.25923,5.3396,khác giá trị
+Jaipur,2018-02-13,train,aqi_wk,5.2479,5.33065,khác giá trị
+Amritsar,2017-07-11,train,co_0,,0,cũ trống → tham chiếu có số
+Amritsar,2017-07-30,train,co_0,,0,cũ trống → tham chiếu có số
+Amritsar,2018-07-16,train,co_0,,0,cũ trống → tham chiếu có số
+Amritsar,2018-07-17,train,co_0,,0,cũ trống → tham chiếu có số
+Amritsar,2018-08-29,train,co_0,0.0392207,0,khác giá trị
+Amritsar,2018-08-30,train,co_0,0.0392207,0,khác giá trị
+Amritsar,2018-09-24,train,co_0,0.0198026,0,khác giá trị
+Amritsar,2018-09-25,train,co_0,0.0198026,0,khác giá trị
+Amritsar,2018-09-28,train,co_0,0.0582689,0,khác giá trị
+Amritsar,2018-09-29,train,co_0,0.0582689,0,khác giá trị
+Amritsar,2018-11-03,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2018-11-11,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2018-11-12,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2018-11-16,train,co_0,0.0198026,0,khác giá trị
+Amritsar,2018-11-17,train,co_0,0.0198026,0,khác giá trị
+Amritsar,2018-11-22,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2018-11-23,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-01-04,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-01-05,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-01-11,train,co_0,0.0295588,0,khác giá trị
+Amritsar,2019-01-12,train,co_0,0.0295588,0,khác giá trị
+Amritsar,2019-02-15,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-02-16,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-02-19,train,co_0,0.00995033,0,khác giá trị
+Amritsar,2019-02-20,train,co_0,0.00995033,0,khác giá trị
+Chennai,2018-01-02,train,co_0,0.0295588,0,khác giá trị
+Chennai,2018-01-03,train,co_0,0.0295588,0,khác giá trị
+Gurugram,2017-10-24,train,co_0,0.875469,0,khác giá trị
+Gurugram,2017-10-25,train,co_0,0.875469,0,khác giá trị
+Gurugram,2018-03-18,train,co_0,0.553885,0,khác giá trị
+Gurugram,2018-03-19,train,co_0,0.553885,0,khác giá trị
+Hyderabad,2017-09-23,train,co_0,0.0295588,0,khác giá trị
+Hyderabad,2017-09-24,train,co_0,0.0295588,0,khác giá trị
+Jaipur,2017-11-26,train,co_0,0.270027,0,khác giá trị
+Jaipur,2017-11-27,train,co_0,0.270027,0,khác giá trị

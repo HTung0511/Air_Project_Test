@@ -1,0 +1,5 @@
+fold,n_fit,n_val,fit_target_tu,fit_target_den,val_target_tu,val_target_den,ngay_nang_val,dong_bo_giua (GAP_ROWS),gap_lich_ngay (val_target_min − fit_target_max),so_dong_trong_khoang_gap,so_TP_co_dong_o_ngay_dau_val,val_Date_min − fit_target_max (ngày),aqi_wk cua val dau tien nhin lui toi,nhan y cua fit bi dung lam feature cua val? (fit_target_max >= val_Date_min − 7)
+1,1133,1148,2017-06-15,2017-11-18,2017-11-20,2018-04-19,432,16,2,16,1,1,2017-11-12,True
+2,2281,1148,2017-06-15,2018-04-17,2018-04-19,2018-09-14,147,16,2,16,3,1,2018-04-11,True
+3,3429,1148,2017-06-15,2018-09-12,2018-09-15,2019-02-06,405,16,3,16,7,2,2018-09-07,True
+4,4577,1148,2017-06-15,2019-02-04,2019-02-07,2019-06-30,209,16,3,16,8,2,2019-01-30,True

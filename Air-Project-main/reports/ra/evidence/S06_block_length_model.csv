@@ -1,0 +1,25 @@
+tap,khoi_ngay,so_khoi,so_sanh,delta_MAE,lo,hi,ket_luan
+test,7,35,L3 − hôm nay,-3.947,-5.237,-2.733,tách khỏi 0
+test,7,35,L3 − L2 (thêm thời tiết),-1.4,-2.05,-0.836,tách khỏi 0
+test,7,35,L2 − L1 (thêm chất ô nhiễm),-2.018,-3.02,-1.161,tách khỏi 0
+test,7,35,L1 − hôm nay,-0.529,-1.315,0.224,chưa tách khỏi 0
+test,14,18,L3 − hôm nay,-3.947,-5.405,-2.56,tách khỏi 0
+test,14,18,L3 − L2 (thêm thời tiết),-1.4,-1.933,-0.928,tách khỏi 0
+test,14,18,L2 − L1 (thêm chất ô nhiễm),-2.018,-3.057,-1.048,tách khỏi 0
+test,14,18,L1 − hôm nay,-0.529,-1.195,0.081,chưa tách khỏi 0
+test,28,9,L3 − hôm nay,-3.947,-5.657,-2.279,tách khỏi 0
+test,28,9,L3 − L2 (thêm thời tiết),-1.4,-1.923,-0.953,tách khỏi 0
+test,28,9,L2 − L1 (thêm chất ô nhiễm),-2.018,-3.428,-0.759,tách khỏi 0
+test,28,9,L1 − hôm nay,-0.529,-0.993,-0.1,tách khỏi 0
+holdout,7,18,L3 − hôm nay,-1.02,-2.589,0.461,chưa tách khỏi 0
+holdout,7,18,L3 − L2 (thêm thời tiết),-0.096,-0.857,0.496,chưa tách khỏi 0
+holdout,7,18,L2 − L1 (thêm chất ô nhiễm),-0.205,-0.813,0.448,chưa tách khỏi 0
+holdout,7,18,L1 − hôm nay,-0.718,-1.518,0.074,chưa tách khỏi 0
+holdout,14,9,L3 − hôm nay,-1.02,-2.702,0.483,chưa tách khỏi 0
+holdout,14,9,L3 − L2 (thêm thời tiết),-0.096,-0.948,0.646,chưa tách khỏi 0
+holdout,14,9,L2 − L1 (thêm chất ô nhiễm),-0.205,-0.929,0.539,chưa tách khỏi 0
+holdout,14,9,L1 − hôm nay,-0.718,-1.596,0.037,chưa tách khỏi 0
+holdout,28,5,L3 − hôm nay,-1.02,-2.551,0.527,chưa tách khỏi 0
+holdout,28,5,L3 − L2 (thêm thời tiết),-0.096,-0.914,0.768,chưa tách khỏi 0
+holdout,28,5,L2 − L1 (thêm chất ô nhiễm),-0.205,-1.072,0.711,chưa tách khỏi 0
+holdout,28,5,L1 − hôm nay,-0.718,-1.487,-0.06,tách khỏi 0

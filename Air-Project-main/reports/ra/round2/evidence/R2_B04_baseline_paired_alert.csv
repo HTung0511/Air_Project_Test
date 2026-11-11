@@ -1,0 +1,19 @@
+bo,tap,khoi_ngay,so_khoi,A,B,chi_so,delta,lo,hi,ket_luan
+baseline,test,14,18,Ridge L3 @201,Ngày mai = hôm nay @201,recall,0.033419,0.003360,0.067571,tách khỏi 0
+baseline,test,14,18,Ridge L3 @201,Ngày mai = hôm nay @201,precision,0.046883,0.033422,0.065065,tách khỏi 0
+baseline,test,14,18,Ridge L3 @201,Ngày mai = hôm nay @201,F1,0.040150,0.026794,0.055343,tách khỏi 0
+baseline,test,14,18,Ridge L3 @F2,Ngày mai = hôm nay @F2,recall,0.007712,-0.010312,0.028829,chưa tách được
+baseline,test,14,18,Ridge L3 @F2,Ngày mai = hôm nay @F2,precision,0.045983,0.024216,0.074035,tách khỏi 0
+baseline,test,14,18,Ridge L3 @F2,Ngày mai = hôm nay @F2,F1,0.032186,0.016562,0.054741,tách khỏi 0
+baseline,test,7,35,Ridge L3 @201,Ngày mai = hôm nay @201,recall,0.033419,0.008316,0.062688,tách khỏi 0
+baseline,test,7,35,Ridge L3 @201,Ngày mai = hôm nay @201,precision,0.046883,0.031185,0.064083,tách khỏi 0
+baseline,test,7,35,Ridge L3 @201,Ngày mai = hôm nay @201,F1,0.040150,0.027876,0.053969,tách khỏi 0
+baseline,test,7,35,Ridge L3 @F2,Ngày mai = hôm nay @F2,recall,0.007712,-0.010067,0.030306,chưa tách được
+baseline,test,7,35,Ridge L3 @F2,Ngày mai = hôm nay @F2,precision,0.045983,0.026459,0.068427,tách khỏi 0
+baseline,test,7,35,Ridge L3 @F2,Ngày mai = hôm nay @F2,F1,0.032186,0.017987,0.049702,tách khỏi 0
+baseline,test,28,9,Ridge L3 @201,Ngày mai = hôm nay @201,recall,0.033419,0.001526,0.067925,tách khỏi 0
+baseline,test,28,9,Ridge L3 @201,Ngày mai = hôm nay @201,precision,0.046883,0.035778,0.062501,tách khỏi 0
+baseline,test,28,9,Ridge L3 @201,Ngày mai = hôm nay @201,F1,0.040150,0.026120,0.061364,tách khỏi 0
+baseline,test,28,9,Ridge L3 @F2,Ngày mai = hôm nay @F2,recall,0.007712,-0.013159,0.031479,chưa tách được
+baseline,test,28,9,Ridge L3 @F2,Ngày mai = hôm nay @F2,precision,0.045983,0.022647,0.081039,tách khỏi 0
+baseline,test,28,9,Ridge L3 @F2,Ngày mai = hôm nay @F2,F1,0.032186,0.016762,0.058295,tách khỏi 0

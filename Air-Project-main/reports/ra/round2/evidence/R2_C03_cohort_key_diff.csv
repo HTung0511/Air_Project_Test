@@ -1,0 +1,6 @@
+nhom,City,Date,Date_target,split_theo_Date_target,mua,AQI_raw(t),AQI_raw(t+1),AQI_bang_sach(t),AQI_bang_sach(t+1),PM2.5_raw(t),PM2.5_raw(t+1),suspect_sensor_error(t),suspect_sensor_error(t+1),ly_do
+chỉ có ở C_new (thêm),Bengaluru,2017-07-08,2017-07-09,train,Mưa (6-9),108.0,112.0,,112.0,313.59,35.29,True,False,bảng sạch đã xóa AQI(t)
+chỉ có ở C_new (thêm),Gurugram,2017-07-08,2017-07-09,train,Mưa (6-9),372.0,529.0,372.0,,137.34,821.42,False,True,bảng sạch đã xóa AQI(t+1)
+chỉ có ở C_new (thêm),Gurugram,2017-07-29,2017-07-30,train,Mưa (6-9),248.0,482.0,248.0,,124.17,858.73,False,True,bảng sạch đã xóa AQI(t+1)
+chỉ có ở C_new (thêm),Jaipur,2018-02-05,2018-02-06,train,Đông (12-2),153.0,305.0,153.0,,116.02,311.35,False,True,bảng sạch đã xóa AQI(t+1)
+chỉ có ở C_new (thêm),Jaipur,2018-02-06,2018-02-07,train,Đông (12-2),305.0,291.0,,291.0,311.35,130.52,True,False,bảng sạch đã xóa AQI(t)

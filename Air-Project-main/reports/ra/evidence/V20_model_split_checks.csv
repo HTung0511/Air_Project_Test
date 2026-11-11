@@ -1,0 +1,12 @@
+muc,expected,actual,khop
+số cặp train/test/holdout,5741/1947/975,5741/1947/975,True
+ngày nặng (y>=201) train/test/holdout,1432/389/18,1432/389/18,True
+ngày được dự đoán: train,đến 30/06/2019,15/06/2017–30/06/2019,
+ngày được dự đoán: test,01/07/2019–29/02/2020,01/07/2019–29/02/2020,True
+ngày được dự đoán: holdout,từ 01/03/2020,01/03/2020–01/07/2020,
+dòng 'other' bị loại khỏi 3 tập,0,0,True
+ngày đặc trưng (Date) lớn nhất của train < ngày được dự đoán nhỏ nhất của test,True,True,True
+"dòng test có đặc trưng lag (aqi_1, aqi_2, aqi_wk) lấy từ ngày thuộc train",(thông tin),aqi_0 của test ngày đầu = AQI 30/06/2019 (ngày được dự đoán cuối của train): 8 dòng,
+alpha Ridge chọn bằng CV trong train,(NB06 c10),"{'L1': 10, 'L2': 0.1, 'L3': 30, 'L4': 10}",
+HGB L3 chọn bằng CV trong train,(NB06 c10),"{'max_depth': 2, 'max_iter': 200, 'learning_rate': 0.05, 'min_samples_leaf': 40}",
+ngưỡng F2 chọn trên OOF train,"hôm nay 160, L3 166","{'Ridge L1': 169.0, 'Ridge L2': 165.0, 'Ridge L3': 166.0, 'Ridge L4': 164.0, 'Ngày mai = hôm nay': 160.0} | n_oof=4592, ngày nặng OOF=1193",

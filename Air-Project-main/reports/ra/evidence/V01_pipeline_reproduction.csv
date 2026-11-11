@@ -1,0 +1,47 @@
+tieu_chi,expected,actual,diff,khop,ghi_chu
+raw: số dòng 26 TP,29531,29531,0,True,
+raw: số thành phố,26,26,0,True,
+raw: số dòng 8 TP,14056,14056,0,True,
+"raw: trùng (City,Date)",0,0,0,True,
+raw: ngày bị đứt,0,0,0,True,
+raw: giá trị âm (12 chất + AQI),0,0,0,True,
+raw: ô thiếu 11 chất + AQI,16953,16953,0,True,"10.05% (log ghi 10,05%)"
+clean: shape,"(14056, 40)","(14056, 40)",,True,
+baseline CSV: shape,"(14056, 40)","(14056, 40)",,True,
+clean: cột trùng thứ tự baseline,True,True,0,True,
+"clean: trùng (City,Date)",0,0,0,True,
+clean: liên tục ngày từng TP,True,True,0,True,
+clean: số cờ _was_missing,12,12,0,True,
+clean: số cờ _is_outlier,11,11,0,True,
+so từng ô: tổng ô khác (dung sai 1e-9),0,0,0,True,
+so từng ô: tổng ô lệch NaN,0,0,0,True,
+so từng ô: ô khác bit-level (float làm tròn),0,680,680,False,max |diff| = 1.14e-13; chỉ do số học dấu phẩy động khác phiên bản pandas/numpy
+"flatline 0→NaN (11 chất, ≥3 ngày)",2169,2169,0,True,"{'Benzene': 646, 'Toluene': 615, 'CO': 540, 'NOx': 368}"
+ô nội suy còn giá trị trong bảng cuối (was_missing & notna),3329,3329,0,True,
+điểm được xét (suspect_points),93,93,0,True,
+ô nghi lỗi đặt NaN,41,41,0,True,"{'PM2.5': 22, 'AQI': 19}"
+ngày nghi lỗi (suspect_sensor_error),24,24,0,True,
+số TP có ngày nghi lỗi,7,7,0,True,
+ô cờ IQR theo tháng,6656,6656,0,True,
+PM2.5 bị cờ IQR,531,531,0,True,
+"cờ PM2.5 > 1,2×PM10",139,139,0,True,
+AQI thiếu (bảng cuối),836,836,0,True,log bước 5 ghi 836 'dòng'
+AQI có mà thiếu Bucket hoặc ngược lại,0,0,0,True,
+clean: ô thiếu 11 chất + AQI,15832,15832,0,True,"9.39% (log ghi 9,39%)"
+41 ô nghi lỗi: số ô là giá trị thật (→ NaN mới),39,39,0,True,log §1 cộng +39
+41 ô nghi lỗi: số ô vốn thiếu rồi được nội suy rồi bị xoá lại,2,2,0,True,không tạo NaN mới so với raw; làm giảm số ô 'đã nội suy' còn lại
+cân đối A (log §1): 16953 + 2169 − 3329 + 39,15832,15832,0,True,
+cân đối B (gộp): raw + flatline − nội suy GỘP + 41,15832,15832,0,True,nội suy gộp = 3331 (3329 + 2)
+ô ~was_missing & NaN (NaN thêm sau),39,39,0,True,
+summary: số hàng,104,104,0,True,
+summary: số hàng dung_lam_bien_mo_hinh=False,11,11,0,True,Xylene 8 + PM10 Lucknow 1 + kept≥60% 2
+summary: False KHÔNG tính Xylene,3,3,0,True,Gurugram/NH3 92.9%; Lucknow/PM10 100.0%; Chennai/PM10 84.5%
+summary: tổng n_imputed,3329,3329,0,True,
+summary: tổng n_flatline_to_nan,2169,2169,0,True,
+summary: tổng n_nan_added_later,39,39,0,True,
+summary: tổng n_outlier_flagged,6656,6656,0,True,
+summary: hàng kept cân đối,95,95,0,True,
+summary: số ô đếm khác giữa DA và file commit (95 hàng kept × 5 cột),0,0,0,True,
+suspect_points: 93 dòng trùng từng ô với file commit,True,True,0,True,
+dtype CSV: 24 cờ bool đọc lại thành bool,24,24,0,True,
+dtype CSV: pm25_gt_pm10_flag,object/str (True/False/NaN),object,,False,boolean nullable mất kiểu khi lưu CSV; downstream phải tự ép kiểu

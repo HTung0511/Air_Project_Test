@@ -1,0 +1,25 @@
+bo,tap,khoi_ngay,so_khoi,A,B,dMAE,lo,hi,ket_luan
+baseline,test,14,18,Ridge L1,Ngày mai = hôm nay,-0.529077,-1.194665,0.081402,chưa tách được
+baseline,test,14,18,Ridge L2,Ridge L1,-2.018423,-3.056548,-1.048279,tách khỏi 0
+baseline,test,14,18,Ridge L3,Ridge L2,-1.399840,-1.932721,-0.927914,tách khỏi 0
+baseline,test,14,18,Ridge L3,Ngày mai = hôm nay,-3.947341,-5.404803,-2.559903,tách khỏi 0
+baseline,test,7,35,Ridge L1,Ngày mai = hôm nay,-0.529077,-1.314961,0.223697,chưa tách được
+baseline,test,7,35,Ridge L2,Ridge L1,-2.018423,-3.020407,-1.161433,tách khỏi 0
+baseline,test,7,35,Ridge L3,Ridge L2,-1.399840,-2.049939,-0.835615,tách khỏi 0
+baseline,test,7,35,Ridge L3,Ngày mai = hôm nay,-3.947341,-5.236645,-2.732949,tách khỏi 0
+baseline,test,28,9,Ridge L1,Ngày mai = hôm nay,-0.529077,-0.993205,-0.100262,tách khỏi 0
+baseline,test,28,9,Ridge L2,Ridge L1,-2.018423,-3.428265,-0.759483,tách khỏi 0
+baseline,test,28,9,Ridge L3,Ridge L2,-1.399840,-1.922904,-0.952512,tách khỏi 0
+baseline,test,28,9,Ridge L3,Ngày mai = hôm nay,-3.947341,-5.656676,-2.279009,tách khỏi 0
+baseline,holdout,14,9,Ridge L1,Ngày mai = hôm nay,-0.718372,-1.596369,0.036949,chưa tách được
+baseline,holdout,14,9,Ridge L2,Ridge L1,-0.205159,-0.928796,0.539001,chưa tách được
+baseline,holdout,14,9,Ridge L3,Ridge L2,-0.096184,-0.948379,0.646147,chưa tách được
+baseline,holdout,14,9,Ridge L3,Ngày mai = hôm nay,-1.019714,-2.702124,0.483098,chưa tách được
+baseline,holdout,7,18,Ridge L1,Ngày mai = hôm nay,-0.718372,-1.517847,0.073918,chưa tách được
+baseline,holdout,7,18,Ridge L2,Ridge L1,-0.205159,-0.812604,0.447768,chưa tách được
+baseline,holdout,7,18,Ridge L3,Ridge L2,-0.096184,-0.857393,0.495517,chưa tách được
+baseline,holdout,7,18,Ridge L3,Ngày mai = hôm nay,-1.019714,-2.589013,0.460662,chưa tách được
+baseline,holdout,28,5,Ridge L1,Ngày mai = hôm nay,-0.718372,-1.486670,-0.059991,tách khỏi 0
+baseline,holdout,28,5,Ridge L2,Ridge L1,-0.205159,-1.072457,0.710730,chưa tách được
+baseline,holdout,28,5,Ridge L3,Ridge L2,-0.096184,-0.913889,0.768284,chưa tách được
+baseline,holdout,28,5,Ridge L3,Ngày mai = hôm nay,-1.019714,-2.550847,0.527203,chưa tách được

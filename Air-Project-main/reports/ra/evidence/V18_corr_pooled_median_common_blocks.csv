@@ -1,0 +1,7 @@
+var,trung_vi_rho_5_TP,CI95_lo (khối lịch chung 14 ngày),CI95_hi,so_TP_cung_dau
+temp_mean,0.2317,0.1314,0.3282,5
+humidity_mean,-0.3257,-0.4017,-0.2145,5
+wind_speed_mean,-0.0935,-0.1542,-0.0308,4
+blh_mean,0.0948,0.0153,0.191,5
+precip_sum,-0.174,-0.2259,-0.1197,5
+pressure_mean,-0.1641,-0.2565,-0.0827,5

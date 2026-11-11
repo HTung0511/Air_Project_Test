@@ -1,0 +1,18 @@
+cut,ly_do_chon,"o_gia_tri_doi_(11 chat+AQI, moi ngay<=t)",theo_cot,o_co_doi(_is_outlier/_was_missing/suspect),NB06_test_tai_Date==t: o_feature_L3_doi,feature_doi_tai_t,AQI_tai_t_doi,moi_dong<=t_trong_khoang_chung: o_feature_L3_doi,so_dong_co_feature_doi,nhan_y_doi(Date<t),dong_giu_lai_cut,dong_giu_lai_full
+2017-06-14,ngày đầu của chuỗi flatline CO ở Delhi (dài 78 ngày),12,"{'PM2.5': 3, 'NO': 1, 'NO2': 1, 'CO': 1, 'SO2': 1, 'O3': 1, 'Benzene': 1, 'Toluene': 1, 'AQI': 2}",2921,0,{},0,0,0,0,0,0
+2017-07-08,ngay sau điểm nghi lỗi Bengaluru 07–08/07/2017,8,"{'Benzene': 7, 'Toluene': 1}",2915,0,{},0,0,0,0,177,177
+2017-07-09,ngày nghi lỗi Gurugram 09/07/2017,19,"{'PM2.5': 1, 'PM10': 2, 'NO': 1, 'NO2': 1, 'NH3': 1, 'SO2': 1, 'O3': 1, 'Benzene': 9, 'Toluene': 2}",2919,0,{},0,0,0,0,182,182
+2017-07-30,ngày nghi lỗi Gurugram 30/07/2017,30,"{'PM2.5': 3, 'PM10': 2, 'NO': 2, 'NO2': 2, 'NH3': 2, 'CO': 4, 'SO2': 2, 'O3': 2, 'Benzene': 9, 'Toluene': 2}",2966,1,{'co_0': 1},0,3,3,0,326,326
+2017-08-12,ngày đầu của chuỗi nội suy PM2.5 ở Delhi (dài 2 ngày),6,"{'PM2.5': 2, 'NO': 1, 'NO2': 1, 'NH3': 2}",2988,0,{},0,1,1,0,411,411
+2017-08-29,ngày nghi lỗi Gurugram 29/08/2017 (PM2.5 950),1,{'O3': 1},2934,0,{},0,0,0,0,525,525
+2017-08-30,"Gurugram 30/08/2017 (PM2.5 643,7, AQI 891: điểm tác giả ghi 'chưa xử lý')",2,{'O3': 2},2929,0,{},0,0,0,0,530,530
+2017-11-09,đỉnh mùa đông 2017 (top AQI Delhi),5,{'Benzene': 5},3015,0,{},0,0,0,0,1062,1062
+2017-11-13,ngày đầu của chuỗi nội suy SO2 ở Gurugram (dài 12 ngày),1,{'SO2': 1},3061,0,{},0,0,0,0,1094,1094
+2018-02-06,ngày nghi lỗi Jaipur 06/02/2018,2,{'Benzene': 2},2982,0,{},0,0,0,0,1760,1760
+2018-06-15,cụm bụi 14–16/06/2018,2,{'CO': 2},2874,0,{},0,0,0,0,2742,2742
+2018-09-15,ngày đầu của chuỗi nội suy CO ở Gurugram (dài 2 ngày),8,"{'PM2.5': 1, 'NO': 1, 'NO2': 1, 'NOx': 1, 'CO': 1, 'SO2': 1, 'O3': 1, 'Benzene': 1}",2702,0,{},0,0,0,0,3452,3452
+2018-12-01,NB06 c6 (ngày tác giả thử),0,{},2537,0,{},0,0,0,0,4059,4059
+2019-06-30,ranh train/test (TRAIN_END),0,{},2043,0,{},0,0,0,0,5741,5741
+2019-11-15,NB06 c6 (ngày tác giả thử),0,{},1371,0,{},0,0,0,0,6843,6843
+2020-01-10,NB06 c6 (ngày tác giả thử),0,{},1013,0,{},0,0,0,0,7291,7291
+2020-02-29,ranh test/holdout (TEST_END),0,{},778,0,{},0,0,0,0,7688,7688
