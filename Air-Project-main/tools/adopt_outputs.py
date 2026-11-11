@@ -6,6 +6,8 @@ notebook trong repo có output thì: chạy trong bản sao, rồi dùng công c
   * Dừng (mã thoát 2) nếu hai bản khác nhau ở bất kỳ ô nào về loại ô, id hoặc mã nguồn: output phải đúng là của mã đang có trong repo.
   * Chép `outputs` và `execution_count` của ô mã, và `language_info` (phiên bản Python đã chạy).
   * Bỏ dấu thời gian chạy từng ô (`metadata.execution`) để file không đổi mỗi lần chạy lại khi kết quả không đổi.
+  * Gộp các đoạn `stream` liền nhau cùng tên (stdout/stderr) thành một: kernel cắt một chuỗi `print` thành mấy đoạn là tuỳ thời
+    điểm xả bộ đệm, không phải khác biệt về kết quả. Nhờ vậy hai lần chạy cho cùng kết quả thì cho cùng file.
   * Không đổi mã nguồn của bất kỳ ô nào; ghi file theo đúng định dạng JSON của các notebook trong repo.
 
   python tools/adopt_outputs.py <bản đã chạy .ipynb> <notebook trong repo .ipynb> [--check]
@@ -13,6 +15,7 @@ notebook trong repo có output thì: chạy trong bản sao, rồi dùng công c
   --check   chỉ kiểm hai bản có cùng mã nguồn và cùng output hay không, không ghi gì (mã thoát 0: trùng, 1: khác output, 2: khác mã)
 """
 import argparse
+import copy
 import hashlib
 import json
 import sys
@@ -23,9 +26,25 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def coalesce_streams(outputs):
+    """Bản sao của danh sách output trong đó các đoạn `stream` LIỀN NHAU cùng tên được gộp làm một (chữ giữ nguyên từng ký tự,
+    lưu theo từng dòng như định dạng notebook trên đĩa). Output loại khác và thứ tự các output không đổi."""
+    out = []
+    for o in outputs:
+        o = copy.deepcopy(o)
+        if o.get("output_type") == "stream":
+            text = "".join(o.get("text", ""))
+            if out and out[-1].get("output_type") == "stream" and out[-1].get("name") == o.get("name"):
+                text = "".join(out[-1]["text"]) + text
+                o = out.pop()
+            o["text"] = text.splitlines(keepends=True)
+        out.append(o)
+    return out
+
+
 def cleaned_outputs(cell):
-    """(outputs, execution_count) của một ô mã, không kèm dấu thời gian."""
-    return cell.get("outputs", []), cell.get("execution_count")
+    """(outputs đã gộp stream, execution_count) của một ô mã, không kèm dấu thời gian."""
+    return coalesce_streams(cell.get("outputs", [])), cell.get("execution_count")
 
 
 def main():
@@ -41,9 +60,11 @@ def main():
             print(f"KHÁC MÃ: ô {i} (id {d.get('id')}) khác loại, id hoặc mã nguồn; không chép output của mã khác vào repo"); return 2
     code = [(s, d) for s, d in zip(src["cells"], dst["cells"]) if d["cell_type"] == "code"]
     same = all(cleaned_outputs(s) == cleaned_outputs(d) for s, d in code)
-    n_out = sum(len(s.get("outputs", [])) for s, _ in code)
+    n_out = sum(len(cleaned_outputs(s)[0]) for s, _ in code)
     if a.check:
-        print(f"{'TRÙNG' if same else 'KHÁC OUTPUT'}: {len(code)} ô mã, {n_out} output ở bản đã chạy")
+        differ = [d.get("id") or f"#{i}" for i, (s, d) in enumerate(code) if cleaned_outputs(s) != cleaned_outputs(d)]
+        print(f"{'TRÙNG' if same else 'KHÁC OUTPUT'}: {len(code)} ô mã, {n_out} output ở bản đã chạy"
+              + ("" if same else f"; ô khác: {differ} (so chi tiết: tools/compare_notebook_outputs.py)"))
         return 0 if same else 1
     before = sha(a.target)
     for s, d in code:

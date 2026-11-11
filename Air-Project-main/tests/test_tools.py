@@ -55,6 +55,27 @@ def test_adopt_copies_outputs_only_and_drops_run_timestamps(tmp_path):
     assert call(executed, target, "--check")[0] == 0 and target.read_text(encoding="utf-8").endswith("}\n")
 
 
+def test_stream_chunking_is_not_a_difference_but_text_and_order_are(tmp_path):
+    """Kernel có thể cắt một chuỗi print thành nhiều đoạn stream tuỳ lúc xả bộ đệm. Hai bản chỉ khác cách cắt là TRÙNG; khác một ký
+    tự, khác tên luồng, hay khác thứ tự giữa chữ và hình thì vẫn là KHÁC."""
+    one = {1: [{"output_type": "stream", "name": "stdout", "text": ["a\n", "b\n", "c\n"]}]}
+    two = {1: [{"output_type": "stream", "name": "stdout", "text": ["a\n"]}, {"output_type": "stream", "name": "stdout", "text": "b\nc\n"}]}
+    target = write(tmp_path / "target.ipynb", notebook(SRC, one))
+    assert call(write(tmp_path / "two.ipynb", notebook(SRC, two)), target, "--check")[0] == 0
+    typo = {1: [{"output_type": "stream", "name": "stdout", "text": ["a\n"]}, {"output_type": "stream", "name": "stdout", "text": "b\nC\n"}]}
+    assert call(write(tmp_path / "typo.ipynb", notebook(SRC, typo)), target, "--check")[0] == 1
+    err = {1: [{"output_type": "stream", "name": "stdout", "text": ["a\n"]}, {"output_type": "stream", "name": "stderr", "text": "b\nc\n"}]}
+    assert call(write(tmp_path / "err.ipynb", notebook(SRC, err)), target, "--check")[0] == 1          # stdout và stderr không gộp vào nhau
+    img = {"output_type": "display_data", "metadata": {}, "data": {"text/plain": ["<Figure>"]}}
+    s = lambda t: {"output_type": "stream", "name": "stdout", "text": [t]}
+    a = write(tmp_path / "a.ipynb", notebook(SRC, {1: [s("x\n"), img, s("y\n")]}))
+    b = write(tmp_path / "b.ipynb", notebook(SRC, {1: [s("x\n"), s("y\n"), img]}))
+    assert call(a, b, "--check")[0] == 1                                                              # đoạn chữ cách nhau bởi hình không được gộp
+    assert call(write(tmp_path / "two2.ipynb", notebook(SRC, two)), write(tmp_path / "empty.ipynb", notebook(SRC))) [0] == 0
+    got = json.loads((tmp_path / "empty.ipynb").read_text(encoding="utf-8"))["cells"][1]["outputs"]
+    assert got == one[1]                                                                              # khi chép, các đoạn được gộp thành dạng chuẩn
+
+
 def test_adopt_refuses_outputs_of_different_source_code(tmp_path):
     other = [("markdown", "# Tiêu đề"), ("code", "x = 2\nprint(x)"), ("code", "x + 1")]  # một ô mã khác một ký tự
     executed = write(tmp_path / "executed.ipynb", notebook(other, OUT))
