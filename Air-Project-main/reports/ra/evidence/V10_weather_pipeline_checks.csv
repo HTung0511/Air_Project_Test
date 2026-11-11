@@ -1,0 +1,34 @@
+tieu_chi,expected,actual,khop,ghi_chu
+số file cache,8,8,True,
+số ngày lịch 25/12/2014–01/07/2020,2016,2016,True,
+số giờ lịch mỗi TP,48384,48384,True,
+mỗi file đủ 48.384 dòng giờ,8,8,True,
+tổng dòng giờ,387072,387072,True,
+giờ trùng,0,0,True,
+ô trống (6 biến lõi + BLH),0,0,True,
+lưới giờ liên tục đúng lịch (8 TP),8,8,True,
+BLH có trong cả 8 cache,8,8,True,downstream NB05/06 dùng blh_mean cố định
+giờ nóng nhất 12–16h local (8 TP),8,8,True,"giờ nóng nhất: {'Delhi': 14, 'Gurugram': 14, 'Lucknow': 14, 'Jaipur': 14, 'Bengaluru': 14, 'Amritsar': 14, 'Chennai': 14, 'Hyderabad': 14}; nếu chuỗi là UTC thì đỉnh sẽ rơi ~8–9h"
+Delhi và Gurugram khác ô lưới,True,True,True,"Delhi (28.5, 77.25), Gurugram (28.5, 77.0)"
+"độ lệch toạ độ lưới tối đa ≤ 0,125°",True,True,True,max = 0.12°
+Metadata.weather_source.locations khớp grid trong cache,0,0,True,"các khoá: ['requested_lat', 'requested_lon', 'era5_grid_lat', 'era5_grid_lon', 'grid_elevation_m']"
+daily: số hàng,16128,16128,True,
+daily commit: số hàng,16128,16128,True,
+daily: cùng bộ cột với file commit,True,True,True,"['City', 'Date', 'temp_mean', 'temp_min', 'temp_max', 'humidity_mean', 'pressure_mean', 'wind_speed_mean', 'wind_speed_max', 'wind_u', 'wind_v', 'precip_sum', 'blh_mean', 'blh_min', 'rain_day', 'wind_dir_8']"
+"daily tái lập từ cache == file commit (từng ô, 1e-9)",0,852,False,"{'temp_mean': 335, 'pressure_mean': 348, 'wind_speed_mean': 169}; max |diff| = 0.0100 trên 193536 ô số (0.44%). Nguyên nhân: round(2) của trung bình 24 giờ rơi đúng biên ...5 nên làm tròn lên/xuống khác nhau giữa phiên bản numpy/pandas; không lệch cột min/max/sum/u/v/blh, rain_day, wind_dir_8"
+"daily: mọi ô lệch có trung bình chưa làm tròn nằm đúng biên x,xx5 (|phần lẻ − 0,5| < 1e-6)",852,852,True,
+daily: ô trống,0,0,True,
+daily: vi phạm giới hạn vật lý (check_ranges),0,0,True,
+"daily: tính độc lập (mean/min/max/sum/u/v) lệch tối đa ≤ 0,01",True,True,True,max |diff| = 0.0100 (1 đơn vị ở chữ số thập phân thứ 2 = làm tròn tại biên ...5)
+daily: mỗi ngày đủ 24 giờ (8 TP × 2016 ngày),16128,16128,True,
+daily: wind_dir_8 khớp công thức 'gió thổi TỪ',16128,16128,True,
+daily: rain_day == (precip_sum ≥ 1 mm),16128,16128,True,
+dấu u: gió từ hướng Tây (270°) → u dương (thổi về Đông),True,True,True,"ví dụ Delhi 2015-02-13T08:00: hướng 272°, tốc độ 3.1 m/s → u = 3.10"
+_dir8: 4 hướng cơ bản,"N,E,S,W","N,E,S,W",True,
+merged: shape,"(14056, 54)","(14056, 54)",True,
+merged: số cột thời tiết thêm,14,14,True,"['temp_mean', 'temp_min', 'temp_max', 'humidity_mean', 'pressure_mean', 'wind_speed_mean', 'wind_speed_max', 'wind_u', 'wind_v', 'precip_sum', 'blh_mean', 'blh_min', 'rain_day', 'wind_dir_8']"
+merged: dòng thiếu thời tiết,0,0,True,
+"merged: khoá (City,Date) trùng",0,0,True,
+merged: 40 cột AQ giữ nguyên từng ô (so tuyệt đối),0,0,True,
+"merged: cột thời tiết == daily ghép lại theo (City,Date)",0,0,True,
+"Delhi–Gurugram: tương quan thời tiết ngày 0,95–0,999",True,True,True,"{'temp_mean': np.float64(0.999), 'humidity_mean': np.float64(0.994), 'wind_speed_mean': np.float64(0.985), 'precip_sum': np.float64(0.954), 'blh_mean': np.float64(0.988)}"

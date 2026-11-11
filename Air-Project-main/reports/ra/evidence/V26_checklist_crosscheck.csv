@@ -1,0 +1,15 @@
+muc,gia_tri,chi_tiet
+số ID CK duy nhất trong CHECKLIST,54,"{'1': 6, '2': 15, '3': 16, '4': 7, '5': 10}"
+B/K theo phần,,"{'?': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 6}, 'B': {'1': 4, '2': 12, '3': 12, '4': 5, '5': 3}, 'K': {'1': 2, '2': 3, '3': 4, '4': 2, '5': 1}}"
+BAN_GIAO nói số tiêu chí,50 tiêu chí,
+CHECKLIST tự nói số tiêu chí,,
+chuỗi '2069' / '2.069' trong CHECKLIST,1,"Giải thích: flatline 0 ≥3 ngày là cảm biến treo (2069 ngày, ví dụ Bengaluru NOx 0 suốt 207 ngày); nội suy >14 ngày là bịa số (đã sửa lỗi pandas `limit=14`); AQI"
+chuỗi '2169' / '2.169' trong CHECKLIST,2,
+CK-5.3 '3 cặp',,"| **CK-5.3** | **Nếu xoá ngẫu nhiên 10% dòng, kết luận có đổi không?** | Trả lời: thứ hạng theo % ngày nặng **đổi** ở 3 cặp gần nhau (Lucknow↔Gurugram 46.4 vs 46.3, Amritsar↔Jaipur 11.4 vs 11.1) nên báo cáo **chia nhóm** thay vì xếp hạng 1–8. Kiểm: chạy lại bootstrap 200 lần. Trả lời đúng có kèm con"
+CK-3.7 '3 cặp hay đổi chỗ',,"3 cặp trên | 3 cặp hay đổi chỗ (Lucknow↔Gurugram, Amritsar↔Jaipur, Bengaluru↔Hyderabad) → kết luận chia nhóm thay vì xếp hạng. Kiểm: notebook có đoạn `bootstrap sensitivity` với `n_iter=200` | 3 cặp gần nhau (Lucknow↔Gurugram 46.4 vs 46.3, Amritsar↔Jaipur 11.4 vs 11.1) nên báo cáo **chia nhóm** thay vì xếp hạng 1–8. Kiểm: chạy lại bootstrap 200 lần. Trả lời đúng có kèm con số"
+Ngưỡng đạt P3 (dòng công thức),,"PASS 8/12 B (thu thập đủ, làm sạch cơ bản nhưng thiếu cờ hoặc thiếu assert). | PASS 10/12 B + có handling cho flatline, interpolation, outlier. | PASS 12/12 B + CK-2.13→2.15 PASS + chạy lại `01_cleaning` từ raw ra **khớp từng ô** (`assert_frame_equal`). | PASS 6/8 B (có EDA cơ bản + mô hình chạy nhưng biểu đồ chưa đủ chuẩn). | PASS 8/8 B + model thắng baseline (MAE thấp hơn persistence). | PASS 8/8 B + CK-3.7/3.8 + CK-3.15/3.16 + mỗi phát hiện có biểu đồ + confounder + hạn chế."
+CK-3.8 nói Bonferroni cho,,Bonferroni cho 3 tests
+MAR/MNAR trong CHECKLIST,8,**Cơ chế thiếu của cột X (MAR/MCAR/MNAR)? Bằng chứng?** | Phân biệt: Xylene thiếu 100% 4/8 TP → MNAR (cảm biến chưa lắp); PM10 Lucknow 100% → MNAR; NH3 Gurugram 92.9% khối lớn → MAR theo thời gian (Date). Bằng chứng: `block_ratio` trong `diagnose_missing()` 
+đường dẫn hoa/thường: file thật,,"['BAN_GIAO_BA-RA.md', 'CHECKLIST_KIEM_CHUNG.md', 'Data_dictionary.md', 'Metadata.json', 'README.md', 'Requirements.txt']"
+đường dẫn CHECKLIST nhắc 'requirements.txt' (thường) / 'Requirements.txt',0/5,data_dictionary.md 0 / Data_dictionary.md 13; metadata.json 0 / Metadata.json 10
+Branch ghi trong CHECKLIST,arena/ad184e76-air-project-test,nhánh DA đang chạy: arena/b5aacef3-air-project-test

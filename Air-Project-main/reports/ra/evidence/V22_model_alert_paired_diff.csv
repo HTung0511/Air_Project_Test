@@ -1,0 +1,10 @@
+A,B,chi_so,delta,lo,hi,ket_luan
+L3@201,hôm nay@201,recall,0.0334,0.0034,0.0676,A hơn B
+L3@201,hôm nay@201,precision,0.0469,0.0334,0.0651,A hơn B
+L3@201,hôm nay@201,F1,0.0402,0.0268,0.0553,A hơn B
+L3@F2,hôm nay@F2,recall,0.0077,-0.0103,0.0288,chưa tách khỏi 0
+L3@F2,hôm nay@F2,precision,0.046,0.0242,0.074,A hơn B
+L3@F2,hôm nay@F2,F1,0.0322,0.0166,0.0547,A hơn B
+L3@F2,hôm nay@201,recall,0.1131,0.0792,0.1643,A hơn B
+L3@F2,hôm nay@201,precision,-0.0801,-0.1066,-0.0559,A kém B
+L3@F2,hôm nay@201,F1,0.005,-0.0167,0.0327,chưa tách khỏi 0

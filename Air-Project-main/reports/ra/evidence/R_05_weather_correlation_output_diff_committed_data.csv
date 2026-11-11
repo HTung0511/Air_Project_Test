@@ -1,0 +1,11 @@
+cell,so_goc,so_chay_lai,hinh_goc,hinh_chay_lai,text_giong_het,phan_loai,so_khac,max_abs,max_rel,vi_du
+3,25,25,0,0,True,khớp,0,0.0,0.0,
+5,99,99,0,0,True,khớp,0,0.0,0.0,
+7,0,0,1,1,False,khớp,0,0.0,0.0,
+10,109,109,0,0,True,khớp,0,0.0,0.0,
+12,0,0,1,1,False,khớp,0,0.0,0.0,
+15,7,7,0,0,True,khớp,0,0.0,0.0,
+17,0,0,1,1,False,khớp,0,0.0,0.0,
+19,15,15,1,1,False,khớp,0,0.0,0.0,
+22,59,59,0,0,True,khớp,0,0.0,0.0,
+26,0,0,0,0,True,khớp,0,0.0,0.0,

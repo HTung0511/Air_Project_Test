@@ -1,0 +1,11 @@
+,n,n,n,ngay_nang,ngay_nang,ngay_nang
+split,lockdown,test,train,lockdown,test,train
+City,,,,,,
+Delhi,123,244,733,8,133,423
+Gurugram,123,244,685,2,97,390
+Lucknow,123,244,743,7,111,397
+Jaipur,123,244,716,0,9,111
+Bengaluru,123,244,737,0,0,2
+Amritsar,114,239,650,1,29,84
+Chennai,123,244,740,0,10,24
+Hyderabad,123,244,737,0,0,1

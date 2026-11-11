@@ -1,0 +1,7 @@
+bien_the,q<0.05,CI95_loai_0,doi_dau_so_voi_goc,mat_y_nghia (gốc q<0.05 → q≥0.05),them_y_nghia,max|Δrho|,do_am_am_ca_8_TP,do_am_q<0.05_so_TP,Delhi_temp,Delhi_pressure,Delhi_blh,cac_o_doi_ket_luan
+"gốc: tháng, khối 14",32,33,0,0,0,0.0,True,8,0.233,-0.164,0.08 [-0.03; 0.19],
+khối 7 ngày,33,35,0,0,1,0.0,True,8,0.233,-0.164,0.08 [-0.02; 0.18],Bengaluru/precip_sum
+khối 28 ngày,32,32,0,0,0,0.0,True,8,0.233,-0.164,0.08 [-0.06; 0.21],
+anomaly theo tuần,32,36,1,3,3,0.1737809439841651,True,8,0.407,-0.291,0.06 [-0.06; 0.17],Delhi/precip_sum; Gurugram/wind_speed_mean; Gurugram/pressure_mean; Lucknow/wind_speed_mean; Amritsar/wind_speed_mean; Hyderabad/temp_mean
+trước 01/03/2020,31,34,3,5,4,0.137153498596199,True,8,0.157,-0.112,-0.02 [-0.13; 0.08],Delhi/pressure_mean; Lucknow/temp_mean; Lucknow/wind_speed_mean; Lucknow/blh_mean; Lucknow/pressure_mean; Jaipur/pressure_mean; Bengaluru/precip_sum; Bengaluru/pressure_mean; Chennai/wind_speed_mean
+trước 25/03/2020,33,34,2,3,4,0.10429499610082993,True,8,0.173,-0.118,-0.01 [-0.12; 0.10],Delhi/pressure_mean; Lucknow/wind_speed_mean; Lucknow/blh_mean; Jaipur/pressure_mean; Bengaluru/precip_sum; Bengaluru/pressure_mean; Chennai/wind_speed_mean

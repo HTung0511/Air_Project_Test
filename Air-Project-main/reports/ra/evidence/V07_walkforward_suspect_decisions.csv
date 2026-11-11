@@ -1,0 +1,50 @@
+city,date,column,value_original,lan_dau_bi_co,lan_cuoi_bi_co,so_ngay_bi_co,trong_khoang_chung,la_nghi_loi_cuoi_cung,tre_ngay_tu_su_kien_den_khi_bi_co,so_ngay_co_the_bi_co,loai
+Amritsar,2017-05-06,AQI,117.0,2017-06-14,2020-07-01,1114,False,True,39,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-06,PM2.5,296.8,2017-06-14,2020-07-01,1114,False,True,39,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-08,AQI,110.0,2017-06-14,2020-07-01,1114,False,True,37,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-08,PM2.5,868.7,2017-06-14,2020-07-01,1114,False,True,37,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-09,AQI,122.0,2017-06-14,2020-07-01,1114,False,True,36,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-09,PM2.5,850.7,2017-06-14,2020-07-01,1114,False,True,36,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-10,PM2.5,832.8,2017-06-14,2020-07-01,1114,False,True,35,1114,cuối cùng vẫn nghi lỗi
+Amritsar,2017-05-11,PM2.5,595.9,2017-06-14,2020-07-01,1114,False,True,34,1114,cuối cùng vẫn nghi lỗi
+Bengaluru,2016-07-16,AQI,61.0,2017-06-14,2017-07-07,24,False,False,333,1114,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Bengaluru,2016-07-16,PM2.5,165.9,2017-06-14,2017-07-07,24,False,False,333,1114,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Bengaluru,2016-07-17,AQI,70.0,2017-06-14,2017-07-07,24,False,False,332,1114,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Bengaluru,2016-07-17,PM2.5,192.0,2017-06-14,2017-07-07,24,False,False,332,1114,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Bengaluru,2016-07-18,AQI,62.0,2017-06-14,2020-07-01,1114,False,True,331,1114,cuối cùng vẫn nghi lỗi
+Bengaluru,2016-07-18,PM2.5,218.2,2017-06-14,2020-07-01,1114,False,True,331,1114,cuối cùng vẫn nghi lỗi
+Bengaluru,2016-07-19,AQI,308.0,2017-06-14,2020-07-01,1114,False,True,330,1114,cuối cùng vẫn nghi lỗi
+Bengaluru,2017-07-07,PM2.5,256.0,2017-07-08,2020-07-01,1090,True,True,1,1091,cuối cùng vẫn nghi lỗi
+Bengaluru,2017-07-08,AQI,108.0,2017-07-08,2020-07-01,1090,True,True,0,1090,cuối cùng vẫn nghi lỗi
+Bengaluru,2017-07-08,PM2.5,313.6,2017-07-08,2020-07-01,1090,True,True,0,1090,cuối cùng vẫn nghi lỗi
+Bengaluru,2018-05-01,AQI,352.0,2018-05-01,2018-05-05,5,True,False,0,793,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Chennai,2017-03-10,AQI,148.0,2017-06-14,2020-07-01,1114,False,True,96,1114,cuối cùng vẫn nghi lỗi
+Chennai,2017-03-10,PM2.5,227.2,2017-06-14,2020-07-01,1114,False,True,96,1114,cuối cùng vẫn nghi lỗi
+Chennai,2017-03-16,AQI,350.0,2017-06-14,2020-07-01,1114,False,True,90,1114,cuối cùng vẫn nghi lỗi
+Chennai,2017-03-16,PM2.5,286.1,2017-06-14,2020-07-01,1114,False,True,90,1114,cuối cùng vẫn nghi lỗi
+Gurugram,2017-07-09,AQI,529.0,2017-07-09,2020-07-01,1089,True,True,0,1089,cuối cùng vẫn nghi lỗi
+Gurugram,2017-07-09,PM2.5,821.4,2017-07-09,2020-07-01,1089,True,True,0,1089,cuối cùng vẫn nghi lỗi
+Gurugram,2017-07-14,AQI,497.0,2017-07-14,2017-07-15,2,True,False,0,1084,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Gurugram,2017-07-14,PM2.5,723.2,2017-07-14,2017-07-15,2,True,False,0,1084,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Gurugram,2017-07-16,PM2.5,812.5,2017-07-20,2017-08-28,40,True,False,4,1082,"MA: thời gian thực từng xoá, bản cuối GIỮ"
+Gurugram,2017-07-30,AQI,482.0,2017-07-30,2020-07-01,1068,True,True,0,1068,cuối cùng vẫn nghi lỗi
+Gurugram,2017-07-30,PM2.5,858.7,2017-07-30,2020-07-01,1068,True,True,0,1068,cuối cùng vẫn nghi lỗi
+Gurugram,2017-08-29,PM2.5,950.0,2017-08-29,2020-07-01,1038,True,True,0,1038,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-06-02,AQI,661.0,2017-06-14,2020-07-01,1114,False,True,743,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-06-02,PM2.5,539.1,2017-06-14,2020-07-01,1114,False,True,743,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-06-24,AQI,348.0,2017-06-14,2020-07-01,1114,False,True,721,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-06-24,PM2.5,467.7,2017-06-14,2020-07-01,1114,False,True,721,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-10-30,AQI,487.0,2017-06-14,2020-07-01,1114,False,True,593,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2015-10-30,PM2.5,516.2,2017-06-14,2020-07-01,1114,False,True,593,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2016-02-21,AQI,442.0,2017-06-14,2020-07-01,1114,False,True,479,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2016-02-21,PM2.5,525.1,2017-06-14,2020-07-01,1114,False,True,479,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2016-06-16,AQI,737.0,2017-06-14,2020-07-01,1114,False,True,363,1114,cuối cùng vẫn nghi lỗi
+Hyderabad,2016-06-16,PM2.5,571.0,2017-06-14,2020-07-01,1114,False,True,363,1114,cuối cùng vẫn nghi lỗi
+Jaipur,2018-02-06,AQI,305.0,2018-02-06,2020-07-01,877,True,True,0,877,cuối cùng vẫn nghi lỗi
+Jaipur,2018-02-06,PM2.5,311.4,2018-02-06,2020-07-01,877,True,True,0,877,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-20,PM2.5,742.7,2017-06-14,2020-07-01,1114,False,True,817,1114,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-21,AQI,607.0,2017-06-14,2020-07-01,1114,False,True,816,1114,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-21,PM2.5,518.1,2017-06-14,2020-07-01,1114,False,True,816,1114,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-22,AQI,707.0,2017-06-14,2020-07-01,1114,False,True,815,1114,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-22,PM2.5,674.4,2017-06-14,2020-07-01,1114,False,True,815,1114,cuối cùng vẫn nghi lỗi
+Lucknow,2015-03-23,AQI,699.0,2017-06-14,2020-07-01,1114,False,True,814,1114,cuối cùng vẫn nghi lỗi

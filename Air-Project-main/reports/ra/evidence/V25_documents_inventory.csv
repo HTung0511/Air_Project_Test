@@ -1,0 +1,17 @@
+muc,so_file,file
+pdf,0,
+pptx/slide,0,
+docx,0,
+bao_cao (*report*/*bao_cao*.md),0,
+bien_ban/van_dap,0,
+LICENSE,0,
+ngữ cảnh.txt,0,
+chuỗi 'quyền riêng tư / privacy',0,
+chuỗi 'thiên lệch / bias',0,
+chuỗi 'khai báo dùng AI',1,06_predict_aqi.ipynb(1)
+chuỗi 'giấy phép / CC BY',4,Data_dictionary.md(2); Metadata.json(2); cleaning_log_8cities.md(1); 04_weather_merge.ipynb(2)
+chuỗi 'ngày truy cập',0,
+chuỗi 'URL nguồn Kaggle/CPCB',2,Metadata.json(2); README.md(1)
+chuỗi 'tài liệu tham khảo / bibliography',0,
+chuỗi 'notebook 07',1,cleaning_log_8cities.md(2)
+chuỗi 'production / triển khai thật',1,06_predict_aqi.ipynb(1)
