@@ -34,6 +34,19 @@ Từ đây, F03 chỉ là **cách diễn giải độ tin cậy của kết qu�
 
 **Nguồn đánh giá:** bộ DA tại PR #3, commit `0dfc71568d439b3b2e9dae9a9093f23bcf379969`: `verification_results.md` v1.1, `supplementary_analysis.md` v1.0 và bằng chứng đi kèm. RA đọc hồ sơ/CSV/script, không chạy lại phân tích thay DA. Mọi link V/S được ghim vào snapshot DA này; không có kết quả kiểm chứng mới trong lần thu hẹp phạm vi.
 
+### Bối cảnh từ tài liệu giữa kỳ do nhóm cung cấp
+
+RA đã đọc nội dung văn bản của toàn bộ **18 trang** tệp `Giua_ky_INFO3020_O_nhiem_khong_khi_8_thanh_pho.pdf` đính kèm. Tài liệu được dùng để hiểu tiến trình và những giải thích nhóm đã có, **không chấm hình thức slide/vấn đáp** và không thay bằng chứng thực nghiệm DA. Chưa nghiệm thu bằng mắt từng biểu đồ nhúng trong PDF.
+
+- **Trang 2–3:** đã nêu câu hỏi nghiên cứu, đối tượng sử dụng, định nghĩa AQI≥201 trên số ngày có AQI và khoảng chung giữa thành phố. Không tiếp tục đặt lại những câu hỏi này như thể nhóm chưa xác định.
+- **Trang 4, 14–15:** đã giải thích flatline, Xylene, nội suy ≤14 ngày, không điền AQI, điểm nghi lỗi và ngoại lai chỉ gắn cờ. Các quyết định có lý do được trình bày; F05 chỉ bổ sung cách diễn đạt mức chắc chắn, không yêu cầu nhóm giải thích lại từ đầu. Số đếm hiện hành đối chiếu ở [V01], [V08], [V09].
+- **Trang 11:** đã ghi rõ “2,8 lần” là **trung vị 5 thành phố**. Không gán lỗi ghép 2,8 với 137/42 cho trang này; F04 nhắm đúng các câu ghép sai trong tài liệu hiện hành đã được DA chỉ ra, không sửa hàng loạt những chỗ vốn đúng. [V16]
+- **Trang 12, 16–17:** nhóm đã nhận diện thứ hạng trong nhóm không bền, giới hạn do mùa/công thức AQI/PM10 thiếu, điểm nghi lỗi chưa đối chiếu và không gán toàn bộ giảm AQI cho phong tỏa. Đây là những giới hạn đã được nhóm thừa nhận, không phải tất cả là phát hiện mới của RA. Kết quả tái lập/sensitivity hiện hành ở [V14], [V15], [V16].
+- **Trang 12:** dự báo AQI ngày mai còn là bước tiếp theo, dự kiến train 2015–2019/test 2020. Đây là kế hoạch giữa kỳ, không phải cấu hình mô hình cuối. Dùng [V20] để xác nhận chia tập hiện hành (train đến 30/06/2019, test 01/07/2019–29/02/2020, holdout từ 01/03/2020); chỉ cần giải thích quá trình cập nhật, không tự coi khác kế hoạch là lỗi.
+- Các câu “không có thời tiết” và các dẫn chiếu notebook cũ trong tài liệu này được hiểu theo **snapshot EDA giữa kỳ**, không dùng để phủ định phần khí tượng đã bổ sung sau đó theo README. Căn cứ kiểm chứng tích hợp hiện hành là [V10], [V11], và liên hệ khí tượng–AQI là [V18], [V19].
+
+Từ nay, trước khi hỏi thêm, RA đối chiếu cả README, tài liệu giữa kỳ và hồ sơ DA; chỉ hỏi khi có khoảng trống ảnh hưởng quyết định kỹ thuật mà các nguồn này chưa trả lời. Hai việc sửa mã F01–F02 không được đóng chỉ nhờ có bài thuyết trình; bằng chứng kỹ thuật vẫn là [V05], [V07], [V10], [NEW-003].
+
 ## 2. Những phần chính đã làm được
 
 | Tiêu chí | Kết quả | Bằng chứng | Ghi chú |
