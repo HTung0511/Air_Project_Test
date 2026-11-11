@@ -1,6 +1,6 @@
 # Kết quả kiểm chứng — DA → RA
 
-Ngày 11/11/2026 · phiên bản 1.0 · người chạy: AI-3 Data Analyst · commit `ccd0a63`
+Ngày 11/11/2026 · phiên bản 1.1 (rút NEW-005) · người chạy: AI-3 Data Analyst · commit `ccd0a63`
 Trả lời hợp đồng trong [open_questions.md](open_questions.md). Môi trường, lệnh và hash ở [reproduction_log.md](reproduction_log.md). Phân tích bổ sung ở [supplementary_analysis.md](supplementary_analysis.md).
 
 DA chỉ báo số đo được. Mọi đánh giá phương pháp và quyết định cuối thuộc về RA; thay đổi checklist thuộc về BA.
@@ -21,7 +21,7 @@ DA chỉ báo số đo được. Mọi đánh giá phương pháp và quyết đ
 | Q07 / P1 — dự báo và cảnh báo | ⚠️ partial | [V20](#V20)–[V24](#V24) | Số trên tập test tái lập đúng. Trên holdout, mô hình **chưa tách** khỏi "ngày mai = hôm nay". Giờ phát hành dữ liệu thật không kiểm được. |
 | Q08 / P2 — bản nộp, đạo đức, trình bày | ⛔ blocked phần lớn | [V25](#V25) | 15/15 hình có mặt. Không có báo cáo, slide, biên bản, mục quyền riêng tư, khai báo AI, danh mục tài liệu tham khảo trong repo. |
 | Q09 / P2 — đối chiếu checklist | ✅ đã đối chiếu, chờ BA | [V26](#V26) | DA xác nhận các điểm lệch RA nêu và bổ sung chi tiết. |
-| Vấn đề mới | 5 mục | [NEW-001](#NEW-001) … [NEW-005](#NEW-005) | **Cần RA đánh giá bổ sung.** |
+| Vấn đề mới | 4 mục còn hiệu lực, 1 mục đã rút | [NEW-001](#NEW-001) … [NEW-004](#NEW-004); [NEW-005](#NEW-005) đã rút | NEW-001 đến NEW-004 **cần RA đánh giá bổ sung.** |
 
 ---
 
@@ -300,14 +300,14 @@ Script: `v25_docs.py`. Bảng: [V26_checklist_crosscheck.csv](evidence/V26_check
 | Q09 — CI so với BH | ✅ đã làm rõ | [V18](#V18) | 33 theo CI, 32 theo q. |
 | Q09 — ngưỡng thiếu ở raw hay ở bảng cuối | ✅ đã làm rõ | [V01](#V01) | Toàn bảng: raw 10,05%, bảng cuối 9,39%. Ví dụ một cột: Chennai PM10 thiếu 85,0% ở raw và 84,5% ở bảng cuối. Checklist cần nói rõ ngưỡng áp cho con số nào. |
 | Q09 — tên file hoa/thường | ✅ pass | V26 dòng 11–12 | Checklist dùng `Requirements.txt`, `Data_dictionary.md`, `Metadata.json`, đúng với tên file thật. |
-| Q09 — nhánh ghi trong checklist | ⚠️ | V26 dòng 13 | Checklist ghi `arena/ad184e76-air-project-test`. Nhánh DA chạy là `arena/b5aacef3-air-project-test`. |
+| Q09 — nhánh ghi trong checklist | ✅ đã làm rõ | V26 dòng 13; `gh pr list` | Checklist ghi `arena/ad184e76-air-project-test`. Đó là nhánh của chính BA (PR #1). RA làm trên `arena/8afd3d48-…` (PR #2), DA trên `arena/b5aacef3-…` (PR #3). Không có mâu thuẫn; chỉ cần biết checklist trỏ về nhánh gốc của BA. |
 | Q09 — AQI ngày mai thay cho PM2.5 cùng ngày; miễn phân tích theo giờ | Không kiểm được | — | Đây là quyết định về đề bài của BA. Dữ kiện liên quan: `city_day.csv` chỉ có số liệu theo ngày. |
 
 ---
 
 ## Vấn đề mới ngoài danh sách của RA
 
-Tất cả các mục dưới đây **cần RA đánh giá bổ sung**.
+NEW-001 đến NEW-004 **cần RA đánh giá bổ sung**. NEW-005 đã được DA rút lại; mục này được giữ để không xoá dấu vết.
 
 <a id="NEW-001"></a>
 ### NEW-001 — Log làm sạch dẫn chứng một notebook không còn trên đường chạy
@@ -338,8 +338,8 @@ Tất cả các mục dưới đây **cần RA đánh giá bổ sung**.
 | CK-2.15, CK-4.7 | ⚠️ | [V11](#V11); [R_06](evidence/R_06_predict_aqi_output_diff.csv) | Bảng thời tiết ngày làm tròn 2 chữ số; 852 ô nằm đúng biên nên khác nhau giữa các phiên bản. Hệ quả: 1 ô ma trận nhầm lẫn của HistGradientBoosting đổi (TP 388 → 387), 3 biên CI ở NB05 đổi. Ridge và mọi kết luận không đổi. Phạm vi: bất kỳ ai sinh lại dữ liệu trên môi trường khác sẽ không khớp từng ô với file đã commit. |
 
 <a id="NEW-005"></a>
-### NEW-005 — Commit đầu vào ghi trong hợp đồng không có trong repo
+### NEW-005 — ĐÃ RÚT: commit đầu vào ghi trong hợp đồng "không có trong repo"
 
 | Tiêu chí | Kết quả | Bằng chứng | Ghi chú |
 |---|---|---|---|
-| Ngoài checklist (truy vết) | ⚠️ | `open_questions.md` dòng 3; `git cat-file -t 1a4f5a56…` | Hợp đồng ghi đầu vào là commit `1a4f5a56f2c3937dfe812b5036634c69c8496897`. Repo chỉ có `b8aba4b` và `ccd0a63`. DA chạy trên `ccd0a63`. Giữa hai commit có trong repo, `src/`, `data/` và notebook không đổi. DA không xác nhận được `1a4f5a56` có cùng nội dung hay không. |
+| Ngoài checklist (truy vết) | ✅ không còn là vấn đề | `git fetch --unshallow`; `git log --oneline`; `git diff --stat 1a4f5a5 ccd0a63` | Phiên bản 1.0 của tài liệu này ghi rằng commit `1a4f5a56…` không có trong repo. Nhận định đó **sai**: bản sao DA làm việc là bản clone nông (shallow) nên không thấy lịch sử. Sau khi tải đủ lịch sử, `1a4f5a5` là commit cha trực tiếp của `ccd0a63`. Hai commit chỉ khác nhau ở 2 file `reports/ra/notebook_review.md` và `reports/ra/open_questions.md` (163 dòng thêm). `src/`, `data/` và notebook giống hệt, nên mọi kết quả DA chạy trên `ccd0a63` áp dụng nguyên vẹn cho đầu vào `1a4f5a5`. |

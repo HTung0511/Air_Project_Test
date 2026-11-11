@@ -1,6 +1,6 @@
 # Nhật ký tái lập — DA → RA
 
-Ngày 11/11/2026 · phiên bản 1.0 · người chạy: AI-3 Data Analyst
+Ngày 11/11/2026 · phiên bản 1.1 (đính chính truy vết commit) · người chạy: AI-3 Data Analyst
 Đọc cùng [verification_results.md](verification_results.md) (kết quả từng phép kiểm) và [supplementary_analysis.md](supplementary_analysis.md) (phân tích bổ sung).
 Tài liệu này chỉ ghi **cái gì đã chạy, ở đâu, ra sao**. Không có kết luận về phương pháp.
 
@@ -8,8 +8,10 @@ Tài liệu này chỉ ghi **cái gì đã chạy, ở đâu, ra sao**. Không c
 
 | Tiêu chí | Kết quả | Bằng chứng | Ghi chú |
 |---|---|---|---|
-| Commit đã chạy | `ccd0a63757d862c50735a9745864c5e2ef4c3c0e`, nhánh `arena/b5aacef3-air-project-test` | `git log` | `open_questions.md` ghi đầu vào là commit `1a4f5a56…`. Commit đó **không có** trong repo này (repo chỉ có `b8aba4b` và `ccd0a63`). Xem [NEW-005](verification_results.md#NEW-005). |
+| Commit đã chạy | `ccd0a63757d862c50735a9745864c5e2ef4c3c0e`, nhánh `arena/b5aacef3-air-project-test` | `git log` | `open_questions.md` ghi đầu vào là commit `1a4f5a56…`. Đó là commit cha trực tiếp của `ccd0a63`. Lịch sử: `b8aba4b` (tác giả tải lên) → `deb8864` (checklist BA) → `1a4f5a5` (bàn giao BA→RA) → `ccd0a63` (RA). |
+| Khác biệt `1a4f5a5` → `ccd0a63` | 2 file: `reports/ra/notebook_review.md`, `reports/ra/open_questions.md`; 163 dòng thêm | `git diff --stat 1a4f5a5 ccd0a63` | `src/`, `data/`, notebook không đổi. Kết quả chạy trên `ccd0a63` áp dụng cho đầu vào `1a4f5a5`. |
 | Khác biệt `b8aba4b` → `ccd0a63` | 8 file tài liệu, 1.576 dòng thêm; `src/`, `data/`, notebook không đổi | `git diff --stat b8aba4b ccd0a63` | Code và dữ liệu DA chạy giống bản tác giả tải lên. |
+| Đính chính so với phiên bản 1.0 | Phiên bản 1.0 ghi commit `1a4f5a56…` "không có trong repo" | `git rev-parse --is-shallow-repository` trả `true` lúc đó | Sai do bản clone nông. Đã sửa ở phiên bản 1.1 sau `git fetch --unshallow`. Xem [NEW-005](verification_results.md#NEW-005). |
 | `data/raw/city_day.csv` | sha256 `0d84b21c3e4878bb…` | `sha256sum` | 29.531 dòng, 26 thành phố. Không sửa. |
 | `data/processed/air_quality_8cities.csv` | `38653221fda73fed…` | như trên | Bảng sạch đã commit (baseline). |
 | `data/processed/air_quality_8cities_weather.csv` | `2729117038eabafe…` | như trên | Baseline. |
