@@ -1,0 +1,328 @@
+doi_tuong,gia_tri_vong2,gia_tri_v1.1,lech_tuyet_doi,dung_sai,khop
+test | Trung bình theo thành phố | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Trung bình theo thành phố | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Trung bình theo thành phố | MAE,64.470822,64.470800,0.000022,0.000050,True
+test | Trung bình theo thành phố | RMSE,85.146470,85.146500,0.000030,0.000050,True
+test | Trung bình theo thành phố | R2,0.257087,0.257100,0.000013,0.000050,True
+test | Trung bình theo thành phố | MAE_ngay_nang,95.115293,95.115300,0.000007,0.000050,True
+test | Trung bình theo thành phố | MAE_con_lai,56.819539,56.819500,0.000039,0.000050,True
+test | Trung vị cùng tháng (khí hậu) | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Trung vị cùng tháng (khí hậu) | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Trung vị cùng tháng (khí hậu) | MAE,43.406009,43.406000,0.000009,0.000050,True
+test | Trung vị cùng tháng (khí hậu) | RMSE,64.275708,64.275700,0.000008,0.000050,True
+test | Trung vị cùng tháng (khí hậu) | R2,0.576651,0.576700,0.000049,0.000050,True
+test | Trung vị cùng tháng (khí hậu) | MAE_ngay_nang,63.109254,63.109300,0.000046,0.000050,True
+test | Trung vị cùng tháng (khí hậu) | MAE_con_lai,38.486521,38.486500,0.000021,0.000050,True
+test | Ngày mai = hôm nay | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay | MAE,23.466359,23.466400,0.000041,0.000050,True
+test | Ngày mai = hôm nay | RMSE,37.611283,37.611300,0.000017,0.000050,True
+test | Ngày mai = hôm nay | R2,0.855042,0.855000,0.000042,0.000050,True
+test | Ngày mai = hôm nay | MAE_ngay_nang,47.460154,47.460200,0.000046,0.000050,True
+test | Ngày mai = hôm nay | MAE_con_lai,17.475610,17.475600,0.000010,0.000050,True
+test | Ridge L1 | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Ridge L1 | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Ridge L1 | MAE,22.937281,22.937300,0.000019,0.000050,True
+test | Ridge L1 | RMSE,36.000551,36.000600,0.000049,0.000050,True
+test | Ridge L1 | R2,0.867192,0.867200,0.000008,0.000050,True
+test | Ridge L1 | MAE_ngay_nang,46.578021,46.578000,0.000021,0.000050,True
+test | Ridge L1 | MAE_con_lai,17.034683,17.034700,0.000017,0.000050,True
+test | Ridge L2 | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Ridge L2 | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Ridge L2 | MAE,20.918858,20.918900,0.000042,0.000050,True
+test | Ridge L2 | RMSE,31.889826,31.889800,0.000026,0.000050,True
+test | Ridge L2 | R2,0.895790,0.895800,0.000010,0.000050,True
+test | Ridge L2 | MAE_ngay_nang,42.099138,42.099100,0.000038,0.000050,True
+test | Ridge L2 | MAE_con_lai,15.630585,15.630600,0.000015,0.000050,True
+test | Ridge L3 | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Ridge L3 | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Ridge L3 | MAE,19.519018,19.519000,0.000018,0.000050,True
+test | Ridge L3 | RMSE,30.227606,30.227600,0.000006,0.000050,True
+test | Ridge L3 | R2,0.906371,0.906400,0.000029,0.000050,True
+test | Ridge L3 | MAE_ngay_nang,39.771857,39.771900,0.000043,0.000050,True
+test | Ridge L3 | MAE_con_lai,14.462308,14.462300,0.000008,0.000050,True
+test | Ridge L4 | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | Ridge L4 | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | Ridge L4 | MAE,19.084412,19.084400,0.000012,0.000050,True
+test | Ridge L4 | RMSE,29.620171,29.620200,0.000029,0.000050,True
+test | Ridge L4 | R2,0.910096,0.910100,0.000004,0.000050,True
+test | Ridge L4 | MAE_ngay_nang,39.139241,39.139200,0.000041,0.000050,True
+test | Ridge L4 | MAE_con_lai,14.077141,14.077100,0.000041,0.000050,True
+test | HGB L3 | n,1947.000000,1947.000000,0.000000,0.000000,True
+test | HGB L3 | ngay_nang,389.000000,389.000000,0.000000,0.000000,True
+test | HGB L3 | MAE,18.025440,18.025400,0.000040,0.000050,True
+test | HGB L3 | RMSE,28.546862,28.546900,0.000038,0.000050,True
+test | HGB L3 | R2,0.916493,0.916500,0.000007,0.000050,True
+test | HGB L3 | MAE_ngay_nang,35.071067,35.071100,0.000033,0.000050,True
+test | HGB L3 | MAE_con_lai,13.769504,13.769500,0.000004,0.000050,True
+holdout | Trung bình theo thành phố | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Trung bình theo thành phố | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Trung bình theo thành phố | MAE,64.632720,64.632700,0.000020,0.000050,True
+holdout | Trung bình theo thành phố | RMSE,79.048068,79.048100,0.000032,0.000050,True
+holdout | Trung bình theo thành phố | R2,-3.080569,-3.080600,0.000031,0.000050,True
+holdout | Trung bình theo thành phố | MAE_ngay_nang,38.472259,38.472300,0.000041,0.000050,True
+holdout | Trung bình theo thành phố | MAE_con_lai,65.124766,65.124800,0.000034,0.000050,True
+holdout | Trung vị cùng tháng (khí hậu) | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Trung vị cùng tháng (khí hậu) | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Trung vị cùng tháng (khí hậu) | MAE,47.905641,47.905600,0.000041,0.000050,True
+holdout | Trung vị cùng tháng (khí hậu) | RMSE,61.778330,61.778300,0.000030,0.000050,True
+holdout | Trung vị cùng tháng (khí hậu) | R2,-1.492359,-1.492400,0.000041,0.000050,True
+holdout | Trung vị cùng tháng (khí hậu) | MAE_ngay_nang,35.305556,35.305600,0.000044,0.000050,True
+holdout | Trung vị cùng tháng (khí hậu) | MAE_con_lai,48.142633,48.142600,0.000033,0.000050,True
+holdout | Ngày mai = hôm nay | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Ngày mai = hôm nay | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Ngày mai = hôm nay | MAE,14.803077,14.803100,0.000023,0.000050,True
+holdout | Ngày mai = hôm nay | RMSE,26.886561,26.886600,0.000039,0.000050,True
+holdout | Ngày mai = hôm nay | R2,0.527927,0.527900,0.000027,0.000050,True
+holdout | Ngày mai = hôm nay | MAE_ngay_nang,60.388889,60.388900,0.000011,0.000050,True
+holdout | Ngày mai = hôm nay | MAE_con_lai,13.945664,13.945700,0.000036,0.000050,True
+holdout | Ridge L1 | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Ridge L1 | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Ridge L1 | MAE,14.084705,14.084700,0.000005,0.000050,True
+holdout | Ridge L1 | RMSE,24.262302,24.262300,0.000002,0.000050,True
+holdout | Ridge L1 | R2,0.615583,0.615600,0.000017,0.000050,True
+holdout | Ridge L1 | MAE_ngay_nang,61.268693,61.268700,0.000007,0.000050,True
+holdout | Ridge L1 | MAE_con_lai,13.197232,13.197200,0.000032,0.000050,True
+holdout | Ridge L2 | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Ridge L2 | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Ridge L2 | MAE,13.879546,13.879500,0.000046,0.000050,True
+holdout | Ridge L2 | RMSE,22.957977,22.958000,0.000023,0.000050,True
+holdout | Ridge L2 | R2,0.655804,0.655800,0.000004,0.000050,True
+holdout | Ridge L2 | MAE_ngay_nang,57.532462,57.532500,0.000038,0.000050,True
+holdout | Ridge L2 | MAE_con_lai,13.058488,13.058500,0.000012,0.000050,True
+holdout | Ridge L3 | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Ridge L3 | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Ridge L3 | MAE,13.783362,13.783400,0.000038,0.000050,True
+holdout | Ridge L3 | RMSE,22.631641,22.631600,0.000041,0.000050,True
+holdout | Ridge L3 | R2,0.665520,0.665500,0.000020,0.000050,True
+holdout | Ridge L3 | MAE_ngay_nang,52.235665,52.235700,0.000035,0.000050,True
+holdout | Ridge L3 | MAE_con_lai,13.060122,13.060100,0.000022,0.000050,True
+holdout | Ridge L4 | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | Ridge L4 | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | Ridge L4 | MAE,13.677667,13.677700,0.000033,0.000050,True
+holdout | Ridge L4 | RMSE,22.395192,22.395200,0.000008,0.000050,True
+holdout | Ridge L4 | R2,0.672472,0.672500,0.000028,0.000050,True
+holdout | Ridge L4 | MAE_ngay_nang,49.640287,49.640300,0.000013,0.000050,True
+holdout | Ridge L4 | MAE_con_lai,13.001254,13.001300,0.000046,0.000050,True
+holdout | HGB L3 | n,975.000000,975.000000,0.000000,0.000000,True
+holdout | HGB L3 | ngay_nang,18.000000,18.000000,0.000000,0.000000,True
+holdout | HGB L3 | MAE,13.509611,13.509600,0.000011,0.000050,True
+holdout | HGB L3 | RMSE,23.031912,23.031900,0.000012,0.000050,True
+holdout | HGB L3 | R2,0.653584,0.653600,0.000016,0.000050,True
+holdout | HGB L3 | MAE_ngay_nang,50.807147,50.807100,0.000047,0.000050,True
+holdout | HGB L3 | MAE_con_lai,12.808090,12.808100,0.000010,0.000050,True
+test | Ngày mai = hôm nay @201 | nguong,201.000000,201.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @201 | TP,333.000000,333.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @201 | FP,59.000000,59.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @201 | FN,56.000000,56.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @201 | TN,1499.000000,1499.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @201 | recall,0.856041,0.856000,0.000041,0.000050,True
+test | Ngày mai = hôm nay @201 | precision,0.849490,0.849500,0.000010,0.000050,True
+test | Ngày mai = hôm nay @201 | F1,0.852753,0.852800,0.000047,0.000050,True
+test | Ngày mai = hôm nay @F2 | nguong,160.000000,160.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @F2 | TP,374.000000,374.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @F2 | FP,143.000000,143.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @F2 | FN,15.000000,15.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @F2 | TN,1415.000000,1415.000000,0.000000,0.000000,True
+test | Ngày mai = hôm nay @F2 | recall,0.961440,0.961400,0.000040,0.000050,True
+test | Ngày mai = hôm nay @F2 | precision,0.723404,0.723400,0.000004,0.000050,True
+test | Ngày mai = hôm nay @F2 | F1,0.825607,0.825600,0.000007,0.000050,True
+test | Ridge L1 @201 | nguong,201.000000,201.000000,0.000000,0.000000,True
+test | Ridge L1 @201 | TP,340.000000,340.000000,0.000000,0.000000,True
+test | Ridge L1 @201 | FP,53.000000,53.000000,0.000000,0.000000,True
+test | Ridge L1 @201 | FN,49.000000,49.000000,0.000000,0.000000,True
+test | Ridge L1 @201 | TN,1505.000000,1505.000000,0.000000,0.000000,True
+test | Ridge L1 @201 | recall,0.874036,0.874000,0.000036,0.000050,True
+test | Ridge L1 @201 | precision,0.865140,0.865100,0.000040,0.000050,True
+test | Ridge L1 @201 | F1,0.869565,0.869600,0.000035,0.000050,True
+test | Ridge L1 @F2 | nguong,169.000000,169.000000,0.000000,0.000000,True
+test | Ridge L1 @F2 | TP,372.000000,372.000000,0.000000,0.000000,True
+test | Ridge L1 @F2 | FP,102.000000,102.000000,0.000000,0.000000,True
+test | Ridge L1 @F2 | FN,17.000000,17.000000,0.000000,0.000000,True
+test | Ridge L1 @F2 | TN,1456.000000,1456.000000,0.000000,0.000000,True
+test | Ridge L1 @F2 | recall,0.956298,0.956300,0.000002,0.000050,True
+test | Ridge L1 @F2 | precision,0.784810,0.784800,0.000010,0.000050,True
+test | Ridge L1 @F2 | F1,0.862109,0.862100,0.000009,0.000050,True
+test | Ridge L2 @201 | nguong,201.000000,201.000000,0.000000,0.000000,True
+test | Ridge L2 @201 | TP,339.000000,339.000000,0.000000,0.000000,True
+test | Ridge L2 @201 | FP,43.000000,43.000000,0.000000,0.000000,True
+test | Ridge L2 @201 | FN,50.000000,50.000000,0.000000,0.000000,True
+test | Ridge L2 @201 | TN,1515.000000,1515.000000,0.000000,0.000000,True
+test | Ridge L2 @201 | recall,0.871465,0.871500,0.000035,0.000050,True
+test | Ridge L2 @201 | precision,0.887435,0.887400,0.000035,0.000050,True
+test | Ridge L2 @201 | F1,0.879377,0.879400,0.000023,0.000050,True
+test | Ridge L2 @F2 | nguong,165.000000,165.000000,0.000000,0.000000,True
+test | Ridge L2 @F2 | TP,378.000000,378.000000,0.000000,0.000000,True
+test | Ridge L2 @F2 | FP,113.000000,113.000000,0.000000,0.000000,True
+test | Ridge L2 @F2 | FN,11.000000,11.000000,0.000000,0.000000,True
+test | Ridge L2 @F2 | TN,1445.000000,1445.000000,0.000000,0.000000,True
+test | Ridge L2 @F2 | recall,0.971722,0.971700,0.000022,0.000050,True
+test | Ridge L2 @F2 | precision,0.769857,0.769900,0.000043,0.000050,True
+test | Ridge L2 @F2 | F1,0.859091,0.859100,0.000009,0.000050,True
+test | Ridge L3 @201 | nguong,201.000000,201.000000,0.000000,0.000000,True
+test | Ridge L3 @201 | TP,346.000000,346.000000,0.000000,0.000000,True
+test | Ridge L3 @201 | FP,40.000000,40.000000,0.000000,0.000000,True
+test | Ridge L3 @201 | FN,43.000000,43.000000,0.000000,0.000000,True
+test | Ridge L3 @201 | TN,1518.000000,1518.000000,0.000000,0.000000,True
+test | Ridge L3 @201 | recall,0.889460,0.889500,0.000040,0.000050,True
+test | Ridge L3 @201 | precision,0.896373,0.896400,0.000027,0.000050,True
+test | Ridge L3 @201 | F1,0.892903,0.892900,0.000003,0.000050,True
+test | Ridge L3 @F2 | nguong,166.000000,166.000000,0.000000,0.000000,True
+test | Ridge L3 @F2 | TP,377.000000,377.000000,0.000000,0.000000,True
+test | Ridge L3 @F2 | FP,113.000000,113.000000,0.000000,0.000000,True
+test | Ridge L3 @F2 | FN,12.000000,12.000000,0.000000,0.000000,True
+test | Ridge L3 @F2 | TN,1445.000000,1445.000000,0.000000,0.000000,True
+test | Ridge L3 @F2 | recall,0.969152,0.969200,0.000048,0.000050,True
+test | Ridge L3 @F2 | precision,0.769388,0.769400,0.000012,0.000050,True
+test | Ridge L3 @F2 | F1,0.857793,0.857800,0.000007,0.000050,True
+test | Ridge L4 @201 | nguong,201.000000,201.000000,0.000000,0.000000,True
+test | Ridge L4 @201 | TP,352.000000,352.000000,0.000000,0.000000,True
+test | Ridge L4 @201 | FP,37.000000,37.000000,0.000000,0.000000,True
+test | Ridge L4 @201 | FN,37.000000,37.000000,0.000000,0.000000,True
+test | Ridge L4 @201 | TN,1521.000000,1521.000000,0.000000,0.000000,True
+test | Ridge L4 @201 | recall,0.904884,0.904900,0.000016,0.000050,True
+test | Ridge L4 @201 | precision,0.904884,0.904900,0.000016,0.000050,True
+test | Ridge L4 @201 | F1,0.904884,0.904900,0.000016,0.000050,True
+test | Ridge L4 @F2 | nguong,164.000000,164.000000,0.000000,0.000000,True
+test | Ridge L4 @F2 | TP,380.000000,380.000000,0.000000,0.000000,True
+test | Ridge L4 @F2 | FP,113.000000,113.000000,0.000000,0.000000,True
+test | Ridge L4 @F2 | FN,9.000000,9.000000,0.000000,0.000000,True
+test | Ridge L4 @F2 | TN,1445.000000,1445.000000,0.000000,0.000000,True
+test | Ridge L4 @F2 | recall,0.976864,0.976900,0.000036,0.000050,True
+test | Ridge L4 @F2 | precision,0.770791,0.770800,0.000009,0.000050,True
+test | Ridge L4 @F2 | F1,0.861678,0.861700,0.000022,0.000050,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.529077,-0.529100,0.000023,0.000050,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | lo,-1.194665,-1.194700,0.000035,0.000050,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | hi,0.081402,0.081400,0.000002,0.000050,True
+test | khối 14 | Ridge L2 − Ridge L1 | dMAE,-2.018423,-2.018400,0.000023,0.000050,True
+test | khối 14 | Ridge L2 − Ridge L1 | lo,-3.056548,-3.056500,0.000048,0.000050,True
+test | khối 14 | Ridge L2 − Ridge L1 | hi,-1.048279,-1.048300,0.000021,0.000050,True
+test | khối 14 | Ridge L3 − Ridge L2 | dMAE,-1.399840,-1.399800,0.000040,0.000050,True
+test | khối 14 | Ridge L3 − Ridge L2 | lo,-1.932721,-1.932700,0.000021,0.000050,True
+test | khối 14 | Ridge L3 − Ridge L2 | hi,-0.927914,-0.927900,0.000014,0.000050,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | dMAE,-3.947341,-3.947300,0.000041,0.000050,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | lo,-5.404803,-5.404800,0.000003,0.000050,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | hi,-2.559903,-2.559900,0.000003,0.000050,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.718372,-0.718400,0.000028,0.000050,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | lo,-1.596369,-1.596400,0.000031,0.000050,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | hi,0.036949,0.036900,0.000049,0.000050,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | dMAE,-1.019714,-1.019700,0.000014,0.000050,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | lo,-2.702124,-2.702100,0.000024,0.000050,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | hi,0.483098,0.483100,0.000002,0.000050,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | dMAE,-0.096184,-0.096200,0.000016,0.000050,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | lo,-0.948379,-0.948400,0.000021,0.000050,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | hi,0.646147,0.646100,0.000047,0.000050,True
+test | khối 7 | Ridge L3 − Ngày mai = hôm nay | so_khoi,35.000000,35.000000,0.000000,0.000000,True
+test | khối 7 | Ridge L3 − Ngày mai = hôm nay | dMAE,-3.947341,-3.947000,0.000341,0.000501,True
+test | khối 7 | Ridge L3 − Ngày mai = hôm nay | lo,-5.236645,-5.237000,0.000355,0.000501,True
+test | khối 7 | Ridge L3 − Ngày mai = hôm nay | hi,-2.732949,-2.733000,0.000051,0.000501,True
+test | khối 7 | Ridge L3 − Ridge L2 | so_khoi,35.000000,35.000000,0.000000,0.000000,True
+test | khối 7 | Ridge L3 − Ridge L2 | dMAE,-1.399840,-1.400000,0.000160,0.000501,True
+test | khối 7 | Ridge L3 − Ridge L2 | lo,-2.049939,-2.050000,0.000061,0.000501,True
+test | khối 7 | Ridge L3 − Ridge L2 | hi,-0.835615,-0.836000,0.000385,0.000501,True
+test | khối 7 | Ridge L2 − Ridge L1 | so_khoi,35.000000,35.000000,0.000000,0.000000,True
+test | khối 7 | Ridge L2 − Ridge L1 | dMAE,-2.018423,-2.018000,0.000423,0.000501,True
+test | khối 7 | Ridge L2 − Ridge L1 | lo,-3.020407,-3.020000,0.000407,0.000501,True
+test | khối 7 | Ridge L2 − Ridge L1 | hi,-1.161433,-1.161000,0.000433,0.000501,True
+test | khối 7 | Ridge L1 − Ngày mai = hôm nay | so_khoi,35.000000,35.000000,0.000000,0.000000,True
+test | khối 7 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.529077,-0.529000,0.000077,0.000501,True
+test | khối 7 | Ridge L1 − Ngày mai = hôm nay | lo,-1.314961,-1.315000,0.000039,0.000501,True
+test | khối 7 | Ridge L1 − Ngày mai = hôm nay | hi,0.223697,0.224000,0.000303,0.000501,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | dMAE,-3.947341,-3.947000,0.000341,0.000501,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | lo,-5.404803,-5.405000,0.000197,0.000501,True
+test | khối 14 | Ridge L3 − Ngày mai = hôm nay | hi,-2.559903,-2.560000,0.000097,0.000501,True
+test | khối 14 | Ridge L3 − Ridge L2 | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+test | khối 14 | Ridge L3 − Ridge L2 | dMAE,-1.399840,-1.400000,0.000160,0.000501,True
+test | khối 14 | Ridge L3 − Ridge L2 | lo,-1.932721,-1.933000,0.000279,0.000501,True
+test | khối 14 | Ridge L3 − Ridge L2 | hi,-0.927914,-0.928000,0.000086,0.000501,True
+test | khối 14 | Ridge L2 − Ridge L1 | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+test | khối 14 | Ridge L2 − Ridge L1 | dMAE,-2.018423,-2.018000,0.000423,0.000501,True
+test | khối 14 | Ridge L2 − Ridge L1 | lo,-3.056548,-3.057000,0.000452,0.000501,True
+test | khối 14 | Ridge L2 − Ridge L1 | hi,-1.048279,-1.048000,0.000279,0.000501,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.529077,-0.529000,0.000077,0.000501,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | lo,-1.194665,-1.195000,0.000335,0.000501,True
+test | khối 14 | Ridge L1 − Ngày mai = hôm nay | hi,0.081402,0.081000,0.000402,0.000501,True
+test | khối 28 | Ridge L3 − Ngày mai = hôm nay | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+test | khối 28 | Ridge L3 − Ngày mai = hôm nay | dMAE,-3.947341,-3.947000,0.000341,0.000501,True
+test | khối 28 | Ridge L3 − Ngày mai = hôm nay | lo,-5.656676,-5.657000,0.000324,0.000501,True
+test | khối 28 | Ridge L3 − Ngày mai = hôm nay | hi,-2.279009,-2.279000,0.000009,0.000501,True
+test | khối 28 | Ridge L3 − Ridge L2 | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+test | khối 28 | Ridge L3 − Ridge L2 | dMAE,-1.399840,-1.400000,0.000160,0.000501,True
+test | khối 28 | Ridge L3 − Ridge L2 | lo,-1.922904,-1.923000,0.000096,0.000501,True
+test | khối 28 | Ridge L3 − Ridge L2 | hi,-0.952512,-0.953000,0.000488,0.000501,True
+test | khối 28 | Ridge L2 − Ridge L1 | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+test | khối 28 | Ridge L2 − Ridge L1 | dMAE,-2.018423,-2.018000,0.000423,0.000501,True
+test | khối 28 | Ridge L2 − Ridge L1 | lo,-3.428265,-3.428000,0.000265,0.000501,True
+test | khối 28 | Ridge L2 − Ridge L1 | hi,-0.759483,-0.759000,0.000483,0.000501,True
+test | khối 28 | Ridge L1 − Ngày mai = hôm nay | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+test | khối 28 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.529077,-0.529000,0.000077,0.000501,True
+test | khối 28 | Ridge L1 − Ngày mai = hôm nay | lo,-0.993205,-0.993000,0.000205,0.000501,True
+test | khối 28 | Ridge L1 − Ngày mai = hôm nay | hi,-0.100262,-0.100000,0.000262,0.000501,True
+holdout | khối 7 | Ridge L3 − Ngày mai = hôm nay | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+holdout | khối 7 | Ridge L3 − Ngày mai = hôm nay | dMAE,-1.019714,-1.020000,0.000286,0.000501,True
+holdout | khối 7 | Ridge L3 − Ngày mai = hôm nay | lo,-2.589013,-2.589000,0.000013,0.000501,True
+holdout | khối 7 | Ridge L3 − Ngày mai = hôm nay | hi,0.460662,0.461000,0.000338,0.000501,True
+holdout | khối 7 | Ridge L3 − Ridge L2 | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+holdout | khối 7 | Ridge L3 − Ridge L2 | dMAE,-0.096184,-0.096000,0.000184,0.000501,True
+holdout | khối 7 | Ridge L3 − Ridge L2 | lo,-0.857393,-0.857000,0.000393,0.000501,True
+holdout | khối 7 | Ridge L3 − Ridge L2 | hi,0.495517,0.496000,0.000483,0.000501,True
+holdout | khối 7 | Ridge L2 − Ridge L1 | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+holdout | khối 7 | Ridge L2 − Ridge L1 | dMAE,-0.205159,-0.205000,0.000159,0.000501,True
+holdout | khối 7 | Ridge L2 − Ridge L1 | lo,-0.812604,-0.813000,0.000396,0.000501,True
+holdout | khối 7 | Ridge L2 − Ridge L1 | hi,0.447768,0.448000,0.000232,0.000501,True
+holdout | khối 7 | Ridge L1 − Ngày mai = hôm nay | so_khoi,18.000000,18.000000,0.000000,0.000000,True
+holdout | khối 7 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.718372,-0.718000,0.000372,0.000501,True
+holdout | khối 7 | Ridge L1 − Ngày mai = hôm nay | lo,-1.517847,-1.518000,0.000153,0.000501,True
+holdout | khối 7 | Ridge L1 − Ngày mai = hôm nay | hi,0.073918,0.074000,0.000082,0.000501,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | dMAE,-1.019714,-1.020000,0.000286,0.000501,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | lo,-2.702124,-2.702000,0.000124,0.000501,True
+holdout | khối 14 | Ridge L3 − Ngày mai = hôm nay | hi,0.483098,0.483000,0.000098,0.000501,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | dMAE,-0.096184,-0.096000,0.000184,0.000501,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | lo,-0.948379,-0.948000,0.000379,0.000501,True
+holdout | khối 14 | Ridge L3 − Ridge L2 | hi,0.646147,0.646000,0.000147,0.000501,True
+holdout | khối 14 | Ridge L2 − Ridge L1 | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+holdout | khối 14 | Ridge L2 − Ridge L1 | dMAE,-0.205159,-0.205000,0.000159,0.000501,True
+holdout | khối 14 | Ridge L2 − Ridge L1 | lo,-0.928796,-0.929000,0.000204,0.000501,True
+holdout | khối 14 | Ridge L2 − Ridge L1 | hi,0.539001,0.539000,0.000001,0.000501,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | so_khoi,9.000000,9.000000,0.000000,0.000000,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.718372,-0.718000,0.000372,0.000501,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | lo,-1.596369,-1.596000,0.000369,0.000501,True
+holdout | khối 14 | Ridge L1 − Ngày mai = hôm nay | hi,0.036949,0.037000,0.000051,0.000501,True
+holdout | khối 28 | Ridge L3 − Ngày mai = hôm nay | so_khoi,5.000000,5.000000,0.000000,0.000000,True
+holdout | khối 28 | Ridge L3 − Ngày mai = hôm nay | dMAE,-1.019714,-1.020000,0.000286,0.000501,True
+holdout | khối 28 | Ridge L3 − Ngày mai = hôm nay | lo,-2.550847,-2.551000,0.000153,0.000501,True
+holdout | khối 28 | Ridge L3 − Ngày mai = hôm nay | hi,0.527203,0.527000,0.000203,0.000501,True
+holdout | khối 28 | Ridge L3 − Ridge L2 | so_khoi,5.000000,5.000000,0.000000,0.000000,True
+holdout | khối 28 | Ridge L3 − Ridge L2 | dMAE,-0.096184,-0.096000,0.000184,0.000501,True
+holdout | khối 28 | Ridge L3 − Ridge L2 | lo,-0.913889,-0.914000,0.000111,0.000501,True
+holdout | khối 28 | Ridge L3 − Ridge L2 | hi,0.768284,0.768000,0.000284,0.000501,True
+holdout | khối 28 | Ridge L2 − Ridge L1 | so_khoi,5.000000,5.000000,0.000000,0.000000,True
+holdout | khối 28 | Ridge L2 − Ridge L1 | dMAE,-0.205159,-0.205000,0.000159,0.000501,True
+holdout | khối 28 | Ridge L2 − Ridge L1 | lo,-1.072457,-1.072000,0.000457,0.000501,True
+holdout | khối 28 | Ridge L2 − Ridge L1 | hi,0.710730,0.711000,0.000270,0.000501,True
+holdout | khối 28 | Ridge L1 − Ngày mai = hôm nay | so_khoi,5.000000,5.000000,0.000000,0.000000,True
+holdout | khối 28 | Ridge L1 − Ngày mai = hôm nay | dMAE,-0.718372,-0.718000,0.000372,0.000501,True
+holdout | khối 28 | Ridge L1 − Ngày mai = hôm nay | lo,-1.486670,-1.487000,0.000330,0.000501,True
+holdout | khối 28 | Ridge L1 − Ngày mai = hôm nay | hi,-0.059991,-0.060000,0.000009,0.000501,True
+test | khối 14 | L3@201 − hôm nay@201 | recall | delta,0.033419,0.033400,0.000019,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | recall | lo,0.003360,0.003400,0.000040,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | recall | hi,0.067571,0.067600,0.000029,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | precision | delta,0.046883,0.046900,0.000017,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | precision | lo,0.033422,0.033400,0.000022,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | precision | hi,0.065065,0.065100,0.000035,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | F1 | delta,0.040150,0.040200,0.000050,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | F1 | lo,0.026794,0.026800,0.000006,0.000050,True
+test | khối 14 | L3@201 − hôm nay@201 | F1 | hi,0.055343,0.055300,0.000043,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | recall | delta,0.007712,0.007700,0.000012,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | recall | lo,-0.010312,-0.010300,0.000012,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | recall | hi,0.028829,0.028800,0.000029,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | precision | delta,0.045983,0.046000,0.000017,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | precision | lo,0.024216,0.024200,0.000016,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | precision | hi,0.074035,0.074000,0.000035,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | F1 | delta,0.032186,0.032200,0.000014,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | F1 | lo,0.016562,0.016600,0.000038,0.000050,True
+test | khối 14 | L3@F2 − hôm nay@F2 | F1 | hi,0.054741,0.054700,0.000041,0.000050,True

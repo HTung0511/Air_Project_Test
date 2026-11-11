@@ -1,0 +1,19 @@
+A_01_cleaning | 01_cleaning.ipynb | net=noblock | exit=0 | 15s | "status":"ok","code_cells":11,"cells_executed":11,
+A_01_cleaning: 4 file đọc, 4 file ghi, 0 lần thử mạng
+A_02_cleaning_evidence | 02_cleaning_evidence.ipynb | net=noblock | exit=0 | 7s | "status":"ok","code_cells":12,"cells_executed":12,
+A_02_cleaning_evidence: 6 file đọc, 4 file ghi, 0 lần thử mạng
+A_03_eda | 03_eda.ipynb | net=noblock | exit=0 | 6s | "status":"ok","code_cells":13,"cells_executed":13,
+A_03_eda: 2 file đọc, 6 file ghi, 0 lần thử mạng
+A_04_weather_merge_goc | 04_weather_merge.ipynb | net=noblock | exit=1 | 53s | "status":"error","code_cells":16,"cells_executed":3,
+A_04_weather_merge_goc: 1 file đọc, 0 file ghi, 10 lần thử mạng -> ["('5.9.98.12', 443)", "('archive-api.open-meteo.com', 443)"]
+đã thay 1 ô -> /home/user/scratch/chainA/Air-Project-main/notebooks/04_weather_merge_offline.ipynb
+A_04_weather_merge_offline | 04_weather_merge_offline.ipynb | net=block | exit=1 | 3s | "status":"error","code_cells":16,"cells_executed":15,
+A_04_weather_merge_offline: 10 file đọc, 2 file ghi, 0 lần thử mạng
+A_05_weather_correlation | 05_weather_correlation.ipynb | net=block | exit=0 | 15s | "status":"ok","code_cells":10,"cells_executed":10,
+A_05_weather_correlation: 4 file đọc, 4 file ghi, 0 lần thử mạng
+A_06_predict_aqi | 06_predict_aqi.ipynb | net=block | exit=0 | 23s | "status":"ok","code_cells":26,"cells_executed":26,
+A_06_predict_aqi: 5 file đọc, 5 file ghi, 0 lần thử mạng
+B_05_weather_correlation | 05_weather_correlation.ipynb | net=block | exit=0 | 15s | "status":"ok","code_cells":10,"cells_executed":10,
+B_05_weather_correlation: 4 file đọc, 4 file ghi, 0 lần thử mạng
+B_06_predict_aqi | 06_predict_aqi.ipynb | net=block | exit=0 | 23s | "status":"ok","code_cells":26,"cells_executed":26,
+B_06_predict_aqi: 5 file đọc, 5 file ghi, 0 lần thử mạng

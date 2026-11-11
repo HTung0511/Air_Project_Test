@@ -1,0 +1,4 @@
+bo,tap,n,ngay_nang_y>=201,Date_target_tu,Date_target_den
+baseline,train,5741,1432,2017-06-15,2019-06-30
+baseline,test,1947,389,2019-07-01,2020-02-29
+baseline,holdout,975,18,2020-03-01,2020-07-01

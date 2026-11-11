@@ -1,0 +1,14 @@
+dac_trung,City,split,so_hang,o_khac,cũ trống → tham chiếu có số,cũ có số → tham chiếu trống,khác giá trị,chenh_lon_nhat (log)
+co_0,Amritsar,train,650,25,4,0,21,0.058268908124
+co_0,Chennai,train,740,2,0,0,2,0.0295588022415
+co_0,Gurugram,train,685,4,0,0,4,0.875468737354
+co_0,Hyderabad,train,737,2,0,0,2,0.0295588022415
+co_0,Jaipur,train,716,2,0,0,2,0.270027137213
+aqi_1,Bengaluru,train,737,1,1,0,0,0.0
+aqi_1,Jaipur,train,716,1,1,0,0,0.0
+aqi_2,Bengaluru,train,737,1,1,0,0,0.0
+aqi_2,Gurugram,train,685,2,2,0,0,0.0
+aqi_2,Jaipur,train,716,1,1,0,0,0.0
+aqi_wk,Bengaluru,train,737,7,0,0,7,0.04035999404999924
+aqi_wk,Gurugram,train,685,8,0,0,8,0.46628776934000005
+aqi_wk,Jaipur,train,716,7,0,0,7,0.11729601474999996

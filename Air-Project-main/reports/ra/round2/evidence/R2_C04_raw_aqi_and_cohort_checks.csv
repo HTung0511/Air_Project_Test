@@ -1,0 +1,28 @@
+kiem_tra,gia_tri,ghi_chu
+số dòng raw của 8 thành phố,14056,
+"khóa (City, Date) trùng trong raw",0,phải bằng 0
+"ngày lịch không có dòng trong raw (8 TP, toàn chuỗi)",0,nếu > 0 thì shift theo dòng sẽ lệch ngày; script này luôn nối theo ngày lịch
+ngày bắt đầu muộn nhất trong 8 TP,2017-06-14,kỳ vọng 2017-06-14
+ngày kết thúc sớm nhất trong 8 TP,2020-07-01,kỳ vọng 2020-07-01
+dòng raw trong khoảng 14/06/2017–01/07/2020,8912,
+AQI raw thiếu (NaN) trong khoảng,174,
+AQI raw không hữu hạn (±inf),0,
+AQI raw <= 0,0,
+AQI raw > 500,42,"lớn nhất = 891; KHÔNG cắt, KHÔNG loại (RA-DEC-02 mục 2)"
+AQI raw không nguyên,0,
+"cặp (TP, ngày t) trong khoảng, trước khi xét AQI",8904,
+"  bị loại vì thiếu AQI(t), có AQI(t+1)",64,
+"  bị loại vì có AQI(t), thiếu AQI(t+1)",62,
+  bị loại vì thiếu cả hai,110,
+C_new: số mẫu,8668,
+C_new: train,5746,ngày nặng (y>=201): 1436; Date_target 2017-06-15 – 2019-06-30
+C_new: test,1947,ngày nặng (y>=201): 389; Date_target 2019-07-01 – 2020-02-29
+C_new: holdout,975,ngày nặng (y>=201): 18; Date_target 2020-03-01 – 2020-07-01
+C_old: số mẫu,8663,
+khóa chung C_old ∩ C_new,8663,
+khóa chỉ có ở C_new (thêm),5,
+khóa chỉ có ở C_old (bớt),0,
+khóa chung có nhãn y khác nhau,0,
+khóa chung có AQI(t) khác nhau,0,
+khóa chung có split khác nhau,0,
+C_old: split lưu trong file trùng split tính lại theo Date_target,True,

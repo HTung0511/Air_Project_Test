@@ -1,0 +1,16 @@
+City,H,n_bat_loi,n_thuan_loi,so_khoi_14_ngay,hieu_ung_diem_AQI,"CI_family15_lo (99,67%)","CI_family15_hi (99,67%)",KL_family15,"CI_family3_lo (98,33%)","CI_family3_hi (98,33%)",KL_family3,CI95_lo (không hiệu chỉnh),CI95_hi (không hiệu chỉnh),KL_khong_hieu_chinh,p_MannWhitney
+Delhi,H1,371,367,80,30.0,9.5829,50.25,ủng hộ,13.5,44.5,ủng hộ,16.7438,41.5,ủng hộ,0.0
+Delhi,H2,371,367,82,-5.5,-35.5,17.1671,chưa đủ bằng chứng,-28.0062,13.75,chưa đủ bằng chứng,-24.0,10.7562,chưa đủ bằng chứng,0.0733
+Delhi,H3,827,278,84,9.5,-2.1683,29.9171,chưa đủ bằng chứng,0.0,25.0854,chưa đủ bằng chứng,1.5,22.0062,ủng hộ,0.0023
+Lucknow,H1,372,370,83,6.0,-7.9171,23.5,chưa đủ bằng chứng,-5.6708,19.0854,chưa đủ bằng chứng,-3.25,17.0,chưa đủ bằng chứng,0.017
+Lucknow,H2,372,370,83,-10.5,-28.1671,4.0,chưa đủ bằng chứng,-23.6708,1.0,chưa đủ bằng chứng,-21.0,-0.5,ngược chiều dự đoán,0.0063
+Lucknow,H3,792,319,84,11.5,-2.8342,24.1671,chưa đủ bằng chứng,-1.0,22.0,chưa đủ bằng chứng,1.0,20.0,ủng hộ,0.0057
+Gurugram,H1,361,356,81,15.0,-5.5025,41.755,chưa đủ bằng chứng,-1.0,34.0,chưa đủ bằng chứng,1.0,31.0062,ủng hộ,0.0003
+Gurugram,H2,361,356,82,-8.5,-39.8354,10.5,chưa đủ bằng chứng,-33.0,8.5,chưa đủ bằng chứng,-29.0,5.2562,chưa đủ bằng chứng,0.1077
+Gurugram,H3,811,259,84,12.0,-3.6683,34.1683,chưa đủ bằng chứng,-0.3354,29.5,chưa đủ bằng chứng,2.0,26.0,ủng hộ,0.0325
+Jaipur,H1,366,365,82,-4.5,-16.5,7.6671,chưa đủ bằng chứng,-15.0,5.5,chưa đủ bằng chứng,-12.25,3.0,chưa đủ bằng chứng,0.4468
+Jaipur,H2,366,365,83,-25.0,-41.3342,-10.9975,ngược chiều dự đoán,-37.5,-13.4146,ngược chiều dự đoán,-35.0125,-15.5,ngược chiều dự đoán,0.0
+Jaipur,H3,869,224,83,17.25,7.0,30.0,ủng hộ,8.0,27.5,ủng hộ,9.75,26.0,ủng hộ,0.0
+Amritsar,H1,348,341,83,6.75,-3.1671,19.9171,chưa đủ bằng chứng,-1.5,17.0,chưa đủ bằng chứng,0.0,15.0,chưa đủ bằng chứng,0.0084
+Amritsar,H2,348,341,82,-11.0,-26.4171,7.005,chưa đủ bằng chứng,-24.0,2.8354,chưa đủ bằng chứng,-22.0,0.5,chưa đủ bằng chứng,0.0708
+Amritsar,H3,750,279,84,16.0,3.5,27.8342,ủng hộ,5.25,26.0,ủng hộ,7.25,24.0062,ủng hộ,0.0
