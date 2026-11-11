@@ -18,7 +18,17 @@ Vẫn xét tính đúng đắn và khả năng chạy của **sản phẩm kỹ 
 - Theo nhóm, 8 thành phố được chọn vì các chuỗi có khoảng thời gian gần nhau và dữ liệu tương đối đầy đủ; nhiều thành phố còn lại thiếu nhiều dữ liệu quan trắc. Ghi nhận đây là **lý do lựa chọn do tác giả cung cấp**, không tiếp tục để trạng thái “chưa có lý do”. Coverage thực tế đã có trong [V17]; bảng này không chứng minh mọi thành phố ngoài mẫu đều thiếu hơn, cũng không phải đánh giá đầy đủ số trạm khí tượng. AQI lấy qua Kaggle/CPCB, còn khí tượng trong pipeline hiện tại là Open-Meteo/ERA5, không nên gọi toàn bộ là quan trắc khí tượng từ Kaggle. [V10], [V17]
 - **Giữ ngưỡng nội suy ≤14 ngày** như quyết định thiết kế thống nhất của nhóm để quy trình trôi chảy và logic; không yêu cầu đổi ngưỡng để dự án được công nhận. Tách lý do thực hành này khỏi khẳng định “14 ngày là lựa chọn duy nhất/tối ưu về khoa học”: DA đã thử các ngưỡng khác và chúng vẫn chạy được; sensitivity không chứng minh tính duy nhất. Không cần thêm thí nghiệm nếu chỉ trình bày trung thực đây là ngưỡng dự án đã chọn. [V09], [S05]
 
-**Một yêu cầu cần làm rõ trước khi chốt đủ phạm vi:** người dùng nêu “dự đoán khí hậu tương lai từ dữ liệu cũ”. Phần DA đã kiểm hiện dự báo **AQI ngày mai**, dùng khí tượng làm biến giải thích; chưa có bằng chứng trong bộ kiểm chứng rằng đã dự báo nhiệt độ/mưa/gió tương lai. Không coi L4 (đọc khí tượng ngày mai đã xảy ra) là mô hình dự báo khí tượng. Nếu mục tiêu thật sự là dự báo các biến thời tiết, cần giao DA kiểm kê và bổ sung phần đó; nếu là dùng khí tượng để dự báo AQI, mô hình hiện tại phù hợp loại bài toán này nhưng vẫn phải sửa F01–F02. Đây là điểm làm rõ yêu cầu, chưa kết luận nhóm làm sai. [V20], [V21], [V24]
+**Đã chốt phạm vi dự báo theo README và đính chính của người dùng:** [`Air-Project-main/README.md`](../../README.md) §4 xác định NB05 phân tích tương quan thời tiết–AQI và NB06 **dự đoán AQI ngày mai, cảnh báo AQI ≥201**. Không có yêu cầu bổ sung mô hình dự báo khí hậu/thời tiết riêng trong phạm vi đã mô tả. Rút câu hỏi lựa chọn A/B và không giao DA xây thêm mô hình nhiệt độ/mưa/gió. Phần mô hình DA đã kiểm đúng loại biến đích này; việc khắc phục F01–F02 vẫn cần thiết. [V20], [V21]
+
+Mạch nội dung chính theo README:
+
+| Tiêu chí | Kết quả | Bằng chứng | Ghi chú |
+|---|---|---|---|
+| NB01–02 — làm sạch và bằng chứng làm sạch | Phạm vi đã xác định | README §4; [V01], [V08], [V09] | Dựng bảng 8 TP và giải thích quyết định missing/outlier. |
+| NB03 — EDA | Phạm vi đã xác định | README §4; [V14], [V15], [V16] | Ở đâu, khi nào, chất nào; kiểm tra độ nhạy. |
+| NB04 — tích hợp khí tượng | Phạm vi đã xác định | README §4; [V10], [V11] | Thời tiết Open-Meteo/ERA5 theo ngày, ghép với bảng AQ. |
+| NB05 — liên hệ khí tượng–AQI | Phạm vi đã xác định | README §4; [V18], [V19] | Tương quan thô/khử mùa, giả thuyết gió/lớp biên/mưa và độ ẩm khám phá; không đồng nhất tương quan với nhân quả. |
+| NB06 — dự báo AQI/cảnh báo | Phạm vi đã xác định | README §4; [V20], [V21], [V22] | AQI ngày mai, cảnh báo ≥201; baseline, L1–L3, đánh giá và sensitivity. Không phải dự báo khí hậu. |
 
 Từ đây, F03 chỉ là **cách diễn giải độ tin cậy của kết quả**, không phản đối việc thêm khí tượng/dự báo. Khả năng cảnh báo vận hành thật vẫn là bước riêng, không áp đặt hệ thống production cho đồ án. [V21], [V24]
 
@@ -45,7 +55,7 @@ P0 = cần xử lý trước khi chốt pipeline dự báo; P1 = cần xử lý 
 | **P1 / F03 — Diễn giải kết quả dự báo theo đúng phép đánh giá** | ⚠️ Bổ sung giải thích, không phải mở rộng sai phạm vi | [V21], [V22], [V24], [S01], [S06] | Holdout: hiệu MAE −1,02 [−2,70; 0,48], chưa tách khỏi baseline; không có nghĩa mô hình vô ích. Ở nhãn ≥301, recall L3 kém baseline. Không chọn lại mô hình/ngưỡng theo test để làm đẹp kết quả; không bắt buộc thắng holdout mới được công nhận kết quả test. |
 | **P1 / F04 — Hai lỗi diễn giải số học/thống kê** | ⚠️ Cần sửa ngay, không cần chạy lại EDA toàn bộ | [V16], [V18], [V19] | 2,82 là median của 5 tỷ số TP; 137,1/42,0 là tỷ số gộp 3,26, không cùng phép tính. 32/48 là q_BH<0,05, không phải CI95% đã FDR; CI95% chưa hiệu chỉnh loại 0 là 33/48. Nêu rõ Bonferroni trên 15 so sánh, không 3 toàn bảng. |
 | **P1 / F05 — Phạm vi mẫu, cơ chế thiếu và ngưỡng phải nói đúng** | ⚠️ Có bằng chứng mô tả, chưa đủ để khẳng định cơ chế/đại diện | [V08], [V14], [V17], [V26], [S05] | Lý do chọn 8 TP đã được tác giả cung cấp ở mục 1; không còn yêu cầu xác nhận lại động cơ chọn mẫu. Giữ 14 ngày là ngưỡng dự án. Phần viết bổ sung cần nêu coverage/cửa sổ, tránh gán chắc MAR/MNAR và tránh nói ngưỡng duy nhất/tối ưu; chỉ yêu cầu DA sửa benchmark nếu dùng S05 để khẳng định tối ưu. |
-| **P1 / F06 — Làm rõ biến đích của yêu cầu dự báo bổ sung** | ❓ Chờ xác nhận biến đích, không phải phản đối phạm vi | [V20], [V21], [V26] | Yêu cầu khí tượng/dự báo đã được người dùng xác nhận. Cần phân biệt dự báo AQI từ thời tiết với dự báo chính nhiệt độ/mưa/gió. Bộ DA hiện xác nhận loại thứ nhất; nếu giáo viên cần loại thứ hai, bổ sung mô hình tương ứng. Các đối chiếu rubric PM2.5/giờ cũ không tự động biến thành việc cần làm khi chưa xác nhận chúng còn áp dụng. |
+| **F06 — Biến đích và phạm vi phân tích** | ✅ Đã làm rõ, đóng câu hỏi phạm vi | README §4; [V20], [V21], [V22] | Phân tích khí tượng–AQI và dự báo AQI ngày mai/cảnh báo ≥201 là đúng mạch dự án. Không yêu cầu thêm dự báo khí hậu hoặc tự áp thêm bài toán PM2.5/giờ ngoài phạm vi đã thống nhất. Đây là đóng câu hỏi yêu cầu, không có nghĩa mọi kiểm tra kỹ thuật mô hình đã đạt. |
 
 ### Tiêu chí đóng từng vấn đề
 
@@ -56,7 +66,7 @@ P0 = cần xử lý trước khi chốt pipeline dự báo; P1 = cần xử lý 
 | F03 — RA/người viết nội dung bổ sung diễn giải | Cần thực hiện | [V21], [V22], [V24], [S01] | Kết luận phân biệt test/holdout, MAE/recall, ngưỡng201/F2/301 và nghiên cứu hồi cứu/vận hành thật; giữ cả kết quả âm. Không cần ép mọi thử nghiệm thành đạt. |
 | F04 — Người viết nội dung sửa, RA rà soát | Cần thực hiện | [V16], [V18], [V19] | Mỗi tỷ số ghi đúng tập và cách gộp; chú thích q/CI/family đúng phép kiểm. Không thay số DA để khớp câu cũ. |
 | F05 — Người viết nội dung bổ sung căn cứ thiết kế | Cần thực hiện | [V08], [V14], [V17], [S05] | Ghi lý do chọn mẫu theo giải thích của nhóm, minh họa bằng coverage hiện có; giữ 14 ngày và giải thích là lựa chọn thực hành. Cơ chế thiếu ghi là giả thuyết chưa nhận diện. Chỉ cần DA tính lại benchmark nếu muốn khẳng định ngưỡng tối ưu, không yêu cầu thử ngưỡng mới để đổi thiết kế. |
-| F06 — BA/người phụ trách phạm vi xác nhận | Cần thực hiện | [V26] | Xác nhận cần dự báo biến nào và trước bao lâu. Nếu là mưa/nhiệt độ/gió, giao DA kiểm kê mô hình dự báo các biến đó, chia thời gian và so baseline; RA không tự chạy thay DA. Nếu là AQI, giữ mục tiêu hiện tại. Không chấm slide, vấn đáp hay hình thức. |
+| F06 — Đã đóng theo README/người dùng | Không còn việc bổ sung mô hình thời tiết | README §4; [V20], [V21], [V22] | Giữ mục tiêu AQI ngày mai và cảnh báo ≥201; tập trung sửa F01–F02 và bổ sung diễn giải F03–F05. |
 
 ## 4. Những điểm không nên biến thành công việc làm lại toàn bộ
 
@@ -72,7 +82,7 @@ P0 = cần xử lý trước khi chốt pipeline dự báo; P1 = cần xử lý 
 ## 5. Chốt phạm vi hiện tại
 
 - **Không cần làm lại từ đầu:** phần dữ liệu, EDA và mô hình test có căn cứ tái lập. [V01], [V14], [V21]
-- **Chưa nên chốt “pipeline dự báo hoàn chỉnh”:** ưu tiên F01–F02; F03–F05 sửa kết luận/cơ sở phương pháp, F06 xác nhận đúng đề. [V05], [V07], [V10], [V16], [V18], [V24], [V26]
+- **Chưa nên chốt “pipeline dự báo hoàn chỉnh”:** ưu tiên F01–F02; F03–F05 bổ sung kết luận/cơ sở phương pháp; F06 đã đóng theo README và đính chính của người dùng. [V05], [V07], [V10], [V16], [V18], [V24], [V26]
 - **Không lấy phần chưa làm ngoài kỹ thuật làm lý do đánh trượt:** Phần 4–5 và mọi tiêu chí slide/trình bày/vấn đáp được tạm bỏ khỏi kết luận này. Các tài liệu vòng trước chỉ giữ như lịch sử đánh giá, không dùng tổng 54 tiêu chí cũ để kết luận mức sẵn sàng hiện tại.
 
 ## Nguồn bằng chứng DA
