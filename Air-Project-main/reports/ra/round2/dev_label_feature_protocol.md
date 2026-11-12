@@ -67,7 +67,7 @@ Chỉ đánh giá được những ngày có nhãn. Đây là giới hạn về 
 | Jaipur | 05/02/2018 | 153 → 305 | AQI(*t*+1), tức nhãn |
 | Jaipur | 06/02/2018 | 305 → 291 | AQI(*t*) |
 
-Cả 5 ô AQI bị xoá đều mang cờ `suspect_sensor_error` của nhánh hồi cứu. Giữ chúng không có nghĩa là khẳng định chúng đúng.
+Đứng sau 5 mẫu này là 4 ô AQI mà bảng sạch hồi cứu đã xoá: ô của Jaipur ngày 06/02/2018 vừa là nhãn của mẫu 05/02 vừa là AQI(*t*) của mẫu 06/02. Cả 4 ô mang cờ `suspect_sensor_error` của nhánh hồi cứu (mục 5). Giữ chúng không có nghĩa là khẳng định chúng đúng.
 
 ## 3. Đặc trưng as-of *t*
 

@@ -22,7 +22,7 @@ Tài liệu đi kèm: [`dev_label_feature_protocol.md`](dev_label_feature_protoc
 | F01: nhãn, mẫu | 8.668 mẫu; thêm 5 mẫu train so với đường cũ, mất 0; test và 03–07/2020 giữ nguyên khoá và nhãn | `dev_evidence/chains/nb06_only/nb06_outputs/nb06_cohort_keys.csv`, `nb06_cohort_diff.csv`; [mục 5](#5-nhãn-mẫu-chia-tập-baseline-có-đổi-không) | **Có đổi nhãn và mẫu**, theo RA-DEC-02 |
 | F01: ba phép so bắt buộc | Đã có trong NB06 (Phần I) và trong test | `nb06_path_comparison.csv`, `nb06_path_comparison_paired.csv` | 18/18 khoảng 95% của hiệu MAE chứa 0 |
 | NEW-002: `investigate` lỗi khi chuỗi chưa có khí | Đã sửa; kết quả trên dữ liệu đủ trùng bản gốc | [D09](#D09) | |
-| Nhánh làm sạch và EDA giữ nguyên | NB01, NB02, NB03, NB05 chạy lại cho output dạng chữ trùng bản đã commit; không file nào trong `data/` đổi | `dev_evidence/compare/*_committed_vs_rerun.md`; [mục 9](#9-tương-thích-với-nhánh-eda-và-cách-quay-lui) | |
+| Nhánh làm sạch và EDA giữ nguyên | NB01, NB02, NB03, NB05 chạy lại: 0 con số khác so với output đã commit (các dòng khác còn lại: [mục 7](#7-kiểm-thử-đã-chạy-và-chưa-chạy)); không file nào trong `data/` của repo đổi | `dev_evidence/compare/*_committed_vs_rerun.md`; [mục 9](#9-tương-thích-với-nhánh-eda-và-cách-quay-lui) | |
 | Toàn bộ kiểm thử | 211 ca: 210 đạt, 1 bỏ qua (API thật); mã thoát 0 | `dev_evidence/pytest/pytest_full.log`, `junit.xml`; [D12](#D12) | |
 
 ## 2. Commit, nhánh, PR, môi trường
@@ -31,7 +31,7 @@ Tài liệu đi kèm: [`dev_label_feature_protocol.md`](dev_label_feature_protoc
 |---|---|
 | Nhánh | `arena/5cb21c04-air-project-test`, tách từ `cd719cf7f8aa43529df953e860f9cc5f45d963ee` (commit tài liệu của RA) |
 | **Commit mã để DA kiểm** | **`a9757af398ddac2f8536e8019e4eb6b5900b4f75`** |
-| Commit tài liệu và bằng chứng | commit chứa file này, nằm ngay sau `a9757af`. Nó chỉ thêm `reports/ra/round2/dev_*`; không đổi `src/`, `notebooks/`, `tools/`, `tests/`, `data/`, `reports/figures/` |
+| Commit tài liệu và bằng chứng | các commit sau `a9757af` trên nhánh này (SHA ghi ở PR #4 và tin HANDOFF). Chúng chỉ thêm hoặc sửa file dưới `reports/ra/round2/dev_*`; không đổi `src/`, `notebooks/`, `tools/`, `tests/`, `data/`, `reports/figures/` |
 | PR | [#4](https://github.com/HTung0511/Air_Project_Test/pull/4) → `main`. Chưa merge; Dev không tự merge |
 | Diff riêng của Dev | [`cd719cf...a9757af`](https://github.com/HTung0511/Air_Project_Test/compare/cd719cf7f8aa43529df953e860f9cc5f45d963ee...a9757af398ddac2f8536e8019e4eb6b5900b4f75): 31 file, +8.152 / −1.204 dòng |
 | Môi trường | Python 3.11.2, Linux x86_64, 2 CPU, 3,8 GB RAM; numpy 2.4.6, pandas 3.1.1, scipy 1.17.1, scikit-learn 1.9.1, statsmodels 0.15.0, matplotlib 3.11.2; đủ 66 gói trong `requirements-lock.txt` |
@@ -45,7 +45,7 @@ PR #4 so với `main` còn chứa 9 commit tài liệu kế thừa của BA và 
 | `024080d` | Ghi mọi lần che và điền (NB06) và mọi ô thời tiết khác bản đã commit (NB04) thành file output |
 | `79c95ed` | `adopt_outputs.py`: cách kernel cắt đoạn `print` không còn bị coi là khác output |
 | `75c69dd` | NB06: nói đúng nguồn gốc 81 mẫu dùng CO = 0; gắn hai số đếm vào snapshot |
-| `a9757af` | Chỉ thêm test: 8 ca cache hỏng ở mức notebook; 8 ví dụ viết tay theo RA-DEC-02 và RA-DEC-03 |
+| `a9757af` | Chỉ thêm test: 8 ca cache hỏng ở mức notebook; 8 ví dụ viết tay theo RA-DEC-02 và RA-DEC-03. Kèm một dòng mô tả marker trong `pytest.ini` |
 
 Tree git ở `a9757af` (lệnh `git rev-parse a9757af:Air-Project-main/<thư mục>`): `src` `e5a4c8b8`, `notebooks` `ae2f28b2`, `tools` `fad8f903`, `tests` `51a7d6c0`, `data` `6e5d738d`, `reports/figures` `ac648ae1`. Tree `data` trùng định danh baseline `6e5d738d` trong giao thức của DA: không file dữ liệu nào bị đổi.
 
@@ -62,6 +62,13 @@ bash reports/ra/round2/dev_evidence/run_evidence.sh /tmp/air-venv/bin/python /tm
 ```
 
 Lần chạy của Dev: ngày 12/11/2026, cây làm việc sạch ở `a9757af`, kết quả trong `dev_evidence/`. Mã thoát từng bước nằm ở `dev_evidence/steps.tsv`; **cả 21 bước thoát 0**.
+
+Hai điều cần biết khi chạy lại:
+
+- Ở lần chạy đó hai script chưa nằm trong cây git; chúng được commit cùng tài liệu, sau `a9757af`. Nội dung trùng bản trong `dev_evidence/`: sha256 của hai script ghi ở `environment.txt`.
+- Chạy lệnh trên ở một commit tài liệu thì `environment.txt` ghi SHA của commit đó. Mã được chạy vẫn là mã của `a9757af`, vì các tree `src`, `notebooks`, `tools`, `tests`, `data`, `reports/figures` trùng nhau (mục 2).
+
+Dev đã thử đúng trường hợp thứ hai: chạy lệnh trên từ một bản checkout sạch của commit tài liệu `9273507`, đặt ở thư mục khác, ngày 12/11/2026 (kết quả không lưu trong repo). 21/21 bước thoát 0; 210 ca đạt, 1 bỏ qua. 51 trên 100 file bằng chứng trùng từng byte với bản trong `dev_evidence/`, gồm cả 43 bảng `.csv`. 49 file còn lại chỉ khác ở đường dẫn, SHA commit, tên nhánh, giờ chạy, thời lượng, thứ tự các dòng thời lượng trong log pytest, và sha256 của những file có ghi giờ chạy (notebook đã chạy, `nb04_manifest.json`).
 
 | Bước trong `steps.tsv` | Lệnh (chạy từ `Air-Project-main/`) | Mã thoát | Log |
 |---|---|---|---|
@@ -86,7 +93,7 @@ Chạy riêng từng phần:
 ```bash
 cd Air-Project-main
 python -m pytest -q                         # toàn bộ, khoảng 6 phút
-python -m pytest -q -m "not notebook"       # bỏ các test chạy notebook thật, khoảng 1,5 phút
+python -m pytest -q -m "not notebook"       # bỏ các test chạy notebook thật, khoảng 2 phút
 python tools/run_chain.py --work /tmp/w --notebooks 04,05,06 --weather nb04    # NB04 -> NB05 -> NB06 trong một bản sao, chặn mạng
 ```
 
@@ -167,12 +174,13 @@ Số ô của notebook đếm từ 0; `id` là mã ô trong file `.ipynb`.
 | Mục | Nội dung |
 |---|---|
 | File | `Requirements.txt`, `requirements-lock.txt` (mới), `pytest.ini` (mới), `.gitignore` (mới) |
-| Trước | `Requirements.txt` có 10 dòng không ghi phiên bản, `statsmodels` lặp hai lần. Không có file lock. Notebook gốc ghi Python 3.14.7; phiên bản thư viện của tác giả không được ghi ở đâu |
+| Trước | `Requirements.txt` có 10 dòng không ghi phiên bản, `statsmodels` lặp hai lần. Không có file lock. Metadata của NB04, NB05, NB06 gốc ghi Python 3.14.7, của NB01–NB03 ghi 3.12.3; phiên bản thư viện của tác giả không được ghi ở đâu |
 | Sau | `Requirements.txt` ghim 12 thư viện dùng trực tiếp. `requirements-lock.txt` ghim đủ 66 gói (kết quả `pip freeze`, Python 3.11.2, pip 26.3). `jupyter` không nằm trong môi trường đã kiểm nên không ghim, chỉ ghi chú cách cài thêm |
 | Kiểm thử | Cài file lock vào venv mới: `pip freeze` trùng file lock (`environment_vs_lock.diff`), `pip check` không báo xung đột |
 | Đối chứng môi trường | NB06 **gốc** (mã và dữ liệu của `cd719cf`) chạy lại trong môi trường này: 26/26 ô mã, 0 con số khác so với output tác giả đã commit; 5 dòng khác đều là dấu `\` và `/` trong đường dẫn hình (`compare/nb06_author_outputs_vs_original_code_rerun.md`). Vậy các con số đổi ở NB06 mới là do mã và mẫu, không do môi trường |
 | Chưa làm | Không tái lập môi trường của tác giả |
-| Ghi chú | Phiên bản các thư viện dùng trực tiếp trùng với môi trường baseline ghi ở mục 2 trong giao thức của DA |
+| Thử thêm, ngoài `dev_evidence/` | Dev cài `Requirements.txt` (không dùng file lock) vào một venv mới bằng pip 23.0.1 của Python 3.11.2, ngày 12/11/2026: thoát 0, `pip check` không báo xung đột, 66 gói trùng phiên bản với file lock. File này không ghim thư viện phụ thuộc gián tiếp nên kết quả có thể đổi theo thời gian |
+| Ghi chú | 11 trong 12 thư viện ghim ở `Requirements.txt` (mọi thư viện trừ `pytest`) trùng phiên bản với môi trường baseline ở mục 2 của giao thức DA. Cả 63 gói trong `evidence/R2_B01_pip_freeze_venv_da.txt` của DA (commit `13e93ae`) có cùng phiên bản trong `requirements-lock.txt`; file lock của Dev có thêm `pytest`, `pluggy`, `iniconfig` |
 
 <a id="D06"></a>
 ### D06 — Đường dự báo từ raw: `src/forecast_utils.py` (F01)
@@ -263,8 +271,8 @@ Kiểm thử: `tests/test_tools.py` (4 ca) và toàn bộ `tests/test_notebooks_
 | Trước | NB04 của tác giả không có output. NB06 và 5 hình mang kết quả của đường cũ |
 | Sau | Cả hai notebook mang output của một lần chạy trọn trong bản sao, môi trường ghim, chặn mạng (NB04: 26 output; NB06: 56 output). 5 hình là hình do lần chạy NB06 đó ghi |
 | Kiểm thử | Bước `committed_outputs_nb04`, `committed_outputs_nb06`: chạy lại ở `a9757af` cho output trùng bản trong repo, kể cả ảnh nhúng. Bước `figures`: 5 hình trong repo trùng từng byte với hình do lần chạy lại ghi. Hai test `test_nb04_rerun_…` và `test_nb06_rerun_reproduces_the_outputs_committed_in_the_notebook` |
-| So với hình cũ | `model_05` (Phần G) trùng từng điểm ảnh với hình cũ. `model_01`–`model_04` khác từ 0,15% đến 5,9% số điểm ảnh (`compare/nb06_figures_old_vs_new.tsv`). Hai chỗ Dev đã xem bằng mắt: chú thích của hình 1 ghi n = 5.746 thay cho 5.741; tiêu đề hình 4 ghi 78% thay cho 77% báo đúng |
-| Chưa làm | 16 hình của NB01–NB03 và NB05 trong repo vẫn là bản của tác giả. Chạy lại trong môi trường này thì 14 hình khác byte (`chains/eda/chain_summary.json`, mục `report_files_rewritten_in_copy`); Dev không so nội dung các hình đó |
+| So với hình cũ | `model_05` (Phần G) trùng từng điểm ảnh với hình cũ. `model_01`–`model_04` khác từ 0,15% đến 5,9% số điểm ảnh (`compare/nb06_figures_old_vs_new.tsv`). Dev đã xem bằng mắt cả bốn cặp hình. Hình 1: chú thích ghi n = 5.746 thay cho 5.741; các chấm và đường lệch nhẹ; tiêu đề như cũ. Hình 4: tiêu đề ghi 78% thay cho 77% báo đúng; các đường cong lệch nhẹ; chú thích như cũ. Hình 2 và hình 3: mọi chữ và số in trên hình như cũ; chỗ khác là vị trí đầu cột và nhãn số (hình 2 thêm các vạch trục), lệch cỡ một điểm ảnh |
+| Chưa làm | 16 hình của NB01–NB03 và NB05 trong repo vẫn là bản của tác giả. Chạy lại trong môi trường này thì 14 hình khác byte (`chains/eda/chain_summary.json`, mục `report_files_rewritten_in_copy`). Dev đo tay trên bản sao của chuỗi `eda` (không nằm trong `dev_evidence/`): 4 hình `corr_*` trùng từng điểm ảnh; 10 hình còn lại (6 hình `eda_*`, `fill_strategies_*`, 2 hình `missing_*`, `outliers_*`) khác từ 3,6% đến 9,3% số điểm ảnh. Dev mới xem bằng mắt một cặp, `eda_01_poor_share_city.png`: chữ và số như nhau; khác ở phông chữ của dòng nguồn và ở vị trí khung hình, lệch vài điểm ảnh. ❓ Chín cặp còn lại chưa được xem |
 
 <a id="D12"></a>
 ### D12 — Bộ kiểm thử
@@ -340,7 +348,7 @@ Số dòng validation dùng để chọn ngưỡng: 4.592 (1.193 ngày nặng) t
 | Python khác 3.11.2; hệ điều hành khác Linux | ❓ Không đủ bằng chứng | — | Không có trong sandbox |
 | Chạy notebook bằng giao diện Jupyter | Chưa chạy | — | Chỉ chạy bằng nbclient |
 
-**Về phép đối chiếu sơ bộ.** Sau khi khoá mã ở `75c69dd`, Dev đọc giao thức và công cụ DA đã công bố ở `13e93ae`, rồi chạy chính mã tham chiếu của DA (`r2_ref_asof.py`, `r2_protocol.py`, không import `src/`) để so với mã Dev: 9 đặc trưng trên toàn bộ 14.056 dòng raw; tập khoá, AQI(*t*), nhãn và split; 67 hàng kỳ vọng viết tay của hai bộ ca biên, gồm bộ raw bị xoá dòng; và alpha, ngưỡng, MAE, RMSE, R², số đếm cảnh báo, hiệu MAE kèm khoảng 95% do bộ máy tính metric của DA tính trên bảng mẫu của Dev. Tất cả khớp. Sau khi đọc các tài liệu đó, Dev **chỉ thêm test** (commit `a9757af`); `src/`, notebook và công cụ không đổi. Mục đích là báo sớm nếu hai bên hiểu khác nhau; kết luận thuộc về DA.
+**Về phép đối chiếu sơ bộ.** Sau khi khoá mã ở `75c69dd`, Dev đọc giao thức và công cụ DA đã công bố ở `13e93ae`, rồi chạy chính mã tham chiếu của DA (`r2_ref_asof.py`, `r2_protocol.py`, không import `src/`) để so với mã Dev: 9 đặc trưng trên toàn bộ 14.056 dòng raw; tập khoá, AQI(*t*), nhãn và split; 67 hàng kỳ vọng viết tay của hai bộ ca biên, gồm bộ raw bị xoá dòng; và alpha, ngưỡng, MAE, RMSE, R², số đếm cảnh báo, hiệu MAE kèm khoảng 95% do bộ máy tính metric của DA tính trên bảng mẫu của Dev. Tất cả khớp. Sau khi đọc các tài liệu đó, Dev **chỉ thêm test** và sửa một dòng mô tả marker trong `pytest.ini` (commit `a9757af`); `src/`, notebook và công cụ không đổi. Mục đích là báo sớm nếu hai bên hiểu khác nhau; kết luận thuộc về DA.
 
 ## 8. Chưa làm và giới hạn
 
@@ -361,7 +369,7 @@ Số dòng validation dùng để chọn ngưỡng: 4.592 (1.193 ngày nặng) t
 | `01_cleaning`, `02_cleaning_evidence`, `03_eda`, `05_weather_correlation`; `model_utils.py`, `eda_utils.py`, `utils.py`, `gap_utils.py` | Không đổi | `git diff --stat cd719cf a9757af` | |
 | `pipeline.py` | Đổi 2 chỗ (D09); kết quả trên dữ liệu thật như cũ | `test_pipeline_guard.py` | |
 | `corr_utils.py` | Đường dẫn bảng thời tiết lấy từ `data_paths`; mặc định vẫn là file cũ | D02 | |
-| NB01–NB03, NB05 chạy lại | Output dạng chữ và số hình trùng bản đã commit | `test_retrospective_notebooks_still_reproduce_the_committed_outputs` | |
+| NB01–NB03, NB05 chạy lại | Output dạng chữ và số hình trùng bản đã commit | `test_retrospective_notebooks_still_reproduce_the_committed_outputs` | Phép so lấy stdout và bảng in; bỏ stderr và các dòng ghi đường dẫn của máy chạy, file đọc/ghi, phiên bản; coi `\` như `/` trong đường dẫn; hình chỉ được đếm. Các dòng khác khi so nguyên văn: mục 7 |
 | Bảng sạch do NB01 ghi lại trong bản sao | Khác byte so với bản đã commit; phép kiểm tự động khẳng định mọi ô lệch không quá 1e-9 | `test_retrospective_cleaning_reproduces_committed_table`; `chains/eda/chain_summary.json` | Dev đo tay trên bản sao của chuỗi `eda`: 680 ô số khác, lệch lớn nhất 1,1e-13, tất cả là ô nội suy (cờ `_was_missing`); vị trí NaN và mọi cột không phải số trùng nhau. `pipeline.py` chỉ đổi hai chỗ ở D09 và hàm đó cho kết quả như cũ, nên độ lệch này không do bản sửa. Các bảng NB01 ghi vào `reports/` trùng từng byte |
 
 Quay lui toàn bộ: `git revert` sáu commit của Dev theo thứ tự ngược. Quay lui riêng NB06 và NB04 về bản gốc:
@@ -379,12 +387,14 @@ Dev không sửa các file dưới đây. Nội dung nên chờ số đã đư�
 
 | File, vị trí | Hiện ghi | Thực tế sau bản sửa |
 |---|---|---|
-| `README.md` dòng 31; `docs/CHECKLIST_KIEM_CHUNG.md` CK-2.4, CK-4.7 | `pip install -r Requirements.txt`; danh sách thư viện có `jupyter`; lệnh kiểm `jupyter nbconvert --execute` | `Requirements.txt` vẫn cài được và nay ghim 12 thư viện. Muốn đúng môi trường đã kiểm thì cài `requirements-lock.txt` trên Python 3.11.2. `jupyter` và `nbconvert` không nằm trong môi trường đó; notebook được chạy bằng `tools/run_notebook.py` và `tools/run_chain.py` |
-| `README.md` dòng 20, 42; `Data_dictionary.md` dòng 57, 78, 79; `Metadata.json` dòng 131, 132; `reports/cleaning_log_8cities.md` dòng 20, 44 | NB04 tạo hai file trong `data/processed/` | NB04 ghi output mới vào `outputs/nb04/`. Hai file trong `data/processed/` là baseline đã commit, không bị ghi đè |
+| `README.md` dòng 31; `docs/CHECKLIST_KIEM_CHUNG.md` CK-2.4, CK-4.7, dòng 153 và 238 | `pip install -r Requirements.txt`; danh sách thư viện có `jupyter`; lệnh kiểm `jupyter nbconvert --execute` | `Requirements.txt` nay ghim 12 thư viện, không còn `jupyter`; cài thử ngày 12/11/2026 thì được (D05). Muốn đúng môi trường đã kiểm thì cài `requirements-lock.txt` trên Python 3.11.2. Hai gói `jupyter` và `nbconvert` không được cài ở môi trường đó nên `jupyter nbconvert` báo không tìm thấy lệnh; notebook được chạy bằng `tools/run_notebook.py` và `tools/run_chain.py` |
+| `README.md` dòng 20, 42; `reports/cleaning_log_8cities.md` dòng 20, 44 | NB04 tạo và lưu bảng thời tiết trong `data/processed/` | NB04 ghi output mới vào `outputs/nb04/`. Hai file trong `data/processed/` là baseline đã commit, không bị ghi đè |
+| `Data_dictionary.md` dòng 57, 78, 79; `Metadata.json` dòng 131, 132 | Liệt kê hai file thời tiết trong `data/processed/` là file đầu ra, kèm quy mô | Quy mô ghi ở đó vẫn đúng với baseline đã commit (16.128 × 16 và 14.056 × 54). Nên ghi thêm rằng đó là baseline, còn output mới của NB04 nằm ở `outputs/nb04/` |
 | `README.md` dòng 20 | "12 cột thời tiết" | Bảng ghép có 14 cột thời tiết (các tài liệu khác và NB04 đều ghi 14). Sai khác này có từ trước vòng sửa |
 | `README.md` dòng 46 | `05` và `06` cần kết quả của `04`; `04` cần mạng ở lần chạy đầu | `04` không cần mạng khi 8 cache đã có trong repo. `05` và `06` mặc định đọc baseline đã commit. `06` đọc raw, không cần chạy `01` trước |
-| `README.md` dòng 35 | Chạy từng notebook bằng *Restart & Run All* | Vẫn chạy được. Nên biết: chạy `01` trong repo sẽ ghi lại `data/processed/air_quality_8cities.csv`. `tools/run_chain.py` chạy trong bản sao |
-| `README.md` dòng 44; `docs/CHECKLIST_KIEM_CHUNG.md` CK-3.13, CK-4.6 | Chống rò rỉ bằng `mask_interp` và `make_features(as_of=…)` | NB06 dùng `forecast_utils`: đặc trưng và nhãn từ raw, as-of *t*; phép thử cắt và làm nhiễu đi từ raw |
+| `README.md` dòng 35 | Chạy từng notebook bằng *Restart & Run All* | Cả sáu notebook vẫn chạy trọn từ ô đầu đến ô cuối với kernel mới; Dev kiểm bằng `nbclient`, không qua giao diện Jupyter. Nên biết: chạy `01` trong repo sẽ ghi lại `data/processed/air_quality_8cities.csv`. `tools/run_chain.py` chạy trong bản sao |
+| `docs/CHECKLIST_KIEM_CHUNG.md` CK-3.13, CK-4.6 | Chống rò rỉ bằng `mask_interp` và phép kiểm `as_of` | NB06 dùng `forecast_utils`: đặc trưng và nhãn từ raw, as-of *t*; phép thử cắt và làm nhiễu đi từ raw |
+| `README.md` dòng 44 | Kết quả của `06` là 5 hình `model_01`–`model_05` | `06` còn ghi các bảng vào `outputs/nb06/` (không commit) |
 | Mọi chỗ dẫn số của NB06 | Số của đường cũ | Bảng ở mục 6, sau khi DA kiểm |
 | Mọi chỗ dùng hình `model_01`–`model_04` | Hình cũ | Hình đã đổi (D11) |
 
