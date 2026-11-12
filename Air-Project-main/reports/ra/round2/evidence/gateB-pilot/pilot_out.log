@@ -1,0 +1,12 @@
+[load] raw=(14056, 8) weather=(16128, 16)  t=0.06s
+[cuts-chosen-blind] t1(flatline)=2017-06-16 t2(gap)=2018-01-01 t3(normal)=2019-02-01
+[cohort] total=8668 by_split={'lockdown': 975, 'test': 1947, 'train': 5746}  t=0.097s
+[cutoff] t1_flatline 2017-06-16: rows=5168 time=0.0464s
+[cutoff] t2_gap 2018-01-01: rows=6760 time=0.0487s
+[cutoff] t3_normal 2019-02-01: rows=9928 time=0.0530s
+[fixture-small] asof_pollutant (value/flat/run):
+  A,0,0,0,B: val=[5.0, 0.0, 0.0, nan, 7.0] flat=[False, False, False, True, False] run=[0, 1, 2, 3, 0]
+  A,0,0,NaN,0,B: val=[5.0, 0.0, 0.0, 0.0, 0.0, 7.0] flat=[False, False, False, False, False, False] run=[0, 1, 2, 0, 1, 0]
+  A,0,0,0,NaN,NaN,B: val=[5.0, 0.0, 0.0, nan, nan, nan, 7.0] flat=[False, False, False, True, False, False, False] run=[0, 1, 2, 3, 0, 0, 0]
+[TOTAL pilot] 0.34s
+CUT_RESULTS_JSON={"t1_flatline": ["2017-06-16", 5168, 0.0464], "t2_gap": ["2018-01-01", 6760, 0.0487], "t3_normal": ["2019-02-01", 9928, 0.053]}

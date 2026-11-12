@@ -39,9 +39,15 @@ Không merge/đóng PR. Không sửa mã Dev. Mọi số dưới đây là kết
 - `AUDIT-RA` 47 artifact SHA256 khớp, 327 dòng baseline trong dung sai, 8.668 khóa cohort khớp, 3 ca as-of nhỏ phù hợp.
 - GateA ở trên MỚI là kết quả DA tự đo (F02 I/O + offline). F01/F02 chưa đóng; tiêu chí không đổi để khớp số Dev.
 
-## 5. Dừng — GateB/GateC CHƯA chạy (chờ duyệt)
-- Chưa chạy GateB (F01), chưa chạy GateC, chưa chạy toàn bộ pytest hay chuỗi NB01→06.
-- Đề xuất GateB (sẽ trình riêng để duyệt): fixture 14 hàng (T2.4) + rebuild cohort từ raw (T2.2/T3) + walk-forward cắt tại 1.114 ngày hoặc tập thay thế 17+ mốc (T2.3) + perturb 47 ngày × loại (T2.3) + T2.5. Ngân sách dự kiến: vài phút đến vài chục phút tuỳ có dùng tập thay thế; giữ nguyên env đã cài.
+## 5. GateB-pilot (ĐÃ CHẠY — dừng, chờ duyệt GateB đầy đủ)
+- Pilot tái dụng venv, chạy trên `a9757af`. Đo chi phí; **KHÔNG** full 1.113 ngày, **KHÔNG** 47×mọi perturb, **KHÔNG** T2.5 nặng. Tổng 0,34 s (giới hạn 5 p).
+- Cohort rebuild độc lập: **8.668** (train 5.746 / test 1.947 / lockdown 975) — khớp claim Dev (`5746/1947/975`).
+- Cutoff cost: **~0,05 s/cut (hằng số, ~9 µs/hàng)** tại 3 mốc mù (gần flatline, gần gap, normal).
+- Ước tính GateB đầy đủ: T2.2 full 1.113 ngày ≈ **1,5 phút**; T2.3 47 ngày × 4 kiểu perturb ≈ vài phút; T2.4 (14 fixture/67 hàng) <1 p; T2.5 param-invariance <1 p. **Tổng ~5–10 phút** (chưa metric A–D/CI — GateC).
+- Fixture nhỏ: `asof_pollutant` khớp protocol (ngày 1–2 giữ 0, ngày 3 mask; NaN đứt chuỗi).
+- **"fixture 14" = 14 tình huống fixture / 67 hàng** (RA-DEC-03), KHÔNG phải 14 hàng; coverage đầy đủ 14/67 dành cho GateB chính (không thu nhỏ).
+- Bằng chứng: `evidence/gateB-pilot/` (`pilot_results.md`, `pilot_gateB.py`, `pilot_out.log`).
+- Đề xuất GateB đầy đủ (chờ bạn duyệt): **FULL walk-forward 1.113 ngày** (đo ~0,05 s/cut ≪ ngưỡng 6 s → bỏ tập thay thế 17 mốc, giữ làm dự phòng); T2.3 47 ngày × 4 kiểu (NaN/0/×10/hoán vị); T2.4 đủ 14/67; T2.5 chỉ bất biến tham số, không train lại.
 
 ## 6. Log paths (scratch, không commit)
 - `/tmp/da_gateA_run.log` — stdout chain GateA.
