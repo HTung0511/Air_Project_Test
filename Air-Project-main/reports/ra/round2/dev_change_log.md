@@ -406,7 +406,18 @@ Dev không sửa các điểm dưới đây vì chúng nằm ở nhánh hồi c�
 **NEW-R2-001 — Hai trong 41 ô "nghi lỗi cảm biến" không phải số đo.** `reports/suspect_points_8cities.csv` có 93 dòng: 41 dòng "đặt NaN" và 52 dòng "giữ nguyên". Ở 2 trong 41 dòng "đặt NaN", raw không có giá trị: PM2.5 của Amritsar ngày 09/05/2017 (`value_original` 850,7) và của Bengaluru ngày 07/07/2017 (256,0). Trong `pipeline.clean_city`, luật nghi lỗi chạy **sau** bước nội suy, nên giá trị bị coi là nghi lỗi rồi bị xoá ở hai ô này là số do nội suy tạo ra, không phải số đo. Ngoài ra `value_original` là giá trị đã làm tròn một chữ số thập phân: ở 39 dòng còn lại nó bằng raw sau khi làm tròn, và chỉ trùng raw từng chữ số ở 22 dòng. Ảnh hưởng: câu "41 ô nghi lỗi (22 PM2.5 + 19 AQI)" ở `reports/cleaning_log_8cities.md` dòng 34 và tên cột `value_original`. Đường dự báo không bị ảnh hưởng. Bằng chứng: `dev_evidence/pytest/suspect_cells_without_raw_observation.csv`, `suspect_cells_observed_vs_interpolated.csv`.
 
 <a id="NEW-R2-002"></a>
-**NEW-R2-002 — Ba con số của giả thuyết H1 ở NB05 đổi khi tốc độ gió lệch 0,01.** Với bảng thời tiết do NB04 tạo lại (852 ô lệch tối đa 0,01, D03), bảng kiểm giả thuyết của NB05 đổi ở ba chỗ: cận trên khoảng 99,67% của Gurugram 41,8 thành 42,1; của Jaipur 7,7 thành 7,2; p Mann-Whitney (tham khảo) của Jaipur 0,447 thành 0,386. Hiệu ứng, cỡ nhóm và cả 15 kết luận không đổi. Nguyên nhân có thể là nhóm "gió yếu" và "gió mạnh" chia theo phân vị ba của `wind_speed_mean`, nên lệch 0,01 đủ để vài ngày đổi nhóm; Dev chưa kiểm trực tiếp điều này. Bằng chứng: `dev_evidence/compare/nb05_baseline_weather_vs_nb04_weather.md`.
+**NEW-R2-002 — Ba con số của giả thuyết H1 ở NB05 đổi khi tốc độ gió lệch 0,01.** Với bảng thời tiết do NB04 tạo lại (852 ô lệch tối đa 0,01, D03), bảng kiểm giả thuyết của NB05 đổi ở ba chỗ: cận trên khoảng 99,67% của Gurugram 41,8 thành 42,1; của Jaipur 7,7 thành 7,2; p Mann-Whitney (tham khảo) của Jaipur 0,447 thành 0,386. Hiệu ứng, cỡ nhóm và cả 15 kết luận không đổi. Bằng chứng: `dev_evidence/compare/nb05_baseline_weather_vs_nb04_weather.md`.
+
+Nguyên nhân, do Dev đo tay ngày 12/11/2026 (không nằm trong `dev_evidence/`): `corr_utils.tertile_in_strata` chia ba nhóm theo hạng của `wind_speed_mean` trong từng (thành phố, tháng); hai ngày bằng giá trị thì ngày đứng trước nhận hạng thấp hơn. Ở mỗi thành phố có đúng một cặp ngày đổi chỗ cho nhau qua ranh giữa nhóm "thấp" và nhóm "giữa":
+
+| Thành phố | Ngày | Tốc độ gió, baseline → NB04 tạo lại | Nhóm, baseline → NB04 tạo lại |
+|---|---|---|---|
+| Gurugram | 20/10/2017 | 1,73 → 1,73 | giữa → thấp |
+| Gurugram | 16/10/2019 | 1,72 → 1,73 | thấp → giữa |
+| Jaipur | 04/01/2019 | 2,04 → 2,04 | thấp → giữa |
+| Jaipur | 31/01/2020 | 2,04 → 2,03 | giữa → thấp |
+
+Phép kiểm H1 so nhóm "thấp" với nhóm "cao", nên mỗi thành phố có một ngày của nhóm "thấp" bị thay bằng ngày khác. AQI đã bỏ chu kỳ mùa và khối bootstrap của mọi ngày giống nhau ở hai lần tính, nên ba con số đổi là do bốn ngày này. Tính trên các ngày có AQI của khoảng chung, Gurugram có 17 ô tốc độ gió khác và Jaipur có 14. Delhi, Lucknow và Amritsar có 11, 17 và 6 ô khác nhưng không ngày nào đổi nhóm, và kết quả H1 của ba thành phố này không đổi.
 
 ## 12. Danh mục bằng chứng
 
