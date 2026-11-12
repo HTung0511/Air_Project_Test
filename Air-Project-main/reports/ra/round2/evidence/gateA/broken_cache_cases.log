@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.2.0, pluggy-1.7.0 -- /tmp/da_venv_dev/bin/python
+rootdir: /tmp/devroot/Air-Project-main
+configfile: pytest.ini
+plugins: platformdirs-4.14.5
+collecting ... collected 8 items
+
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[thi\u1ebfu 1 cache] PASSED [ 12%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[thi\u1ebfu c\u1ea3 8 cache] PASSED [ 25%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[c\u1ee5t 24 gi\u1edd cu\u1ed1i] PASSED [ 37%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[thi\u1ebfu c\u1ed9t l\u1edbp bi\xean] PASSED [ 50%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[\u0111\u1ed5i t\xean m\u1ed9t c\u1ed9t b\u1eaft bu\u1ed9c] PASSED [ 62%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[tr\xf9ng gi\u1edd] PASSED [ 75%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[gzip h\u1ecfng] PASSED [ 87%]
+tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[cache k\u1ebft th\xfac s\u1edbm] PASSED [100%]
+
+============================== 8 passed in 27.21s ==============================
