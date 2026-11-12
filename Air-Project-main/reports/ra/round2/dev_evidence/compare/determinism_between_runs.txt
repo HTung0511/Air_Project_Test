@@ -1,0 +1,59 @@
+$ (so từng byte các file output giữa các lần chạy; mã nằm trong run_evidence.sh)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:54Z
+# Bắt buộc trùng từng byte
+TRÙNG  output NB06 'nb06_alerts_test.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_cohort_diff.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_cohort_keys.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_feature_diff_cells.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_masked_cells.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_masking_summary.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_path_comparison.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_path_comparison_paired.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_predictions.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_retention.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_run_summary.json': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_snapshot_checks.csv': lần chạy trong pytest == chuỗi nb06_only
+TRÙNG  output NB04 'weather_daily_8cities.csv': chuỗi baseline == chuỗi nb04
+TRÙNG  output NB04 'air_quality_8cities_weather.csv': chuỗi baseline == chuỗi nb04
+TRÙNG  output NB04 'nb04_vs_committed_cells.csv': chuỗi baseline == chuỗi nb04
+TRÙNG  output NB04 'weather_daily_8cities.csv': chuỗi nb04 == chuỗi all6_nb04
+TRÙNG  ô thời tiết khác bản đã commit: bảng do test ghi == bảng do NB04 ghi
+
+# Tham khảo (được phép khác: xem ghi chú)
+TRÙNG  output NB06 'nb06_predictions.csv': chuỗi baseline (04,05,06) == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_cohort_keys.csv': chuỗi baseline (04,05,06) == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_masked_cells.csv': chuỗi baseline (04,05,06) == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_retention.csv': chuỗi baseline (04,05,06) == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_run_summary.json': chuỗi baseline (04,05,06) == chuỗi nb06_only
+TRÙNG  output NB06 'nb06_predictions.csv': chuỗi nb04 == chuỗi all6_nb04 (cùng raw, cùng thời tiết mới; bảng sạch hồi cứu khác)
+TRÙNG  output NB06 'nb06_cohort_keys.csv': chuỗi nb04 == chuỗi all6_nb04 (cùng raw, cùng thời tiết mới; bảng sạch hồi cứu khác)
+TRÙNG  output NB06 'nb06_masked_cells.csv': chuỗi nb04 == chuỗi all6_nb04 (cùng raw, cùng thời tiết mới; bảng sạch hồi cứu khác)
+TRÙNG  output NB06 'nb06_retention.csv': chuỗi nb04 == chuỗi all6_nb04 (cùng raw, cùng thời tiết mới; bảng sạch hồi cứu khác)
+khác   output NB04 'air_quality_8cities_weather.csv': chuỗi nb04 == chuỗi all6_nb04 (ở all6_nb04, NB01 đã ghi lại bảng sạch của bản sao, lệch cỡ 1e-13)   (tham khảo, không tính vào mã thoát)
+
+# sha256 của output NB04 (không gom vào dev_evidence vì lớn; tạo lại được bằng NB04)
+2c906e617ec965fe2a12e6f615ee77e9457a521928a162bf42efae3d828eabc7  nb04/proj/outputs/nb04/weather_daily_8cities.csv
+4ea3e9c918688b8f5705fd986d57e7ce8f704c5ed717ea4d339b44df2a8091b4  nb04/proj/outputs/nb04/air_quality_8cities_weather.csv
+84115bef58f8947c6ad4d247e8ad5f642c47a1f3e0e6186720e34acc8ccca4a2  all6_nb04/proj/outputs/nb04/air_quality_8cities_weather.csv
+
+# sha256 của các notebook đã chạy (không gom; notebook 04 và 06 trong repo đã mang output, xem bước committed_outputs_*)
+c67a15ef9c8f5c2b073d281a53e7d5d530da137c3f1daa3c2ee1a89ccdf65f22  all6_nb04/executed/01_cleaning.ipynb
+1723e9e9966ad7d509c59ccda54b0500d0ee34405816756c5d383b54f453877a  all6_nb04/executed/02_cleaning_evidence.ipynb
+3c29376afb93b2d64291c48fb4ff64e5b1a45e9e44cbc3e2f235ab4e316c7235  all6_nb04/executed/03_eda.ipynb
+3a59e494cb42879bec6ab52dd0e2eaca3c772b0991b46e9a3dacb75ffd780a67  all6_nb04/executed/04_weather_merge.ipynb
+330a407da313f9a976859313b9e7168e1c4f666c16fd7d9188524e34b85facd3  all6_nb04/executed/05_weather_correlation.ipynb
+add71ce6f8f81efa47fca582f4442823245eee8ed5cd984ba2cdd189efe6721e  all6_nb04/executed/06_predict_aqi.ipynb
+11662242083e549669ec01ef0a5f1fcc6b30ecf991eb1369b4b4603738779d02  baseline/executed/04_weather_merge.ipynb
+a08feeeec3bcf042931ced21698dc0aa4f230a6ae23a4bfa5a0f3b2c1e41afe4  baseline/executed/05_weather_correlation.ipynb
+9be77acc8286fe808f51b9f20dee4e963e2bcee558677afa5e89c96224961b22  baseline/executed/06_predict_aqi.ipynb
+ee78186ba3f9b4f12c97dcd2925fe3fa60040da001074a050cb549ae1fde8273  eda/executed/01_cleaning.ipynb
+3d3000532e42e2c0a9723862824ad46fccac4f9e1847cb655919b269637866bb  eda/executed/02_cleaning_evidence.ipynb
+df064efe0dab97dcd4fbd64ea84baffa91c31760edffe96cadeb4279347bca21  eda/executed/03_eda.ipynb
+1a5966ec4efd622ae0d98fa2ed8897a66d118c2c5cb42372d42b09197f5ebb12  eda/executed/05_weather_correlation.ipynb
+d1567458f58d427a469a5c684766414d8f9ee5b1306cb323de59c3217f7aee06  nb04/executed/04_weather_merge.ipynb
+59bcde97a634e110b0d79e607b6952986187198f036e4aede787cfc5ca1315a5  nb04/executed/05_weather_correlation.ipynb
+a67aea0a073f43e57484c98d0d43a6755114c5139268dd4ebad62087b271f034  nb04/executed/06_predict_aqi.ipynb
+6a635df3d2ed5f60a7ec592611d30ebd1ee4507d5741c349d3d4b21ac6bbd556  nb06_only/executed/06_predict_aqi.ipynb
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:54Z

@@ -1,0 +1,11 @@
+City,Date,cột,value_original trong file điểm nghi lỗi,giá trị raw,raw có giá trị,giá trị dùng làm đặc trưng ở đường dự báo,đặc trưng,lý do nhánh hồi cứu xoá,ngày t có trong cohort dự báo,ngày t có trong cohort hồi cứu
+Bengaluru,2017-07-08,AQI,108.0,108.0,True,108.0,aqi_0,NGHI LOI (theo PM2.5 nghi loi cung ngay),True,False
+Bengaluru,2017-07-07,PM2.5,256.0,,False,,pm25_0,"NGHI LOI (PM2.5 > 1,5 x PM10)",False,False
+Bengaluru,2017-07-08,PM2.5,313.6,313.59,True,313.59,pm25_0,"NGHI LOI (PM2.5 > 1,5 x PM10)",True,False
+Gurugram,2017-07-09,AQI,529.0,529.0,True,529.0,aqi_0,NGHI LOI (theo PM2.5 nghi loi cung ngay),False,False
+Gurugram,2017-07-30,AQI,482.0,482.0,True,482.0,aqi_0,NGHI LOI (theo PM2.5 nghi loi cung ngay),False,False
+Gurugram,2017-07-09,PM2.5,821.4,821.42,True,821.42,pm25_0,"NGHI LOI (co lap, trai mua)",False,False
+Gurugram,2017-07-30,PM2.5,858.7,858.73,True,858.73,pm25_0,"NGHI LOI (co lap, trai mua)",False,False
+Gurugram,2017-08-29,PM2.5,950.0,949.99,True,949.99,pm25_0,"NGHI LOI (co lap, trai mua)",False,False
+Jaipur,2018-02-06,AQI,305.0,305.0,True,305.0,aqi_0,NGHI LOI (theo PM2.5 nghi loi cung ngay),True,False
+Jaipur,2018-02-06,PM2.5,311.4,311.35,True,311.35,pm25_0,"NGHI LOI (PM2.5 > 1,5 x PM10)",True,False

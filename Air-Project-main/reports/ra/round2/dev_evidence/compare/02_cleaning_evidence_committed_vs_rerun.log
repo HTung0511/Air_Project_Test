@@ -1,0 +1,6 @@
+$ python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/02_cleaning_evidence_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/02_cleaning_evidence.ipynb, B=chains/eda/executed/02_cleaning_evidence.ipynb)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:35Z
+Tổng: 12 ô mã chung, 0 ô có output dạng chữ khác, 0 dòng khác, 0 số khác (trên các dòng ghép được), lệch số lớn nhất 0.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

@@ -1,0 +1,24 @@
+$ python tools/run_chain.py --work <work>/chains --name eda --notebooks 01,02,03,05 --weather baseline --timeout 2400 --force
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:25:30Z
+[10:25:30] chạy 01_cleaning.ipynb ...
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+    -> ok, 11/11 ô mã, 15.5 s, 0 lần thử mạng
+[10:25:46] chạy 02_cleaning_evidence.ipynb ...
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+    -> ok, 12/12 ô mã, 8.4 s, 0 lần thử mạng
+[10:25:54] chạy 03_eda.ipynb ...
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+    -> ok, 13/13 ô mã, 5.8 s, 0 lần thử mạng
+[10:26:00] chạy 05_weather_correlation.ipynb ...
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+    -> ok, 10/10 ô mã, 15.3 s, 0 lần thử mạng
+
+Tóm tắt: /home/user/scratch/ev/chains/eda/chain_summary.json
+  các bước: 01_cleaning.ipynb=ok, 02_cleaning_evidence.ipynb=ok, 03_eda.ipynb=ok, 05_weather_correlation.ipynb=ok
+  file trong data/ của bản sao bị đổi: ['data/processed/air_quality_8cities.csv']
+  file trong reports/ của bản sao được notebook ghi lại với nội dung khác: 14 (corr_01_raw_vs_adjusted.png, corr_02_hypothesis_tests.png, corr_03_humidity_deciles.png, corr_04_poor_share_by_humidity.png, eda_00_sample_size.png, eda_01_poor_share_city.png, eda_02_heatmap_city_month.png, eda_03_trend_city_year.png, eda_04_pm25_aqi.png, eda_05_aqi_distribution.png, fill_strategies_lucknow_jaipur.png, missing_after_cleaning_8cities.png, missing_pattern_lucknow_jaipur.png, outliers_pm25_lucknow_jaipur.png)
+  file của repo gốc bị đổi trong lúc chạy: không
+  [05_weather_correlation] đọc thời tiết theo ngày: data/processed/weather_daily_8cities.csv | sha256 45f3579a222c55c0 | baseline đã commit
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:26:16Z

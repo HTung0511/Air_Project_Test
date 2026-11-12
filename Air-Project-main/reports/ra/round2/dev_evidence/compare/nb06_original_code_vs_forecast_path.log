@@ -1,0 +1,6 @@
+$ python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb06_original_code_vs_forecast_path.md  (A=orig/executed/06_predict_aqi.ipynb, B=chains/nb06_only/executed/06_predict_aqi.ipynb)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:35Z
+Tổng: 26 ô mã chung, 21 ô có output dạng chữ khác, 236 dòng khác, 267 số khác (trên các dòng ghép được), lệch số lớn nhất 1946.99.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

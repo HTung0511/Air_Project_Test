@@ -1,0 +1,6 @@
+$ python tools/adopt_outputs.py <work>/chains/baseline/executed/04_weather_merge.ipynb notebooks/04_weather_merge.ipynb --check
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:11Z
+TRÙNG: 16 ô mã, 26 output ở bản đã chạy
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:11Z

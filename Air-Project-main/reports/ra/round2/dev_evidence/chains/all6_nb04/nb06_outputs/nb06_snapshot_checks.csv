@@ -1,0 +1,182 @@
+con số,đo được,giá trị snapshot,dung sai,khớp,bắt buộc khớp
+"số mẫu train/test/03-07/2020 = (5746, 1947, 975), snapshot (5746, 1947, 975)",True,True,,True,True
+"ngày nặng train/test/03-07/2020 = (1436, 389, 18), snapshot (1436, 389, 18)",True,True,,True,True
+"mẫu chỉ có ở đường mới / chỉ có ở đường cũ = (5, 0), snapshot (5, 0), đều thuộc train",True,True,,True,False
+"MAE test, Ngày mai = hôm nay",23.466358500256806,23.47,0.05,True,False
+"MAE test, Ridge L1",22.929907268567856,22.93,0.05,True,False
+"MAE test, Ridge L2",20.921550787282648,20.92,0.05,True,False
+"MAE test, Ridge L3",19.52865577931855,19.53,0.05,True,False
+"MAE test, Ridge L4",19.0961929571331,19.1,0.05,True,False
+"MAE test, Trung bình theo thành phố",64.53811489497441,64.54,0.05,True,False
+"MAE test, Trung vị cùng tháng (khí hậu)",43.440421160760145,43.44,0.05,True,False
+"MAE test, HGB L3",18.11803181271551,18.09,0.05,True,False
+"R² test, 'hôm nay'",0.8550423760913322,0.86,0.006,True,False
+"R² test, mức 3",0.9062236069092318,0.91,0.006,True,False
+"RMSE test, 'hôm nay'",37.611283262599216,37.61,0.1,True,False
+"RMSE test, mức 3",30.251323709604762,30.25,0.1,True,False
+giảm MAE của mức 3 so với 'hôm nay' (%),16.780203544981898,16.8,0.2,True,False
+"MAE ngày nặng, 'hôm nay'",47.46015424164524,47.46,0.1,True,False
+"MAE ngày nặng, mức 3",39.7672127797171,39.77,0.1,True,False
+"MAE ngày còn lại, 'hôm nay'",17.475609756097562,17.48,0.1,True,False
+"MAE ngày còn lại, mức 3",14.475511573185672,14.48,0.1,True,False
+ΔMAE test Ridge L1 − Ngày mai = hôm nay: hiệu,-0.5364512316889486,-0.54,0.06,True,False
+ΔMAE test Ridge L1 − Ngày mai = hôm nay: KTC thấp,-1.1958343429465157,-1.2,0.06,True,False
+ΔMAE test Ridge L1 − Ngày mai = hôm nay: KTC cao,0.0665573103370847,0.07,0.06,True,False
+ΔMAE test Ridge L2 − Ridge L1: hiệu,-2.008356481285209,-2.01,0.06,True,False
+ΔMAE test Ridge L2 − Ridge L1: KTC thấp,-3.0420605420942812,-3.04,0.06,True,False
+ΔMAE test Ridge L2 − Ridge L1: KTC cao,-1.0450353350600217,-1.05,0.06,True,False
+ΔMAE test Ridge L3 − Ridge L2: hiệu,-1.3928950079640918,-1.39,0.06,True,False
+ΔMAE test Ridge L3 − Ridge L2: KTC thấp,-1.9246634227549422,-1.92,0.06,True,False
+ΔMAE test Ridge L3 − Ridge L2: KTC cao,-0.9232110474873246,-0.92,0.06,True,False
+ΔMAE test Ridge L3 − Ngày mai = hôm nay: hiệu,-3.93770272093825,-3.94,0.06,True,False
+ΔMAE test Ridge L3 − Ngày mai = hôm nay: KTC thấp,-5.387239840006426,-5.39,0.06,True,False
+ΔMAE test Ridge L3 − Ngày mai = hôm nay: KTC cao,-2.5584002300448137,-2.56,0.06,True,False
+ΔMAE test Ridge L4 − Ridge L3: hiệu,-0.43246282218545445,-0.43,0.06,True,False
+ΔMAE test Ridge L4 − Ridge L3: KTC thấp,-0.6174340833365104,-0.62,0.06,True,False
+ΔMAE test Ridge L4 − Ridge L3: KTC cao,-0.25964188908886054,-0.26,0.06,True,False
+ΔMAE test HGB L3 − Ridge L3: hiệu,-1.4106239666030433,-1.44,0.06,True,False
+ΔMAE test HGB L3 − Ridge L3: KTC thấp,-2.0697169899523487,-2.09,0.06,True,False
+ΔMAE test HGB L3 − Ridge L3: KTC cao,-0.6838208277348448,-0.73,0.06,True,False
+"MAE test Delhi, 'hôm nay'",36.7,36.7,,True,False
+"MAE test Delhi, mức 3",29.3,29.3,,True,False
+"MAE test Lucknow, 'hôm nay'",29.1,29.1,,True,False
+"MAE test Lucknow, mức 3",22.7,22.7,,True,False
+"MAE test Gurugram, 'hôm nay'",37.1,37.1,,True,False
+"MAE test Gurugram, mức 3",30.1,30.1,,True,False
+mức giảm nhỏ nhất theo thành phố (%),7.162650637513579,15.0,8.0,True,False
+mức giảm lớn nhất theo thành phố (%),22.05796317739739,15.0,8.0,True,False
+"MAE validation, Ridge mức 3",22.3,22.3,,True,False
+"MAE validation, 'hôm nay'",25.956048738033072,25.96,0.05,True,False
+"cùng ngưỡng 201, mức 3 − 'hôm nay': recall",0.033419023136246784,0.033,0.005,True,False
+cùng ngưỡng 201: precision,0.046883261076451244,0.047,0.005,True,False
+cùng ngưỡng 201: F1,0.0401503448845566,0.04,0.005,True,False
+"ngưỡng chọn công bằng, mức 3 − 'hôm nay': recall",0.007712082262210873,0.008,0.005,True,False
+ngưỡng chọn công bằng: precision,0.05552136451556178,0.056,0.005,True,False
+số cảnh báo của 'hôm nay' ở ngưỡng 201,392,392,,True,False
+số cảnh báo của mức 3 ở ngưỡng 201,386,386,,True,False
+ngưỡng F2 của 'hôm nay',160.0,160.0,,True,False
+ngưỡng F2 của mức 3,167.0,167.0,,True,False
+báo nhầm của mức 3 ở ngưỡng chọn,107,107,,True,False
+báo nhầm của 'hôm nay' ở ngưỡng chọn,143,143,,True,False
+"Delhi-Gurugram-Lucknow, mức 3 ở ngưỡng chọn: recall",0.9912023460410557,0.99,0.01,True,False
+Delhi-Gurugram-Lucknow: precision,0.8223844282238443,0.82,0.01,True,False
+"Jaipur-Amritsar, mức 3 ở ngưỡng chọn: recall",0.8421052631578947,0.84,0.01,True,False
+Jaipur-Amritsar: precision,0.5161290322580645,0.52,0.01,True,False
+"Jaipur-Amritsar, 'hôm nay' ở ngưỡng chọn: recall",0.8947368421052632,0.89,0.01,True,False
+ngày nặng ở miền Nam trong test,10,10,,True,False
+03-07/2020: MAE 'hôm nay',14.803076923076922,14.8,0.1,True,False
+03-07/2020: MAE mức 3,13.773613970165002,13.8,0.1,True,False
+03-07/2020: AQI dự đoán trung bình của mức 3,98.73349654304538,98.7,0.2,True,False
+03-07/2020: AQI thực tế trung bình,96.63282051282052,96.6,0.2,True,False
+bỏ Gurugram: ΔMAE mức 3 − 'hôm nay',-3.344003839592804,-3.34,0.06,True,False
+bỏ Gurugram: ΔMAE mức 3 − mức 1,-2.812144142143042,-2.81,0.06,True,False
+bỏ biến mùa: ΔMAE mức 3 − mức 1,-3.5093144824638216,-3.51,0.06,True,False
+Phần G: số trường hợp ρ nhiệt độ dương (trên 10),9,9,,True,False
+"Phần G: Delhi, chênh tỉ lệ ngày nặng ẩm thấp − ẩm cao, train (điểm %)",18.277950511724317,18.3,0.2,True,False
+"Phần G: Delhi, chênh tỉ lệ ngày nặng ẩm thấp − ẩm cao, test (điểm %)",18.602941176470587,18.6,0.2,True,False
+"cặp (thành phố, ngày t) trong khoảng chung",8904,8904,,True,True
+cặp thiếu AQI(t),174,174,,True,True
+"cặp có AQI(t), thiếu AQI(t+1)",62,62,,True,True
+số mẫu giữ lại,8668,8668,,True,True
+số ngày cắt trong phép thử rò rỉ,23,23,,True,True
+tỉ lệ ngày nặng của train (%),24.991298294465718,25.0,0.06,True,True
+số mẫu của đường hồi cứu,8663,8663,,True,False
+"ô CO bị che vì số 0 treo, train",252,252,,True,True
+"ô bị che ngoài CO-train (mọi chất, mọi tập)",0,0,,True,True
+mẫu train dùng CO = 0 (số 0 chưa bị che),81,81,,True,True
+trong đó là số 0 của chính ngày t,79,79,,True,True
+trong đó điền từ một số 0 của 1-2 ngày trước,2,2,,True,True
+mẫu train không có nguồn CO,275,275,,True,True
+mẫu train không có nguồn SO2,251,251,,True,True
+mẫu train không có nguồn O3,144,144,,True,True
+mẫu train không có nguồn PM2.5,79,79,,True,True
+mẫu train không có nguồn NO2,4,4,,True,True
+mẫu test không có nguồn O3,12,12,,True,True
+mẫu 03-07/2020 không có nguồn O3,1,1,,True,True
+"mẫu test và 03-07/2020 không có nguồn, ngoài O3",0,0,,True,True
+"MAE validation, trung bình theo thành phố",60.53604823233186,60.54,0.006,True,False
+"MAE validation, khí hậu cùng tháng",56.12315056570931,56.12,0.006,True,False
+"MAE validation, Ridge mức 1",25.51728525596002,25.52,0.006,True,False
+"MAE validation, Ridge mức 2",23.721846938671366,23.72,0.006,True,False
+"MAE validation, cây mức 2",22.942487084630898,22.94,0.006,True,False
+"MAE validation, cây mức 3",22.426069640742327,22.43,0.006,True,False
+"độ lệch giữa các lần chia, Ridge mức 1",1.3789239495316137,1.38,0.006,True,False
+"Spearman(|phần dư|, giá trị khớp), mục tiêu AQI",0.22672266332305496,0.23,0.006,True,False
+"Spearman(|phần dư|, giá trị khớp), mục tiêu log AQI",-0.028742793234414615,-0.03,0.006,True,False
+"Breusch-Pagan LM, mục tiêu AQI",420.0978251719289,420.1,0.6,True,False
+"Breusch-Pagan LM, mục tiêu log AQI",316.0601087517363,316.05,0.6,True,False
+"Durbin-Watson, log AQI",1.8381886763562265,1.84,0.006,True,False
+R² hiệu chỉnh trong mẫu,0.8902000837186516,0.89,0.006,True,False
+AQI khớp nhỏ nhất của mô hình trên AQI,-156.23878346694653,-150.0,20.0,True,False
+phần dư log lớn nhất,1.2037041505491697,1.2,0.06,True,False
+"ACF bậc 1 nhỏ nhất, bảy thành phố ngoài Hyderabad",0.00523077324351774,0.01,0.006,True,False
+"ACF bậc 1 lớn nhất, bảy thành phố ngoài Hyderabad",0.18627891796585871,0.19,0.006,True,False
+"ACF bậc 1, Hyderabad",0.33641487505023865,0.34,0.006,True,False
+VIF lớn nhất,14.506319275988542,14.5,0.06,True,False
+VIF nhỏ nhất trong bốn biến AQI trễ,9.840676343380663,9.8,0.06,True,False
+VIF nhiệt độ,8.749415463827473,8.7,0.06,True,False
+VIF PM2.5,8.306135609264143,8.3,0.06,True,False
+Cook's distance lớn nhất,0.07663360188222072,0.077,0.0006,True,False
+số dòng có Cook's distance vượt 4/n,345,345,,True,False
+hệ số độ ẩm (% mỗi 10 điểm %),-1.1236218374042206,-1.1,0.06,True,False
+hệ số tốc độ gió (% mỗi m/s),-1.8354702862978134,-1.8,0.06,True,False
+hệ số mưa (% với 10 mm),-9.223548560016404,-9.2,0.06,True,False
+hệ số gió Đông (% mỗi m/s),1.7158686675310397,1.7,0.06,True,False
+hệ số lớp biên (% mỗi 100 m),0.08473302052955933,0.1,0.06,True,False
+hệ số PM2.5 (% khi cao hơn 10%),2.963967779037646,3.0,0.06,True,False
+mức 3 ở ngưỡng chọn − 'hôm nay' ở ngưỡng 201: recall,0.11311053984575836,0.113,0.0006,True,False
+... precision,-0.07056417608365662,-0.071,0.0006,True,False
+... F1,0.010935549776844966,0.011,0.0006,True,False
+mức 3 − mức 2 ở ngưỡng chọn: recall,0.0,0.0,0.0006,True,False
+mức 3 − mức 2: precision,0.0032054552256572943,0.003,0.0006,True,False
+mức 3 − mức 2: F1,0.0019741449844542514,0.002,0.0006,True,False
+recall của mức 3 ở ngưỡng chọn,0.9691516709511568,0.969,0.0006,True,False
+recall của 'hôm nay' ở ngưỡng chọn,0.961439588688946,0.961,0.0006,True,False
+bỏ sót của mức 3 ở ngưỡng 201,43,43,,True,False
+báo nhầm của mức 3 ở ngưỡng 201,40,40,,True,False
+bỏ sót của 'hôm nay' ở ngưỡng 201,56,56,,True,False
+báo nhầm của 'hôm nay' ở ngưỡng 201,59,59,,True,False
+"bỏ 10% train: ΔMAE mức 3 − mức 1, nhỏ nhất",-3.4753641013205616,-3.48,0.006,True,False
+"bỏ 10% train: ΔMAE mức 3 − mức 1, lớn nhất",-3.2981574118983374,-3.3,0.006,True,False
+"bỏ 10% train: ΔMAE mức 3 − 'hôm nay', nhỏ nhất",-4.003074799011028,-4.0,0.006,True,False
+"bỏ 10% train: ΔMAE mức 3 − 'hôm nay', lớn nhất",-3.832270675624688,-3.83,0.006,True,False
+"bỏ Gurugram: KTC của mức 3 − 'hôm nay', thấp",-4.611583911391768,-4.61,0.006,True,False
+"bỏ Gurugram: KTC của mức 3 − 'hôm nay', cao",-2.100555790177178,-2.1,0.006,True,False
+"bỏ Gurugram: KTC của mức 3 − mức 1, thấp",-3.902944510831762,-3.9,0.006,True,False
+"bỏ Gurugram: KTC của mức 3 − mức 1, cao",-1.774004048734244,-1.77,0.006,True,False
+test mùa đông: MAE 'hôm nay',28.173793103448276,28.17,0.006,True,False
+test mùa đông: MAE mức 3,22.13733600911385,22.14,0.006,True,False
+test mưa và sau mưa: MAE 'hôm nay',20.673486088379704,20.67,0.006,True,False
+test mưa và sau mưa: MAE mức 3,17.980952696993196,17.98,0.006,True,False
+có biến mùa: ΔMAE mức 3 − mức 1,-3.4012514892493044,-3.4,0.006,True,False
+"so đường B. − A. mức 3, test: hiệu MAE",0.00020743059034996345,0.0002,6e-05,True,False
+"so đường B. − A. mức 3, test: KTC thấp",-0.006924988218685572,-0.0069,6e-05,True,False
+"so đường B. − A. mức 3, test: KTC cao",0.007099979238199119,0.0071,6e-05,True,False
+"so đường C. − B. mức 3, test: hiệu MAE",0.009273631968079269,0.0093,6e-05,True,False
+"so đường C. − B. mức 3, test: KTC thấp",-0.0033481079757931216,-0.0033,6e-05,True,False
+"so đường C. − B. mức 3, test: KTC cao",0.0213108834519261,0.0213,6e-05,True,False
+"so đường C. − A. mức 3, test: hiệu MAE",0.009481062558429232,0.0095,6e-05,True,False
+"so đường C. − A. mức 3, test: KTC thấp",-0.005231437325120075,-0.0052,6e-05,True,False
+"so đường C. − A. mức 3, test: KTC cao",0.023663725414858984,0.0237,6e-05,True,False
+đường cũ (A): ngưỡng F2 của mức 3,166.0,166.0,,True,False
+"đường cũ (A): mức 3 ở ngưỡng chọn, TP/FP/FN",377/113/12,377/113/12,,True,False
+"đường mới (C): mức 3 ở ngưỡng chọn, TP/FP/FN",377/107/12,377/107/12,,True,False
+số khoá chung của hai đường,8663,8663,,True,False
+ô đặc trưng khác giữa hai đường: CO,35,35,,True,False
+... trung bình 7 ngày,22,22,,True,False
+... AQI hôm qua và hôm kia,6,6,,True,False
+tổng số ô đặc trưng khác giữa hai đường,63,63,,True,False
+mức 3 tốt hơn 'hôm nay' ở cả 8 thành phố,True,True,,True,False
+"alpha chọn trên validation = {'L1': 10, 'L2': 0.1, 'L3': 30, 'L4': 10}, snapshot L1 10, L2 0,1, L3 30, L4 10",True,True,,True,False
+"ngưỡng chọn công bằng: recall chưa tách khỏi 0, precision của mức 3 hơn",True,True,,True,False
+mức 3 ở ngưỡng chọn so với baseline nghĩa đen: F1 chưa tách khỏi 0,True,True,,True,False
+mức 3 so với mức 2 ở bài toán cảnh báo: cả ba chỉ số chứa 0,True,True,,True,False
+miền Nam: dưới 30 ngày nặng nên không báo recall/precision,True,True,,True,False
+bỏ Gurugram: hai khoảng tin cậy của ΔMAE vẫn nằm dưới 0,True,True,,True,False
+mức 3 tốt hơn 'hôm nay' ở cả hai giai đoạn của test,True,True,,True,False
+Phần G: ρ độ ẩm âm ở cả 5 thành phố và cả hai giai đoạn,True,True,,True,False
+ba biến thể A/B/C có cùng khoá và cùng nhãn ở test và ở 03-07/2020 (so cặp cùng outcome),True,True,,True,False
+"trên khoá chung của hai đường, AQI hôm nay và nhãn trùng nhau ở mọi tập",True,True,,True,False
+"mọi hiệu MAE giữa A, B, C (test và 03-07/2020, ba mức) có khoảng tin cậy chứa 0",True,True,,True,False
+đặc trưng của test và 03-07/2020 trùng giữa hai đường; khác biệt chỉ nằm ở train,True,True,,True,False
+"alpha của ba biến thể A, B, C giống nhau ở cả ba mức",True,True,,True,False

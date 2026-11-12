@@ -1,0 +1,6 @@
+cohort,City,Date,Date_target,split,AQI_raw(t),AQI_raw(t+1),AQI_sach(t),AQI_sach(t+1),y_poor,nguyen_nhan
+chỉ có ở đường dự báo (raw),Bengaluru,2017-07-08,2017-07-09,train,108.0,112.0,,112.0,False,bảng sạch hồi cứu đã xoá AQI(t) (cờ suspect_sensor_error)
+chỉ có ở đường dự báo (raw),Gurugram,2017-07-08,2017-07-09,train,372.0,529.0,372.0,,True,"bảng sạch hồi cứu đã xoá AQI(t+1), tức nhãn (cờ suspect_sensor_error)"
+chỉ có ở đường dự báo (raw),Gurugram,2017-07-29,2017-07-30,train,248.0,482.0,248.0,,True,"bảng sạch hồi cứu đã xoá AQI(t+1), tức nhãn (cờ suspect_sensor_error)"
+chỉ có ở đường dự báo (raw),Jaipur,2018-02-05,2018-02-06,train,153.0,305.0,153.0,,True,"bảng sạch hồi cứu đã xoá AQI(t+1), tức nhãn (cờ suspect_sensor_error)"
+chỉ có ở đường dự báo (raw),Jaipur,2018-02-06,2018-02-07,train,305.0,291.0,,291.0,True,bảng sạch hồi cứu đã xoá AQI(t) (cờ suspect_sensor_error)

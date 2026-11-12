@@ -1,0 +1,6 @@
+$ python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb05_baseline_weather_vs_nb04_weather.md  (A=chains/baseline/executed/05_weather_correlation.ipynb, B=chains/nb04/executed/05_weather_correlation.ipynb)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:35Z
+Tổng: 10 ô mã chung, 1 ô có output dạng chữ khác, 3 dòng khác, 3 số khác (trên các dòng ghép được), lệch số lớn nhất 0.5.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

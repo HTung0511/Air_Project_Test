@@ -24,6 +24,8 @@ MISSING_MAX_PCT = 60    # cột (trong 1 thành phố) thiếu < 60% thì còn d
 MAX_GAP = 14            # chỉ nội suy khoảng thiếu <= 14 ngày
 CTX_THR = 2.5           # ngưỡng "ngữ cảnh"
 WINTER = {10, 11, 12, 1, 2}
+# cột của bảng bằng chứng do `investigate` trả về; khai báo sẵn để bảng RỖNG vẫn có đủ cột (NEW-002)
+EVIDENCE_COLS = ["date", "column", "value_original", "gap_vs_neighbors", "month", "pm25_div_pm10", "other_gases_up", "suggestion"]
 
 
 # ---------------------------------------------------------------- điểm nghi lỗi cảm biến
@@ -32,7 +34,9 @@ def investigate(d, col, top=5, skip_pm25=(), extra_dates=()):
     Trả về bảng bằng chứng kèm cột `suggestion` ("NGHI LOI ..." / "that ..." / "chua ro ...")."""
     ratio = contextual_ratio(d[col])
     others = [g for g in GASES if g in d.columns and d[g].notna().any()]
-    R = pd.DataFrame({g: contextual_ratio(d[g]) for g in others})
+    # index=d.index (NEW-002): khi chuỗi chưa có khí nào (đầu chuỗi, ví dụ Jaipur 14-18/06/2017 nếu cắt raw), R không có
+    # cột nào nhưng vẫn tra được theo ngày, nên "0/0 khí cùng tăng" thay cho KeyError. Có khí thì kết quả y như trước.
+    R = pd.DataFrame({g: contextual_ratio(d[g]) for g in others}, index=d.index)
     has10 = "PM10" in d.columns and d["PM10"].notna().any()
     pm25_r = contextual_ratio(d["PM2.5"])
     pm10_r = contextual_ratio(d["PM10"]) if has10 else pd.Series(np.nan, index=d.index)
@@ -58,7 +62,9 @@ def investigate(d, col, top=5, skip_pm25=(), extra_dates=()):
                          gap_vs_neighbors=round(ratio[t], 1), month=t.month,
                          pm25_div_pm10=round(p_ratio, 2) if p_ratio == p_ratio else np.nan,
                          other_gases_up=f"{len(co)}/{R.loc[t].notna().sum()}", suggestion=goi_y))
-    return pd.DataFrame(rows)
+    # columns=EVIDENCE_COLS (NEW-002): không có điểm nào để điều tra (cột toàn NaN hoặc bảng rỗng) thì trả bảng rỗng ĐỦ CỘT,
+    # để `run_rule` / `apply_suspect_rule` đọc được cột `suggestion` thay vì lỗi AttributeError.
+    return pd.DataFrame(rows, columns=EVIDENCE_COLS)
 
 
 def run_rule(d):

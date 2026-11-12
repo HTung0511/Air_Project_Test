@@ -1,0 +1,8 @@
+# Output mới của các lần chạy (không phải baseline; xem src/data_paths.py)
+outputs/
+notebooks/_executed/
+# Rác của Python / Jupyter / pytest
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/

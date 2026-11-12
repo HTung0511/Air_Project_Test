@@ -1,25 +1,41 @@
 """Hàm và hằng số dùng chung cho notebook thời tiết (`notebooks/04_weather_merge.ipynb`).
 
-Việc làm: tải thời tiết theo giờ từ Open-Meteo (dữ liệu tái phân tích ERA5) cho 8 thành phố,
-kiểm tra, gộp theo ngày, rồi ghép vào `data/processed/air_quality_8cities.csv`.
+Việc làm: lấy thời tiết theo giờ của Open-Meteo (dữ liệu tái phân tích ERA5) cho 8 thành phố, kiểm tra, gộp theo ngày,
+rồi ghép vào `data/processed/air_quality_8cities.csv`.
 
-Quy ước:
-  * Không sửa `air_quality_8cities.csv`; bảng ghép được lưu ra file mới `air_quality_8cities_weather.csv`.
-  * Dữ liệu tải về (theo giờ) được lưu ở `data/raw/weather/` và không sửa; lần chạy sau đọc lại từ đó.
+Quy ước (vòng 2, F02 - xem `reports/ra/round2/dev_change_log.md`):
+  * ĐỌC CACHE TRƯỚC, theo từng thành phố. Cache hợp lệ = đủ cột bắt buộc (kể cả lớp biên khí quyển), đủ khoảng thời gian,
+    đúng lưới giờ, không giờ trùng, không ô trống (`validate_hourly`). Cả 8 cache hợp lệ thì KHÔNG gọi mạng lần nào.
+  * Mặc định OFFLINE: thiếu hoặc hỏng cache thì dừng với lỗi nêu rõ thành phố, file và tiêu chí hỏng; không bịa dữ liệu,
+    không dùng bản cũ/bản thiếu thay thế. Chỉ khi đặt `AIR_WEATHER_MODE=online` mới tải, và chỉ tải thành phố cần tải.
+  * Lớp biên khí quyển (`boundary_layer_height`) là biến BẮT BUỘC vì NB05/NB06 dùng `blh_mean`. Có hay không được xác định
+    từ schema của cache; thiếu thì báo lỗi chứ không lặng lẽ bỏ.
+  * Không sửa, không ghi đè file nào trong `data/`: cache gốc `data/raw/weather/` chỉ được đọc; bản tải mới lưu ở
+    `outputs/weather_downloads/`; output mới của NB04 lưu ở `outputs/nb04/` (xem `src/data_paths.py`).
+  * Không sửa `air_quality_8cities.csv`; bảng ghép là file riêng `air_quality_8cities_weather.csv`.
   * Chưa scale, chưa tạo biến trễ (lag): để bước dựng mô hình, sau khi chia train/test theo thời gian.
 """
-from pathlib import Path
+import gzip
+import json
+import os
+import platform
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import requests
 
+import data_paths
+
 ROOT = Path(__file__).resolve().parents[1]
-RAW_WEATHER = ROOT / "data" / "raw" / "weather"
+RAW_WEATHER = ROOT / "data" / "raw" / "weather"          # cache gốc đã commit: chỉ đọc
 AQ_FILE = ROOT / "data" / "processed" / "air_quality_8cities.csv"
+# Hai file baseline ĐÃ COMMIT. Giữ tên hằng số cũ để mã đang dùng không gãy, nhưng NB04 không còn ghi vào đây:
+# output mới đi qua `save_outputs()` tới `output_paths()` (mặc định `outputs/nb04/`).
 OUT_MERGED = ROOT / "data" / "processed" / "air_quality_8cities_weather.csv"
 OUT_DAILY = ROOT / "data" / "processed" / "weather_daily_8cities.csv"
+BASELINE_MERGED, BASELINE_DAILY = OUT_MERGED, OUT_DAILY
 
 API_URL = "https://archive-api.open-meteo.com/v1/archive"
 MODEL = "era5"                    # một mô hình duy nhất cho cả 8 thành phố; đặt None nếu API báo lỗi tham số `models`
@@ -44,7 +60,24 @@ CITY_COORDS = {
 
 HOURLY_CORE = ["temperature_2m", "relative_humidity_2m", "surface_pressure",
                "wind_speed_10m", "wind_direction_10m", "precipitation"]
-HOURLY_EXTRA = ["boundary_layer_height"]      # chỉ dùng nếu API trả về được (notebook có bước thử)
+HOURLY_EXTRA = ["boundary_layer_height"]      # lớp biên khí quyển: NB05/NB06 cần `blh_mean`
+REQUIRED_HOURLY = HOURLY_CORE + HOURLY_EXTRA   # biến bắt buộc của một cache hợp lệ (BLH không còn là tuỳ chọn)
+PROVENANCE_COLS = ["grid_lat", "grid_lon", "grid_elev"]   # ô lưới ERA5 thật sự được dùng, API trả về; giữ để truy nguồn
+# đơn vị API phải trả (yêu cầu `wind_speed_unit=ms`); bản tải mới sai đơn vị hoặc sai múi giờ thì bị từ chối, không lưu
+HOURLY_UNITS = {"temperature_2m": "°C", "relative_humidity_2m": "%", "surface_pressure": "hPa", "wind_speed_10m": "m/s",
+                "wind_direction_10m": "°", "precipitation": "mm", "boundary_layer_height": "m"}
+UTC_OFFSET_SECONDS = 19800                     # Asia/Kolkata = UTC+5:30, không có giờ mùa hè nên ngày nào cũng đủ 24 giờ
+RETRY_SLEEP = 5                                # giây chờ giữa các lần thử lại (nhân với số lần đã thử)
+N_API_CALLS = 0                                # số lần đã gọi `requests.get` trong tiến trình này (cache đủ thì phải là 0)
+
+# dung sai khi so bảng theo ngày mới với baseline đã commit (RA-DEC-02 mục 5). `hourly_to_daily` làm tròn 2 chữ số; khi
+# trung bình 24 giờ rơi đúng biên x,xx5 thì sai khác 1 đơn vị cuối của phép cộng số thực (khác phiên bản numpy/pandas) làm
+# tròn lên hoặc xuống. Chỉ ba cột trung bình dưới đây được lệch, chỉ tối đa 0,01 và chỉ tại ô chứng minh được là sát biên.
+TOL_MEAN_COLS = {"temp_mean": "temperature_2m", "pressure_mean": "surface_pressure", "wind_speed_mean": "wind_speed_10m"}
+ROUND_TOL = 0.01          # 1 đơn vị ở chữ số thập phân thứ hai
+ABS_EPS = 1e-9            # sai số số học cho mọi phép so số thực (đọc/ghi CSV)
+BOUNDARY_EPS = 1e-6       # "sát biên": phần lẻ của (trung bình chưa làm tròn x 100) cách 0,5 không quá ngưỡng này
+EXACT_COLS = ["rain_day", "wind_dir_8"]        # so chính xác
 RAIN_DAY_MM = 1.0                              # ngày mưa = tổng mưa >= 1 mm (ngưỡng thường dùng trong khí tượng)
 DIRS8 = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
 
@@ -78,26 +111,57 @@ RANGES = {
 }
 
 
-# ----------------------------------------------------------------------------- tải dữ liệu
+# ----------------------------------------------------------------------------- lỗi có ngữ cảnh
+class WeatherError(Exception):
+    """Lỗi của bước lấy thời tiết. Cố ý KHÔNG kế thừa RuntimeError để các khối `except RuntimeError` không nuốt mất nó."""
+
+
+class WeatherOfflineError(WeatherError):
+    """Có đoạn mã định gọi mạng trong khi đang ở chế độ offline."""
+
+
+class WeatherCacheError(WeatherError):
+    """Không có nguồn dữ liệu giờ hợp lệ cho ít nhất một thành phố (thiếu file hoặc file không qua kiểm tra)."""
+
+
+class WeatherDownloadError(WeatherError):
+    """Gọi API thất bại, hoặc API trả dữ liệu không dùng được. Thông báo luôn nêu thành phố, file đích và biến."""
+
+
+def network_mode(mode=None):
+    """'offline' (mặc định) hoặc 'online'. Lấy từ tham số, nếu không có thì từ biến môi trường `AIR_WEATHER_MODE`."""
+    m = (mode or os.environ.get(data_paths.ENV_MODE) or "offline").strip().lower()
+    if m not in ("offline", "online"):
+        raise ValueError(f"Chế độ thời tiết không hợp lệ: {m!r} (chỉ nhận 'offline' hoặc 'online')")
+    return m
+
+
+def _vars_text(variables):
+    return ", ".join(variables)
+
+
+# ----------------------------------------------------------------------------- gọi API (chỉ khi online)
 def _request(params, retries=5):
-    """Gọi API, tự thử lại khi bị giới hạn tần suất (429) hoặc lỗi máy chủ (5xx)."""
+    """Gọi API, tự thử lại khi bị giới hạn tần suất (429) hoặc lỗi máy chủ (5xx). Nơi DUY NHẤT gọi `requests.get`."""
+    global N_API_CALLS
     for attempt in range(1, retries + 1):
+        N_API_CALLS += 1
         try:
             r = requests.get(API_URL, params=params, timeout=120)
         except requests.RequestException as e:
             if attempt == retries:
                 raise
-            print(f"  lỗi mạng ({e.__class__.__name__}), thử lại sau {5 * attempt}s")
-            time.sleep(5 * attempt)
+            print(f"  lỗi mạng ({e.__class__.__name__}), thử lại sau {RETRY_SLEEP * attempt}s")
+            time.sleep(RETRY_SLEEP * attempt)
             continue
         if r.status_code == 200:
             return r.json()
         if r.status_code == 429:
-            print("  bị giới hạn tần suất (429), chờ 65s rồi thử lại")
-            time.sleep(65)
+            print("  bị giới hạn tần suất (429), chờ rồi thử lại")
+            time.sleep(13 * RETRY_SLEEP)
             continue
         if r.status_code >= 500:
-            time.sleep(5 * attempt)
+            time.sleep(RETRY_SLEEP * attempt)
             continue
         try:
             reason = r.json().get("reason", r.text)
@@ -122,54 +186,287 @@ def _to_frame(data, variables):
     return h
 
 
-def cache_path(city):
-    return RAW_WEATHER / f"openmeteo_{city.lower()}_hourly.csv.gz"
+def _context(city, target, variables, start, end):
+    where = f"file đích: {data_paths.show(target)}" if target is not None else "không lưu file"
+    return f"thành phố {city}; {where}; biến: {_vars_text(variables)}; khoảng {start} -> {end}"
 
 
-def fetch_city(city, variables, start=START, end=END, use_cache=True):
-    """Dữ liệu theo giờ của một thành phố. Có sẵn bản lưu đủ biến và đủ khoảng thời gian thì đọc lại, không gọi API."""
-    path = cache_path(city)
-    if use_cache and path.exists():
-        h = pd.read_csv(path)
-        if set(variables) <= set(h.columns) and h["time"].iloc[0][:10] <= start and h["time"].iloc[-1][:10] >= end:
-            h.attrs["from_cache"] = True
-            return h
-    data = _request(_params(city, variables, start, end))
+def _check_response(data, city, variables, target, start, end):
+    """API phải trả đủ biến, đúng múi giờ và đúng đơn vị; nếu không thì từ chối (không lưu, không dùng)."""
+    ctx = _context(city, target, variables, start, end)
+    hourly = data.get("hourly") if isinstance(data, dict) else None
+    if not isinstance(hourly, dict) or "time" not in hourly:
+        raise WeatherDownloadError(f"API không trả khối `hourly` có cột time ({ctx}).")
+    for v in variables:
+        if v not in hourly:
+            raise WeatherDownloadError(f"API không trả biến `{v}` ({ctx}).")
+        if len(hourly[v]) != len(hourly["time"]):
+            raise WeatherDownloadError(f"API trả biến `{v}` có {len(hourly[v])} giá trị, khác số mốc giờ {len(hourly['time'])} ({ctx}).")
+        if not pd.Series(hourly[v], dtype="float64").notna().any():
+            raise WeatherDownloadError(f"API trả toàn giá trị rỗng cho biến `{v}` ({ctx}). Không bỏ biến này để chạy tiếp.")
+    if data.get("timezone") != TIMEZONE:
+        raise WeatherDownloadError(f"API trả múi giờ {data.get('timezone')!r}, mong đợi {TIMEZONE!r} ({ctx}).")
+    if data.get("utc_offset_seconds", UTC_OFFSET_SECONDS) != UTC_OFFSET_SECONDS:
+        raise WeatherDownloadError(f"API trả độ lệch UTC {data.get('utc_offset_seconds')} giây, mong đợi {UTC_OFFSET_SECONDS} ({ctx}).")
+    units = data.get("hourly_units")
+    if not isinstance(units, dict):
+        raise WeatherDownloadError(f"API không trả `hourly_units` nên không xác nhận được đơn vị ({ctx}).")
+    for v in variables:
+        if units.get(v) != HOURLY_UNITS[v]:
+            raise WeatherDownloadError(f"Biến `{v}`: API trả đơn vị {units.get(v)!r}, mong đợi {HOURLY_UNITS[v]!r} ({ctx}).")
+
+
+def _download(city, variables, start, end, mode=None, target=None):
+    """Một lần gọi API cho một thành phố. Chỉ chạy khi online; lỗi nào cũng nêu thành phố, file đích và biến."""
+    ctx = _context(city, target, variables, start, end)
+    if network_mode(mode) != "online":
+        raise WeatherOfflineError(f"Đang ở chế độ offline nên không gọi API ({ctx}). Muốn tải: đặt {data_paths.ENV_MODE}=online.")
+    try:
+        data = _request(_params(city, variables, start, end))
+    except (requests.RequestException, RuntimeError, ValueError) as e:
+        raise WeatherDownloadError(f"Không tải được thời tiết ({ctx}). Lỗi: {type(e).__name__}: {e}") from e
+    _check_response(data, city, variables, target, start, end)
     h = _to_frame(data, variables)
-    h.attrs["from_cache"] = False
-    if use_cache:
-        RAW_WEATHER.mkdir(parents=True, exist_ok=True)
-        h.to_csv(path, index=False, compression="gzip")
+    h.attrs.update(from_cache=False, source="API", api_meta={
+        k: data.get(k) for k in ("latitude", "longitude", "elevation", "timezone", "timezone_abbreviation",
+                                 "utc_offset_seconds", "generationtime_ms", "hourly_units")})
     return h
 
 
-def fetch_all(variables, cities=CITIES, pause=3):
-    """Tải 8 thành phố, trả về dict {thành phố: bảng theo giờ}. Nghỉ vài giây giữa các lần gọi thật."""
+# ----------------------------------------------------------------------------- kiểm tra một bảng theo giờ
+def _expected_grid(start, end):
+    return pd.date_range(pd.Timestamp(start), pd.Timestamp(end) + pd.Timedelta(hours=23), freq="h")
+
+
+def validate_hourly(h, variables=None, start=START, end=END):
+    """Kiểm một bảng theo giờ có dùng được không. Trả về (bảng đã cắt đúng [start, end] hoặc None, số liệu, danh sách vấn đề).
+
+    Tiêu chí: đủ cột (time, biến bắt buộc, cột ô lưới); cột time đọc được và tăng dần; đủ mọi giờ của [start, end], không
+    giờ nào trùng, không mốc nào lệch lưới giờ; biến là số và không có ô trống. Danh sách vấn đề rỗng nghĩa là hợp lệ.
+    """
+    variables = list(variables or REQUIRED_HOURLY)
+    problems = []
+    stats = {"so_dong_file": len(h), "co_BLH": "boundary_layer_height" in h.columns}
+    missing_cols = [c for c in ["time"] + variables + PROVENANCE_COLS if c not in h.columns]
+    if missing_cols:
+        problems.append("thiếu cột: " + ", ".join(missing_cols))
+    if "time" not in h.columns:
+        return None, stats, problems
+
+    t = pd.to_datetime(h["time"].astype(str), format="%Y-%m-%dT%H:%M", errors="coerce")
+    n_bad = int(t.isna().sum())
+    if n_bad:
+        problems.append(f"{n_bad} dòng có cột time không đọc được (mong đợi dạng YYYY-MM-DDTHH:MM)")
+    if not t.dropna().is_monotonic_increasing:
+        problems.append("cột time không tăng dần")
+
+    grid = _expected_grid(start, end)
+    inside = t.between(grid[0], grid[-1])
+    ti = t[inside]
+    n_dup = int(ti.duplicated().sum())
+    n_off = int((~ti.isin(grid)).sum())
+    missing_hours = grid.difference(pd.DatetimeIndex(ti.unique()))
+    stats.update(so_dong=int(inside.sum()), mong_doi=len(grid), gio_trung=n_dup, gio_thieu=len(missing_hours), gio_lech_luoi=n_off,
+                 dau=ti.min().strftime("%Y-%m-%d %H:%M") if len(ti) else None, cuoi=ti.max().strftime("%Y-%m-%d %H:%M") if len(ti) else None)
+    if n_dup:
+        problems.append(f"{n_dup} giờ bị trùng (ví dụ {ti[ti.duplicated()].iloc[0]:%Y-%m-%d %H:%M})")
+    if n_off:
+        problems.append(f"{n_off} mốc thời gian không nằm trên lưới giờ")
+    if len(missing_hours):
+        problems.append(f"thiếu {len(missing_hours)} giờ trong khoảng {start} -> {end} (ví dụ {missing_hours[0]:%Y-%m-%d %H:%M})")
+
+    out = h.loc[inside.to_numpy()].reset_index(drop=True)
+    empty = {}
+    for v in variables:
+        if v not in h.columns:
+            continue
+        if not pd.api.types.is_numeric_dtype(out[v]):
+            problems.append(f"biến `{v}` không phải kiểu số")
+            continue
+        n_nan = int(out[v].isna().sum())
+        if n_nan:
+            empty[v] = n_nan
+            first = pd.to_datetime(out.loc[out[v].isna(), "time"].iloc[0])
+            problems.append(f"biến `{v}` có {n_nan} ô trống (ô đầu tiên {first:%Y-%m-%d %H:%M})")
+    stats["o_trong"] = int(sum(empty.values()))
+    stats["o_trong_theo_bien"] = empty
+    for c in ("grid_lat", "grid_lon"):
+        if c in out.columns and len(out) and (out[c].isna().any() or out[c].nunique() != 1):
+            problems.append(f"cột `{c}` trống hoặc không cố định trong file (mỗi thành phố chỉ dùng một ô lưới)")
+    return out, stats, problems
+
+
+def cache_path(city, cache_dir=None):
+    return Path(cache_dir or data_paths.weather_cache_dir()) / f"openmeteo_{city.lower()}_hourly.csv.gz"
+
+
+def download_path(city, download_dir=None):
+    return Path(download_dir or data_paths.weather_download_dir()) / f"openmeteo_{city.lower()}_hourly.csv.gz"
+
+
+def validate_cache(city, path, variables=None, start=START, end=END):
+    """Đọc và kiểm một file cache. Trả về dict: city, path, exists, sha256, ok, problems, stats, frame (bảng đã cắt)."""
+    path = Path(path)
+    rep = {"city": city, "path": path, "exists": path.is_file(), "sha256": None, "ok": False, "problems": [], "stats": {}, "frame": None}
+    if not rep["exists"]:
+        rep["problems"] = ["không có file"]
+        return rep
+    rep["sha256"] = data_paths.sha256_file(path)
+    try:
+        h = pd.read_csv(path)
+    except Exception as e:                                  # noqa: BLE001 - file hỏng kiểu gì cũng phải thành một vấn đề được báo
+        rep["problems"] = [f"không đọc được file ({type(e).__name__}: {e})"]
+        return rep
+    rep["frame"], rep["stats"], rep["problems"] = validate_hourly(h, variables, start, end)
+    rep["ok"] = not rep["problems"]
+    return rep
+
+
+def _sources(city, cache_dir=None, download_dir=None):
+    """Thứ tự tìm dữ liệu giờ của một thành phố: cache gốc (chỉ đọc) rồi tới bản tải mới của các lần chạy online trước."""
+    return [("cache gốc", cache_path(city, cache_dir)), ("bản tải mới", download_path(city, download_dir))]
+
+
+def _find_valid(city, variables, start, end, cache_dir, download_dir):
+    reports = []
+    for kind, path in _sources(city, cache_dir, download_dir):
+        rep = validate_cache(city, path, variables, start, end)
+        rep["kind"] = kind
+        reports.append(rep)
+        if rep["ok"]:
+            return rep, reports
+    return None, reports
+
+
+def _why_invalid(city, reports):
+    return [f"  - {city}, {r['kind']} {data_paths.show(r['path'])}: " + "; ".join(r["problems"]) for r in reports]
+
+
+def cache_status(variables=None, cities=CITIES, start=START, end=END, cache_dir=None, download_dir=None):
+    """Bảng tình trạng dữ liệu giờ của từng thành phố. Chỉ đọc file, KHÔNG gọi mạng."""
+    variables = list(variables or REQUIRED_HOURLY)
+    rows = []
+    for c in cities:
+        good, reports = _find_valid(c, variables, start, end, cache_dir, download_dir)
+        r = good or reports[0]
+        st = r["stats"]
+        rows.append({"City": c, "hop_le": good is not None, "nguon": r["kind"] if good else "không có nguồn hợp lệ",
+                     "file": data_paths.show(r["path"]), "sha256_16": (r["sha256"] or "")[:16],
+                     "so_dong": st.get("so_dong"), "mong_doi": st.get("mong_doi"), "gio_trung": st.get("gio_trung"),
+                     "gio_thieu": st.get("gio_thieu"), "o_trong": st.get("o_trong"), "co_BLH": st.get("co_BLH"),
+                     "van_de": "" if good else " | ".join("; ".join(x["problems"]) for x in reports)})
+    return pd.DataFrame(rows).set_index("City")
+
+
+def _save_download(h, city, target, variables, start, end):
+    """Lưu bản tải mới. Mở file ở chế độ tạo mới ('x'): không bao giờ ghi đè một file đã có."""
+    target.parent.mkdir(parents=True, exist_ok=True)
+    data_paths.check_writable(target)
+    with open(target, "xb") as raw:
+        with gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as gz:
+            gz.write(h.to_csv(index=False).encode("utf-8"))
+    meta = {"city": city, "file": target.name, "sha256": data_paths.sha256_file(target), "rows": len(h),
+            "api_url": API_URL, "params": _params(city, variables, start, end), "response": h.attrs.get("api_meta"),
+            "downloaded_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "attribution": ATTRIBUTION}
+    Path(str(target) + ".provenance.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
+    return meta
+
+
+def fetch_city(city, variables=None, start=START, end=END, use_cache=True, mode=None, cache_dir=None, download_dir=None):
+    """Dữ liệu theo giờ của một thành phố, ĐỌC CACHE TRƯỚC.
+
+    Có nguồn hợp lệ (cache gốc, hoặc bản tải mới của lần chạy online trước) thì đọc lại và không gọi API. Không có thì:
+    offline -> `WeatherCacheError` nêu file và tiêu chí hỏng; online -> tải đúng thành phố này, kiểm bằng cùng bộ tiêu chí,
+    lưu vào thư mục bản tải mới (không ghi đè file nào). `use_cache=False` chỉ dành cho thử API: gọi thẳng, không lưu.
+    """
+    variables = list(variables or REQUIRED_HOURLY)
+    if not use_cache:
+        return _download(city, variables, start, end, mode=mode)
+    good, reports = _find_valid(city, variables, start, end, cache_dir, download_dir)
+    if good is not None:
+        h = good["frame"]
+        h.attrs.update(from_cache=True, source=good["kind"], path=str(good["path"]), sha256=good["sha256"])
+        data_paths.record_input(f"thời tiết theo giờ {city} ({good['kind']})", good["path"], quiet=True)
+        return h
+    why = _why_invalid(city, reports)
+    target = download_path(city, download_dir)
+    if network_mode(mode) != "online":
+        raise WeatherCacheError(
+            f"Không có dữ liệu thời tiết theo giờ hợp lệ cho {city} (chế độ offline, không gọi mạng):\n" + "\n".join(why)
+            + f"\nBiến bắt buộc: {_vars_text(variables)}. Khoảng: {start} -> {end}."
+            + f"\nCách xử lý: khôi phục file cache gốc, hoặc cho tải lại bằng {data_paths.ENV_MODE}=online "
+              f"(bản tải mới lưu ở {data_paths.show(target.parent)}, không ghi đè file gốc).")
+    if target.exists():
+        raise WeatherCacheError(
+            f"{city}: bản tải trước đó {data_paths.show(target)} không hợp lệ và sẽ không bị ghi đè:\n" + "\n".join(why)
+            + "\nHãy tự xoá hoặc đổi tên file đó rồi chạy lại.")
+    h = _download(city, variables, start, end, mode=mode, target=target)
+    checked, _, problems = validate_hourly(h, variables, start, end)
+    if problems:
+        raise WeatherDownloadError(f"Dữ liệu vừa tải không qua kiểm tra nên không lưu ({_context(city, target, variables, start, end)}): "
+                                   + "; ".join(problems))
+    meta = _save_download(h, city, target, variables, start, end)
+    checked.attrs.update(from_cache=False, source="API (vừa tải)", path=str(target), sha256=meta["sha256"], api_meta=h.attrs.get("api_meta"))
+    data_paths.record_output(f"bản tải mới thời tiết theo giờ {city}", target, quiet=True)
+    return checked
+
+
+def fetch_all(variables=None, cities=CITIES, pause=3, mode=None, cache_dir=None, download_dir=None, start=START, end=END):
+    """Dữ liệu giờ của các thành phố, trả về dict {thành phố: bảng theo giờ}. Đọc cache trước; chỉ tải thành phố thiếu.
+
+    Offline mà có thành phố không có nguồn hợp lệ: dừng TRƯỚC khi trả bất cứ thứ gì, liệt kê mọi thành phố có vấn đề.
+    """
+    variables = list(variables or REQUIRED_HOURLY)
+    m = network_mode(mode)
+    if m != "online":
+        bad = []
+        for c in cities:
+            good, reports = _find_valid(c, variables, start, end, cache_dir, download_dir)
+            if good is None:
+                bad += _why_invalid(c, reports)
+        if bad:
+            raise WeatherCacheError(
+                "Không có dữ liệu thời tiết theo giờ hợp lệ (chế độ offline, không gọi mạng):\n" + "\n".join(bad)
+                + f"\nBiến bắt buộc: {_vars_text(variables)}. Khoảng: {start} -> {end}."
+                + f"\nCách xử lý: khôi phục file cache gốc, hoặc cho tải lại bằng {data_paths.ENV_MODE}=online "
+                  f"(bản tải mới lưu ở {data_paths.show(data_paths.weather_download_dir() if download_dir is None else download_dir)}, "
+                  f"không ghi đè file gốc).")
     out = {}
     for i, c in enumerate(cities):
-        out[c] = fetch_city(c, variables)
+        out[c] = fetch_city(c, variables, start, end, mode=m, cache_dir=cache_dir, download_dir=download_dir)
         cached = out[c].attrs.get("from_cache", False)
-        print(f"{c}: {len(out[c]):,} dòng giờ" + (" (đọc từ bản lưu)" if cached else " (vừa tải)"))
+        print(f"{c}: {len(out[c]):,} dòng giờ ({out[c].attrs.get('source')}: {data_paths.show(out[c].attrs['path'])}, "
+              f"sha256 {out[c].attrs['sha256'][:16]})")
         if not cached and i < len(cities) - 1:
             time.sleep(pause)
     return out
 
 
-def smoke_test():
-    """Tải thử 7 ngày của Delhi, không lưu. Chạy trước khi tải thật để biết API và tham số còn chạy."""
-    h = fetch_city("Delhi", HOURLY_CORE, "2019-01-01", "2019-01-07", use_cache=False)
+def smoke_test(mode=None):
+    """Tải thử 7 ngày của Delhi, không lưu. Chỉ để chẩn đoán API khi ONLINE; NB04 không còn gọi hàm này."""
+    h = fetch_city("Delhi", HOURLY_CORE, "2019-01-01", "2019-01-07", use_cache=False, mode=mode)
     print(f"OK: {len(h)} dòng giờ (mong đợi 168), ô lưới dùng: lat {h.grid_lat[0]}, lon {h.grid_lon[0]}, cao {h.grid_elev[0]} m")
     return h
 
 
-def probe_variable(var):
-    """True nếu API trả được biến `var` (có giá trị thật) cho Delhi."""
+def probe_variable(var, mode=None):
+    """True nếu API trả được biến `var` (có giá trị thật) cho Delhi. Chỉ để chẩn đoán khi ONLINE; NB04 không còn gọi.
+
+    Lỗi mạng hoặc đang offline KHÔNG được hiểu là "API không có biến này": ném lỗi, để không ai dựa vào kết quả False giả
+    mà bỏ biến. Chỉ khi API trả lời rõ là không phục vụ được (lỗi 4xx, thiếu biến, toàn rỗng) mới trả False.
+    """
+    ctx = _context("Delhi", None, [var], "2019-01-01", "2019-01-07")
+    if network_mode(mode) != "online":
+        raise WeatherOfflineError(f"Đang ở chế độ offline nên không thử được biến qua API ({ctx}).")
     try:
         data = _request(_params("Delhi", [var], "2019-01-01", "2019-01-07"), retries=2)
-        return pd.Series(data["hourly"][var]).notna().any()
-    except (RuntimeError, requests.RequestException, KeyError) as e:
-        print(f"Không lấy được {var}: {e}")
+    except requests.RequestException as e:
+        raise WeatherDownloadError(f"Không thử được biến qua API ({ctx}). Lỗi mạng: {type(e).__name__}: {e}") from e
+    except RuntimeError as e:
+        print(f"API không phục vụ được {var}: {e}")
         return False
+    values = data.get("hourly", {}).get(var)
+    return values is not None and bool(pd.Series(values, dtype="float64").notna().any())
 
 
 # ----------------------------------------------------------------------------- kiểm tra dữ liệu giờ
@@ -302,3 +599,108 @@ def dictionary_markdown(has_blh=False):
     lines = ["| Cột | Kiểu | Đơn vị | Ý nghĩa | Cách tính |", "|---|---|---|---|---|"]
     lines += [f"| `{c}` | {t} | {u} | {m} | {h} |" for c, t, u, m, h in rows]
     return "\n".join(lines)
+
+
+# ----------------------------------------------------------------------------- lưu output mới (không ghi đè baseline)
+def output_paths(out_dir=None):
+    """(file bảng ghép, file thời tiết theo ngày) mà NB04 sẽ ghi. Mặc định `outputs/nb04/`, đổi bằng `AIR_NB04_OUT_DIR`."""
+    d = Path(out_dir) if out_dir is not None else data_paths.nb04_out_dir()
+    return d / data_paths.MERGED_NAME, d / data_paths.DAILY_NAME
+
+
+def save_outputs(merged, daily, hourly=None, out_dir=None):
+    """Ghi hai bảng output của NB04 và một file `nb04_manifest.json` (đầu vào, đầu ra, sha256, môi trường).
+
+    Từ chối ghi vào `data/` của dự án trừ khi bật rõ `AIR_ALLOW_BASELINE_OVERWRITE=1` (chỉ dùng trong bản sao).
+    Trả về (đường dẫn bảng ghép, đường dẫn bảng theo ngày).
+    """
+    p_merged, p_daily = output_paths(out_dir)
+    for p in (p_merged, p_daily):
+        data_paths.check_writable(p)
+    p_daily.parent.mkdir(parents=True, exist_ok=True)
+    merged.to_csv(p_merged, index=False)
+    daily.to_csv(p_daily, index=False)
+    outs = [data_paths.record_output("bảng ghép chất lượng không khí + thời tiết", p_merged),
+            data_paths.record_output("thời tiết theo ngày", p_daily)]
+    manifest = {
+        "created_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "mode": network_mode(), "api_calls_in_process": N_API_CALLS,
+        "python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__,
+        "range": [START, END], "timezone": TIMEZONE, "model": MODEL, "required_hourly": REQUIRED_HOURLY,
+        "inputs": {"air_quality": {"path": str(AQ_FILE), "sha256": data_paths.sha256_file(AQ_FILE)},
+                   "hourly": {c: {k: h.attrs.get(k) for k in ("source", "path", "sha256")} for c, h in (hourly or {}).items()}},
+        "outputs": [{k: r[k] for k in ("role", "path", "sha256", "bytes")} for r in outs],
+    }
+    (p_daily.parent / "nb04_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+    return p_merged, p_daily
+
+
+# ----------------------------------------------------------------------------- so với baseline theo dung sai đã duyệt
+def unrounded_means(hourly):
+    """Trung bình 24 giờ CHƯA làm tròn của ba cột được phép lệch, để chứng minh một ô lệch có nằm sát biên x,xx5 không."""
+    parts = []
+    for city, h in hourly.items():
+        day = pd.to_datetime(h["time"]).dt.normalize()
+        m = h.groupby(day)[list(TOL_MEAN_COLS.values())].mean()
+        m.columns = [c + "_unrounded" for c in TOL_MEAN_COLS]
+        m.index.name = "Date"
+        m = m.reset_index()
+        m.insert(0, "City", city)
+        parts.append(m)
+    return pd.concat(parts, ignore_index=True)
+
+
+def compare_daily(new, base, hourly):
+    """So bảng thời tiết theo ngày `new` với bảng baseline `base`, theo đúng dung sai RA đã duyệt (RA-DEC-02 mục 5).
+
+    * Bộ cột, khoá (City, Date), vị trí NaN, `rain_day`, `wind_dir_8`: phải trùng chính xác.
+    * `temp_mean`, `pressure_mean`, `wind_speed_mean`: được lệch tối đa ROUND_TOL (+ ABS_EPS), và CHỈ KHI trung bình 24 giờ
+      chưa làm tròn (tính lại từ `hourly`) nằm sát biên x,xx5 và cả hai giá trị đều là một cách làm tròn của trung bình đó.
+    * Mọi cột số khác: lệch không quá ABS_EPS.
+    Dung sai không phải miễn kiểm: mọi ô khác nhau đều được liệt kê. Trả về dict:
+      ok (bool), problems (list lỗi cấu trúc), cells (mọi ô khác nhau, có cột `trong_dung_sai`), summary (theo cột).
+    """
+    problems = []
+    if list(new.columns) != list(base.columns):
+        problems.append(f"bộ cột khác nhau: mới {list(new.columns)} | baseline {list(base.columns)}")
+        return {"ok": False, "problems": problems, "cells": pd.DataFrame(), "summary": pd.DataFrame()}
+    a = new.assign(Date=pd.to_datetime(new["Date"]), City=new["City"].astype(str)).sort_values(KEYS).reset_index(drop=True)
+    b = base.assign(Date=pd.to_datetime(base["Date"]), City=base["City"].astype(str)).sort_values(KEYS).reset_index(drop=True)
+    for name, d in (("mới", a), ("baseline", b)):
+        if d.duplicated(KEYS).any():
+            problems.append(f"bảng {name} có khoá (City, Date) trùng")
+    if len(a) != len(b) or not (a[KEYS].to_numpy() == b[KEYS].to_numpy()).all():
+        problems.append(f"bộ khoá (City, Date) khác nhau: mới {len(a)} dòng, baseline {len(b)} dòng")
+        return {"ok": False, "problems": problems, "cells": pd.DataFrame(), "summary": pd.DataFrame()}
+
+    um = a[KEYS].merge(unrounded_means(hourly), on=KEYS, how="left", validate="1:1")
+    cells, summary = [], []
+    for col in [c for c in a.columns if c not in KEYS]:
+        x, y = a[col], b[col]
+        nan_diff = x.isna() ^ y.isna()
+        if col in EXACT_COLS or not (pd.api.types.is_numeric_dtype(x) and pd.api.types.is_numeric_dtype(y)) \
+                or pd.api.types.is_bool_dtype(x) or pd.api.types.is_bool_dtype(y):
+            diff = (x.astype(str) != y.astype(str)) | nan_diff
+            absdiff = pd.Series(np.nan, index=x.index)
+            allowed = pd.Series(False, index=x.index)
+        else:
+            absdiff = (x.astype(float) - y.astype(float)).abs()
+            diff = (absdiff > ABS_EPS) | nan_diff
+            allowed = pd.Series(False, index=x.index)
+            if col in TOL_MEAN_COLS:
+                u = um[col + "_unrounded"]
+                frac = u * 100 - np.floor(u * 100)
+                near = (frac - 0.5).abs() <= BOUNDARY_EPS
+                both_round = ((x - u).abs() <= ROUND_TOL / 2 + BOUNDARY_EPS) & ((y - u).abs() <= ROUND_TOL / 2 + BOUNDARY_EPS)
+                allowed = diff & ~nan_diff & (absdiff <= ROUND_TOL + ABS_EPS) & near & both_round
+        idx = np.flatnonzero(diff.to_numpy())
+        for i in idx:
+            cells.append({"City": a.City[i], "Date": a.Date[i].date(), "cot": col, "moi": x[i], "baseline": y[i],
+                          "abs_lech": absdiff[i], "tb_chua_lam_tron": um[col + "_unrounded"][i] if col in TOL_MEAN_COLS else np.nan,
+                          "trong_dung_sai": bool(allowed[i])})
+        summary.append({"cot": col, "so_o": len(x), "o_khac": int(diff.sum()), "o_trong_dung_sai": int(allowed.sum()),
+                        "o_vi_pham": int((diff & ~allowed).sum()), "max_abs_lech": float(absdiff[diff].max()) if diff.any() and absdiff[diff].notna().any() else 0.0,
+                        "quy_tac": "chính xác" if col in EXACT_COLS else f"<= {ROUND_TOL} tại biên x,xx5" if col in TOL_MEAN_COLS else f"<= {ABS_EPS}"})
+    cells = pd.DataFrame(cells, columns=["City", "Date", "cot", "moi", "baseline", "abs_lech", "tb_chua_lam_tron", "trong_dung_sai"])
+    summary = pd.DataFrame(summary).set_index("cot")
+    return {"ok": not problems and int(summary["o_vi_pham"].sum()) == 0, "problems": problems, "cells": cells, "summary": summary}

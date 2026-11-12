@@ -1,0 +1,22 @@
+bước	mã thoát	lệnh (chạy từ Air-Project-main/)
+pip_check	0	python -m pip check
+pytest	0	AIR_TEST_EVIDENCE_DIR=<work>/pytest python -m pytest -q -rs --durations=15 --junitxml=<work>/pytest/junit.xml
+chain_baseline	0	python tools/run_chain.py --work <work>/chains --name baseline --notebooks 04,05,06 --weather baseline --timeout 2400 --force
+chain_nb04	0	python tools/run_chain.py --work <work>/chains --name nb04 --notebooks 04,05,06 --weather nb04 --timeout 2400 --force
+chain_eda	0	python tools/run_chain.py --work <work>/chains --name eda --notebooks 01,02,03,05 --weather baseline --timeout 2400 --force
+chain_nb06_only	0	python tools/run_chain.py --work <work>/chains --name nb06_only --notebooks 06 --weather baseline --timeout 2400 --force
+chain_all6_nb04	0	python tools/run_chain.py --work <work>/chains --name all6_nb04 --notebooks 01,02,03,04,05,06 --weather nb04 --timeout 2400 --force
+committed_outputs_nb04	0	python tools/adopt_outputs.py <work>/chains/baseline/executed/04_weather_merge.ipynb notebooks/04_weather_merge.ipynb --check
+committed_outputs_nb06	0	python tools/adopt_outputs.py <work>/chains/nb06_only/executed/06_predict_aqi.ipynb notebooks/06_predict_aqi.ipynb --check
+original_nb06	0	python tools/run_notebook.py <work>/orig/Air-Project-main 06_predict_aqi.ipynb --out <work>/orig/executed --timeout 2400 --block-network   # mã và dữ liệu của cd719cf
+cmp_nb06_author_outputs_vs_original_code_rerun	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb06_author_outputs_vs_original_code_rerun.md  (A=orig/06_predict_aqi.author.ipynb, B=orig/executed/06_predict_aqi.ipynb)
+cmp_nb06_original_code_vs_forecast_path	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb06_original_code_vs_forecast_path.md  (A=orig/executed/06_predict_aqi.ipynb, B=chains/nb06_only/executed/06_predict_aqi.ipynb)
+cmp_nb06_baseline_weather_vs_nb04_weather	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb06_baseline_weather_vs_nb04_weather.md  (A=chains/nb06_only/executed/06_predict_aqi.ipynb, B=chains/nb04/executed/06_predict_aqi.ipynb)
+cmp_nb05_baseline_weather_vs_nb04_weather	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb05_baseline_weather_vs_nb04_weather.md  (A=chains/baseline/executed/05_weather_correlation.ipynb, B=chains/nb04/executed/05_weather_correlation.ipynb)
+cmp_01_cleaning_committed_vs_rerun	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/01_cleaning_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/01_cleaning.ipynb, B=chains/eda/executed/01_cleaning.ipynb)
+cmp_02_cleaning_evidence_committed_vs_rerun	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/02_cleaning_evidence_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/02_cleaning_evidence.ipynb, B=chains/eda/executed/02_cleaning_evidence.ipynb)
+cmp_03_eda_committed_vs_rerun	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/03_eda_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/03_eda.ipynb, B=chains/eda/executed/03_eda.ipynb)
+cmp_05_weather_correlation_committed_vs_rerun	0	python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/05_weather_correlation_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/05_weather_correlation.ipynb, B=chains/eda/executed/05_weather_correlation.ipynb)
+figures	0	python - (so điểm ảnh 5 hình model_0x giữa cd719cf và HEAD; mã nằm trong run_evidence.sh)
+da_crosscheck	0	python reports/ra/round2/dev_evidence/crosscheck_da_reference.py <work>/da_crosscheck 13e93ae12c483f01a573ee51ef9562a315e45068 <work>/chains/nb06_only/proj/outputs/nb06/nb06_run_summary.json
+determinism	0	(so từng byte các file output giữa các lần chạy; mã nằm trong run_evidence.sh)

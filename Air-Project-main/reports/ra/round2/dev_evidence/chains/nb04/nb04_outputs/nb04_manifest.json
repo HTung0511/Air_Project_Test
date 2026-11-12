@@ -1,0 +1,85 @@
+{
+ "created_utc": "2026-11-12T10:24:41Z",
+ "mode": "offline",
+ "api_calls_in_process": 0,
+ "python": "3.11.2",
+ "numpy": "2.4.6",
+ "pandas": "3.1.1",
+ "range": [
+  "2014-12-25",
+  "2020-07-01"
+ ],
+ "timezone": "Asia/Kolkata",
+ "model": "era5",
+ "required_hourly": [
+  "temperature_2m",
+  "relative_humidity_2m",
+  "surface_pressure",
+  "wind_speed_10m",
+  "wind_direction_10m",
+  "precipitation",
+  "boundary_layer_height"
+ ],
+ "inputs": {
+  "air_quality": {
+   "path": "/home/user/scratch/ev/chains/nb04/proj/data/processed/air_quality_8cities.csv",
+   "sha256": "38653221fda73fedb9c1f6cac13953cec8f00b81c6628ab44b0bdcef03e7c0c7"
+  },
+  "hourly": {
+   "Delhi": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_delhi_hourly.csv.gz",
+    "sha256": "4aad409d28169a027f8bc419299f6f86884f9575c31812bb1dcb3a93a6a6c90e"
+   },
+   "Gurugram": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_gurugram_hourly.csv.gz",
+    "sha256": "444cba0e015ca4beac75215f6db018d03c4942a73bd0dbdff98cdaaf9247c427"
+   },
+   "Lucknow": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_lucknow_hourly.csv.gz",
+    "sha256": "c9f452a4449bc8a9225c760a96fd3897abbc124edd755dade1b0a8aff2af931f"
+   },
+   "Jaipur": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_jaipur_hourly.csv.gz",
+    "sha256": "dd32d11f53138e9e4abace695ca78d2dac25f3273423f8019ede4618c16f548e"
+   },
+   "Bengaluru": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_bengaluru_hourly.csv.gz",
+    "sha256": "a3832c8ebea5674bb5c960aa36a634b161f1ed70a7c557c46ff541158f65aa3b"
+   },
+   "Amritsar": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_amritsar_hourly.csv.gz",
+    "sha256": "43317b4763944086619f7f999217645734ab860f79010b7a55b4822d9b3c5c7e"
+   },
+   "Chennai": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_chennai_hourly.csv.gz",
+    "sha256": "6e64ca1594d5367bc4fa48bf97399d5d1ffa39c8a61165e245c04d0f3ff50fa1"
+   },
+   "Hyderabad": {
+    "source": "cache gốc",
+    "path": "/home/user/scratch/ev/chains/nb04/proj/data/raw/weather/openmeteo_hyderabad_hourly.csv.gz",
+    "sha256": "482b19cee699c6ee57c60f560e62157d0a027a5b94239409415b78a20d4620e4"
+   }
+  }
+ },
+ "outputs": [
+  {
+   "role": "bảng ghép chất lượng không khí + thời tiết",
+   "path": "/home/user/scratch/ev/chains/nb04/proj/outputs/nb04/air_quality_8cities_weather.csv",
+   "sha256": "4ea3e9c918688b8f5705fd986d57e7ce8f704c5ed717ea4d339b44df2a8091b4",
+   "bytes": 4385522
+  },
+  {
+   "role": "thời tiết theo ngày",
+   "path": "/home/user/scratch/ev/chains/nb04/proj/outputs/nb04/weather_daily_8cities.csv",
+   "sha256": "2c906e617ec965fe2a12e6f615ee77e9457a521928a162bf42efae3d828eabc7",
+   "bytes": 1505562
+  }
+ ]
+}

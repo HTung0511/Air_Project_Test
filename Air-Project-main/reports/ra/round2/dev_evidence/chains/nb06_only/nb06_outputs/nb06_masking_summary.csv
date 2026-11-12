@@ -1,0 +1,16 @@
+đặc trưng,cột raw,tập,số mẫu,che số 0 treo tại t,giá trị dùng là số 0,dùng giá trị ngày t,điền từ t-1,điền từ t-2,không có nguồn (imputer của train)
+pm25_0,PM2.5,train,5746,0,0,5656,6,5,79
+pm25_0,PM2.5,test,1947,0,0,1947,0,0,0
+pm25_0,PM2.5,lockdown,975,0,0,975,0,0,0
+no2_0,NO2,train,5746,0,0,5736,5,1,4
+no2_0,NO2,test,1947,0,0,1947,0,0,0
+no2_0,NO2,lockdown,975,0,0,975,0,0,0
+co_0,CO,train,5746,252,81,5461,6,4,275
+co_0,CO,test,1947,0,0,1947,0,0,0
+co_0,CO,lockdown,975,0,0,975,0,0,0
+so2_0,SO2,train,5746,0,0,5446,31,18,251
+so2_0,SO2,test,1947,0,0,1946,1,0,0
+so2_0,SO2,lockdown,975,0,0,975,0,0,0
+o3_0,O3,train,5746,0,0,5585,11,6,144
+o3_0,O3,test,1947,0,0,1929,3,3,12
+o3_0,O3,lockdown,975,0,0,972,1,1,1

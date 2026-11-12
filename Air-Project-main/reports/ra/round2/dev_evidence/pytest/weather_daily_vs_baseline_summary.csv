@@ -1,0 +1,15 @@
+cot,so_o,o_khac,o_trong_dung_sai,o_vi_pham,max_abs_lech,quy_tac
+temp_mean,16128,335,335,0,0.010000000000005116,"<= 0.01 tại biên x,xx5"
+temp_min,16128,0,0,0,0.0,<= 1e-09
+temp_max,16128,0,0,0,0.0,<= 1e-09
+humidity_mean,16128,0,0,0,0.0,<= 1e-09
+pressure_mean,16128,348,348,0,0.009999999999990905,"<= 0.01 tại biên x,xx5"
+wind_speed_mean,16128,169,169,0,0.010000000000000675,"<= 0.01 tại biên x,xx5"
+wind_speed_max,16128,0,0,0,0.0,<= 1e-09
+wind_u,16128,0,0,0,0.0,<= 1e-09
+wind_v,16128,0,0,0,0.0,<= 1e-09
+precip_sum,16128,0,0,0,0.0,<= 1e-09
+blh_mean,16128,0,0,0,0.0,<= 1e-09
+blh_min,16128,0,0,0,0.0,<= 1e-09
+rain_day,16128,0,0,0,0.0,chính xác
+wind_dir_8,16128,0,0,0,0.0,chính xác
