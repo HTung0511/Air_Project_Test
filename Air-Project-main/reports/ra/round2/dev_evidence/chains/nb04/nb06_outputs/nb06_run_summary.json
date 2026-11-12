@@ -1,0 +1,1043 @@
+{
+ "protocol": "RA-DEC-02 (11/11/2026)",
+ "environment": {
+  "python": "3.11.2",
+  "numpy": "2.4.6",
+  "pandas": "3.1.1",
+  "scipy": "1.17.1",
+  "scikit-learn": "1.9.1",
+  "statsmodels": "0.15.0",
+  "matplotlib": "3.11.2"
+ },
+ "inputs": {
+  "raw": {
+   "path": "data/raw/city_day.csv",
+   "sha256": "0d84b21c3e4878bbad8df362f2ab05f61ad959538dddf5918e714077ed3c1847",
+   "trùng snapshot": true
+  },
+  "thời tiết theo ngày": {
+   "path": "outputs/nb04/weather_daily_8cities.csv",
+   "sha256": "2c906e617ec965fe2a12e6f615ee77e9457a521928a162bf42efae3d828eabc7",
+   "trùng snapshot": false
+  },
+  "bảng sạch hồi cứu (chỉ để đối chiếu)": {
+   "path": "data/processed/air_quality_8cities.csv",
+   "sha256": "38653221fda73fedb9c1f6cac13953cec8f00b81c6628ab44b0bdcef03e7c0c7",
+   "trùng snapshot": true
+  }
+ },
+ "snapshot_checks": {
+  "đầu vào đúng snapshot": false,
+  "số con số đã đối chiếu": 181,
+  "số ở chế độ bắt buộc khớp": 22,
+  "lệch ở chế độ bắt buộc khớp": [],
+  "lệch được ghi lại (đầu vào khác snapshot)": []
+ },
+ "cohort": {
+  "n": {
+   "train": 5746,
+   "test": 1947,
+   "lockdown": 975
+  },
+  "ngày nặng": {
+   "train": 1436,
+   "test": 389,
+   "lockdown": 18
+  },
+  "bảng giữ mẫu": {
+   "train": {
+    "cặp (thành phố, ngày t) trong khoảng": 5968,
+    "thiếu AQI(t)": 164,
+    "có AQI(t), thiếu AQI(t+1)": 58,
+    "giữ (có cả hai)": 5746,
+    "ngày nặng trong số giữ": 1436
+   },
+   "test": {
+    "cặp (thành phố, ngày t) trong khoảng": 1952,
+    "thiếu AQI(t)": 3,
+    "có AQI(t), thiếu AQI(t+1)": 2,
+    "giữ (có cả hai)": 1947,
+    "ngày nặng trong số giữ": 389
+   },
+   "lockdown": {
+    "cặp (thành phố, ngày t) trong khoảng": 984,
+    "thiếu AQI(t)": 7,
+    "có AQI(t), thiếu AQI(t+1)": 2,
+    "giữ (có cả hai)": 975,
+    "ngày nặng trong số giữ": 18
+   },
+   "Cộng": {
+    "cặp (thành phố, ngày t) trong khoảng": 8904,
+    "thiếu AQI(t)": 174,
+    "có AQI(t), thiếu AQI(t+1)": 62,
+    "giữ (có cả hai)": 8668,
+    "ngày nặng trong số giữ": 1843
+   }
+  },
+  "chỉ có ở đường dự báo": 5,
+  "chỉ có ở đường hồi cứu": 0
+ },
+ "che và điền chất ô nhiễm": {
+  "cột áp quy tắc số 0 treo": [
+   "PM2.5",
+   "NO2",
+   "CO",
+   "SO2",
+   "O3"
+  ],
+  "số ngày 0 liên tiếp tối thiểu (tính đến t)": 3,
+  "forward-fill tối đa (ngày)": 2,
+  "số ô bị che": 252,
+  "theo đặc trưng và tập": [
+   {
+    "đặc trưng": "pm25_0",
+    "cột raw": "PM2.5",
+    "tập": "train",
+    "số mẫu": 5746,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 5656,
+    "điền từ t-1": 6,
+    "điền từ t-2": 5,
+    "không có nguồn (imputer của train)": 79
+   },
+   {
+    "đặc trưng": "pm25_0",
+    "cột raw": "PM2.5",
+    "tập": "test",
+    "số mẫu": 1947,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 1947,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "pm25_0",
+    "cột raw": "PM2.5",
+    "tập": "lockdown",
+    "số mẫu": 975,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 975,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "no2_0",
+    "cột raw": "NO2",
+    "tập": "train",
+    "số mẫu": 5746,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 5736,
+    "điền từ t-1": 5,
+    "điền từ t-2": 1,
+    "không có nguồn (imputer của train)": 4
+   },
+   {
+    "đặc trưng": "no2_0",
+    "cột raw": "NO2",
+    "tập": "test",
+    "số mẫu": 1947,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 1947,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "no2_0",
+    "cột raw": "NO2",
+    "tập": "lockdown",
+    "số mẫu": 975,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 975,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "co_0",
+    "cột raw": "CO",
+    "tập": "train",
+    "số mẫu": 5746,
+    "che số 0 treo tại t": 252,
+    "giá trị dùng là số 0": 81,
+    "dùng giá trị ngày t": 5461,
+    "điền từ t-1": 6,
+    "điền từ t-2": 4,
+    "không có nguồn (imputer của train)": 275
+   },
+   {
+    "đặc trưng": "co_0",
+    "cột raw": "CO",
+    "tập": "test",
+    "số mẫu": 1947,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 1947,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "co_0",
+    "cột raw": "CO",
+    "tập": "lockdown",
+    "số mẫu": 975,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 975,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "so2_0",
+    "cột raw": "SO2",
+    "tập": "train",
+    "số mẫu": 5746,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 5446,
+    "điền từ t-1": 31,
+    "điền từ t-2": 18,
+    "không có nguồn (imputer của train)": 251
+   },
+   {
+    "đặc trưng": "so2_0",
+    "cột raw": "SO2",
+    "tập": "test",
+    "số mẫu": 1947,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 1946,
+    "điền từ t-1": 1,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "so2_0",
+    "cột raw": "SO2",
+    "tập": "lockdown",
+    "số mẫu": 975,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 975,
+    "điền từ t-1": 0,
+    "điền từ t-2": 0,
+    "không có nguồn (imputer của train)": 0
+   },
+   {
+    "đặc trưng": "o3_0",
+    "cột raw": "O3",
+    "tập": "train",
+    "số mẫu": 5746,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 5585,
+    "điền từ t-1": 11,
+    "điền từ t-2": 6,
+    "không có nguồn (imputer của train)": 144
+   },
+   {
+    "đặc trưng": "o3_0",
+    "cột raw": "O3",
+    "tập": "test",
+    "số mẫu": 1947,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 1929,
+    "điền từ t-1": 3,
+    "điền từ t-2": 3,
+    "không có nguồn (imputer của train)": 12
+   },
+   {
+    "đặc trưng": "o3_0",
+    "cột raw": "O3",
+    "tập": "lockdown",
+    "số mẫu": 975,
+    "che số 0 treo tại t": 0,
+    "giá trị dùng là số 0": 0,
+    "dùng giá trị ngày t": 972,
+    "điền từ t-1": 1,
+    "điền từ t-2": 1,
+    "không có nguồn (imputer của train)": 1
+   }
+  ]
+ },
+ "rò rỉ từ raw": {
+  "số ngày cắt": 23,
+  "ô khác khi cắt raw ở t": 0,
+  "ô khác khi nhiễu dữ liệu sau t": 0
+ },
+ "alpha": {
+  "L1": 10,
+  "L2": 0.1,
+  "L3": 30,
+  "L4": 10
+ },
+ "hgb": {
+  "L1": {
+   "max_depth": 2,
+   "max_iter": 200,
+   "learning_rate": 0.05,
+   "min_samples_leaf": 40
+  },
+  "L2": {
+   "max_depth": 2,
+   "max_iter": 200,
+   "learning_rate": 0.05,
+   "min_samples_leaf": 40
+  },
+  "L3": {
+   "max_depth": 2,
+   "max_iter": 200,
+   "learning_rate": 0.05,
+   "min_samples_leaf": 40
+  }
+ },
+ "validation": {
+  "n": 4596,
+  "ngày nặng": 1196
+ },
+ "ngưỡng F2": {
+  "Ngày mai = hôm nay": 160.0,
+  "Ridge L1": 170.0,
+  "Ridge L2": 166.0,
+  "Ridge L3": 167.0,
+  "Ridge L4": 164.0,
+  "HGB L3": 167.0
+ },
+ "MAE validation": {
+  "Trung bình theo thành phố": 60.53604823233186,
+  "Trung vị cùng tháng (khí hậu)": 56.12315056570931,
+  "Ngày mai = hôm nay": 25.956048738033072,
+  "Ridge L1: Mức 1: chỉ AQI các ngày trước": 25.51728525596002,
+  "Ridge L2: Mức 2: + chất ô nhiễm hôm nay": 23.721846938671366,
+  "Ridge L3: Mức 3: + thời tiết đến hôm nay": 22.341173996240006,
+  "Ridge L4: Cận trên: + thời tiết ngày mai (dự báo hoàn hảo)": 22.21177573852362,
+  "Cây tăng cường (HGB) L1": 26.200626561419316,
+  "Cây tăng cường (HGB) L2": 22.942487084630898,
+  "Cây tăng cường (HGB) L3": 22.426069640742327
+ },
+ "test": {
+  "Trung bình theo thành phố": {
+   "MAE": 64.53811489497441,
+   "RMSE": 85.2201934990634,
+   "R²": 0.2557997857499694,
+   "MAE ngày nặng": 94.95631692015674,
+   "MAE ngày còn lại": 56.9433263277113,
+   "giảm MAE so với 'hôm nay'": -175.0239876130254
+  },
+  "Trung vị cùng tháng (khí hậu)": {
+   "MAE": 43.440421160760145,
+   "RMSE": 64.28645826278884,
+   "R²": 0.5765094161437532,
+   "MAE ngày nặng": 63.10411311053985,
+   "MAE ngày còn lại": 38.53080872913992,
+   "giảm MAE so với 'hôm nay'": -85.11786206745606
+  },
+  "Ngày mai = hôm nay": {
+   "MAE": 23.466358500256806,
+   "RMSE": 37.611283262599216,
+   "R²": 0.8550423760913322,
+   "MAE ngày nặng": 47.46015424164524,
+   "MAE ngày còn lại": 17.475609756097562,
+   "giảm MAE so với 'hôm nay'": 0.0
+  },
+  "Ridge L1": {
+   "MAE": 22.929907268567856,
+   "RMSE": 35.98762582894562,
+   "R²": 0.8672877074359251,
+   "MAE ngày nặng": 46.527551743571244,
+   "MAE ngày còn lại": 17.03806920645212,
+   "giảm MAE so với 'hôm nay'": 2.286043791937631
+  },
+  "Ridge L2": {
+   "MAE": 20.921550787282648,
+   "RMSE": 31.90895671732981,
+   "R²": 0.8956650124415313,
+   "MAE ngày nặng": 42.063457206515004,
+   "MAE ngày còn lại": 15.642859133186764,
+   "giảm MAE so với 'hôm nay'": 10.844493460484328
+  },
+  "Ridge L3": {
+   "MAE": 19.52865577931855,
+   "RMSE": 30.251323709604762,
+   "R²": 0.9062236069092318,
+   "MAE ngày nặng": 39.7672127797171,
+   "MAE ngày còn lại": 14.475511573185672,
+   "giảm MAE so với 'hôm nay'": 16.780203544981898
+  },
+  "Ridge L4": {
+   "MAE": 19.0961929571331,
+   "RMSE": 29.65336759758135,
+   "R²": 0.9098941886741356,
+   "MAE ngày nặng": 39.17091817571417,
+   "MAE ngày còn lại": 14.08395411886093,
+   "giảm MAE so với 'hôm nay'": 18.62310909072612
+  },
+  "HGB L1": {
+   "MAE": 23.001099992669847,
+   "RMSE": 36.121123707544356,
+   "R²": 0.8663012755831322,
+   "MAE ngày nặng": 47.37660613776363,
+   "MAE ngày còn lại": 16.915046147713827,
+   "giảm MAE so với 'hôm nay'": 1.982661722234691
+  },
+  "HGB L2": {
+   "MAE": 19.099693151748255,
+   "RMSE": 29.671765351830338,
+   "R²": 0.9097823458068734,
+   "MAE ngày nặng": 36.92123581145551,
+   "MAE ngày còn lại": 14.65002685224497,
+   "giảm MAE so với 'hôm nay'": 18.60819329279728
+  },
+  "HGB L3": {
+   "MAE": 18.11803181271551,
+   "RMSE": 28.727426927776264,
+   "R²": 0.9154335273636411,
+   "MAE ngày nặng": 35.50402994597018,
+   "MAE ngày còn lại": 13.777111868019709,
+   "giảm MAE so với 'hôm nay'": 22.791464161270547
+  }
+ },
+ "hiệu MAE test": {
+  "Ridge L1 − Ngày mai = hôm nay": {
+   "hiệu": -0.5364512316889486,
+   "KTC thấp": -1.1958343429465157,
+   "KTC cao": 0.0665573103370847
+  },
+  "Ridge L2 − Ridge L1": {
+   "hiệu": -2.008356481285209,
+   "KTC thấp": -3.0420605420942812,
+   "KTC cao": -1.0450353350600217
+  },
+  "Ridge L3 − Ridge L2": {
+   "hiệu": -1.3928950079640918,
+   "KTC thấp": -1.9246634227549422,
+   "KTC cao": -0.9232110474873246
+  },
+  "Ridge L3 − Ridge L1": {
+   "hiệu": -3.401251489249301,
+   "KTC thấp": -4.53696341991056,
+   "KTC cao": -2.2876383659858575
+  },
+  "Ridge L3 − Ngày mai = hôm nay": {
+   "hiệu": -3.93770272093825,
+   "KTC thấp": -5.387239840006426,
+   "KTC cao": -2.5584002300448137
+  },
+  "Ridge L4 − Ridge L3": {
+   "hiệu": -0.43246282218545445,
+   "KTC thấp": -0.6174340833365104,
+   "KTC cao": -0.25964188908886054
+  },
+  "HGB L3 − Ridge L3": {
+   "hiệu": -1.4106239666030433,
+   "KTC thấp": -2.0697169899523487,
+   "KTC cao": -0.6838208277348448
+  }
+ },
+ "cảnh báo test": {
+  "Không bao giờ cảnh báo": {
+   "TP": 0.0,
+   "FP": 0.0,
+   "FN": 389.0,
+   "TN": 1558.0,
+   "recall": 0.0,
+   "precision": null,
+   "F1": 0.0
+  },
+  "Ngày mai = hôm nay (ngưỡng 201)": {
+   "TP": 333.0,
+   "FP": 59.0,
+   "FN": 56.0,
+   "TN": 1499.0,
+   "recall": 0.8560411311053985,
+   "precision": 0.8494897959183674,
+   "F1": 0.852752880921895
+  },
+  "Ngày mai = hôm nay (ngưỡng 160)": {
+   "TP": 374.0,
+   "FP": 143.0,
+   "FN": 15.0,
+   "TN": 1415.0,
+   "recall": 0.961439588688946,
+   "precision": 0.723404255319149,
+   "F1": 0.82560706401766
+  },
+  "Ridge L1 (ngưỡng 201)": {
+   "TP": 340.0,
+   "FP": 53.0,
+   "FN": 49.0,
+   "TN": 1505.0,
+   "recall": 0.8740359897172236,
+   "precision": 0.8651399491094147,
+   "F1": 0.8695652173913043
+  },
+  "Ridge L1 (ngưỡng 170)": {
+   "TP": 372.0,
+   "FP": 100.0,
+   "FN": 17.0,
+   "TN": 1458.0,
+   "recall": 0.9562982005141388,
+   "precision": 0.788135593220339,
+   "F1": 0.8641114982578397
+  },
+  "Ridge L2 (ngưỡng 201)": {
+   "TP": 339.0,
+   "FP": 43.0,
+   "FN": 50.0,
+   "TN": 1515.0,
+   "recall": 0.87146529562982,
+   "precision": 0.887434554973822,
+   "F1": 0.8793774319066148
+  },
+  "Ridge L2 (ngưỡng 166)": {
+   "TP": 377.0,
+   "FP": 109.0,
+   "FN": 12.0,
+   "TN": 1449.0,
+   "recall": 0.9691516709511568,
+   "precision": 0.7757201646090535,
+   "F1": 0.8617142857142858
+  },
+  "Ridge L3 (ngưỡng 201)": {
+   "TP": 346.0,
+   "FP": 40.0,
+   "FN": 43.0,
+   "TN": 1518.0,
+   "recall": 0.8894601542416453,
+   "precision": 0.8963730569948186,
+   "F1": 0.8929032258064517
+  },
+  "Ridge L3 (ngưỡng 167)": {
+   "TP": 377.0,
+   "FP": 107.0,
+   "FN": 12.0,
+   "TN": 1451.0,
+   "recall": 0.9691516709511568,
+   "precision": 0.7789256198347108,
+   "F1": 0.86368843069874
+  },
+  "Ridge L4 (ngưỡng 201)": {
+   "TP": 352.0,
+   "FP": 37.0,
+   "FN": 37.0,
+   "TN": 1521.0,
+   "recall": 0.9048843187660668,
+   "precision": 0.9048843187660668,
+   "F1": 0.9048843187660668
+  },
+  "Ridge L4 (ngưỡng 164)": {
+   "TP": 380.0,
+   "FP": 113.0,
+   "FN": 9.0,
+   "TN": 1445.0,
+   "recall": 0.9768637532133676,
+   "precision": 0.77079107505071,
+   "F1": 0.8616780045351474
+  },
+  "HGB L3 (ngưỡng 201)": {
+   "TP": 356.0,
+   "FP": 35.0,
+   "FN": 33.0,
+   "TN": 1523.0,
+   "recall": 0.9151670951156813,
+   "precision": 0.9104859335038363,
+   "F1": 0.9128205128205128
+  },
+  "HGB L3 (ngưỡng 167)": {
+   "TP": 378.0,
+   "FP": 111.0,
+   "FN": 11.0,
+   "TN": 1447.0,
+   "recall": 0.9717223650385605,
+   "precision": 0.7730061349693251,
+   "F1": 0.8610478359908884
+  }
+ },
+ "hiệu cảnh báo test": [
+  {
+   "so sánh": "mô hình mức 3 (ngưỡng chọn) so với baseline đúng nghĩa đen",
+   "chỉ số": "recall",
+   "Δ (A trừ B)": 0.11311053984575836,
+   "KTC 95% thấp": 0.07920688943894386,
+   "KTC 95% cao": 0.16434635784332438,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "mô hình mức 3 (ngưỡng chọn) so với baseline đúng nghĩa đen",
+   "chỉ số": "precision",
+   "Δ (A trừ B)": -0.07056417608365662,
+   "KTC 95% thấp": -0.10065132833314286,
+   "KTC 95% cao": -0.045344645746906574,
+   "kết luận": "A kém B"
+  },
+  {
+   "so sánh": "mô hình mức 3 (ngưỡng chọn) so với baseline đúng nghĩa đen",
+   "chỉ số": "F1",
+   "Δ (A trừ B)": 0.010935549776844966,
+   "KTC 95% thấp": -0.01224592839809224,
+   "KTC 95% cao": 0.03826517080094703,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với 'hôm nay' cũng được chọn ngưỡng (so sánh công bằng)",
+   "chỉ số": "recall",
+   "Δ (A trừ B)": 0.007712082262210873,
+   "KTC 95% thấp": -0.010311963058419317,
+   "KTC 95% cao": 0.028829261954261887,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với 'hôm nay' cũng được chọn ngưỡng (so sánh công bằng)",
+   "chỉ số": "precision",
+   "Δ (A trừ B)": 0.05552136451556178,
+   "KTC 95% thấp": 0.03454277488680916,
+   "KTC 95% cao": 0.08320772960540394,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "mức 3 so với 'hôm nay' cũng được chọn ngưỡng (so sánh công bằng)",
+   "chỉ số": "F1",
+   "Δ (A trừ B)": 0.038081366681079976,
+   "KTC 95% thấp": 0.02228324311374421,
+   "KTC 95% cao": 0.0605471344721957,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "mức 3 so với mức 1: chất ô nhiễm và thời tiết thêm vào",
+   "chỉ số": "recall",
+   "Δ (A trừ B)": 0.01285347043701801,
+   "KTC 95% thấp": 0.0026736185383244293,
+   "KTC 95% cao": 0.027473787680209718,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "mức 3 so với mức 1: chất ô nhiễm và thời tiết thêm vào",
+   "chỉ số": "precision",
+   "Δ (A trừ B)": -0.009209973385628234,
+   "KTC 95% thấp": -0.025265416505489795,
+   "KTC 95% cao": 0.007599930899184168,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với mức 1: chất ô nhiễm và thời tiết thêm vào",
+   "chỉ số": "F1",
+   "Δ (A trừ B)": -0.00042306755909971017,
+   "KTC 95% thấp": -0.009182896467210997,
+   "KTC 95% cao": 0.009254835270500176,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với mức 2: riêng phần thời tiết thêm vào",
+   "chỉ số": "recall",
+   "Δ (A trừ B)": 0.0,
+   "KTC 95% thấp": -0.008086253369272267,
+   "KTC 95% cao": 0.006135283616614777,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với mức 2: riêng phần thời tiết thêm vào",
+   "chỉ số": "precision",
+   "Δ (A trừ B)": 0.0032054552256572943,
+   "KTC 95% thấp": -0.007885862771823116,
+   "KTC 95% cao": 0.014202032463523116,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "mức 3 so với mức 2: riêng phần thời tiết thêm vào",
+   "chỉ số": "F1",
+   "Δ (A trừ B)": 0.0019741449844542514,
+   "KTC 95% thấp": -0.005769351031412404,
+   "KTC 95% cao": 0.008876415476580392,
+   "kết luận": "chưa tách khỏi 0"
+  },
+  {
+   "so sánh": "cùng ngưỡng 201: mức 3 so với 'hôm nay'",
+   "chỉ số": "recall",
+   "Δ (A trừ B)": 0.033419023136246784,
+   "KTC 95% thấp": 0.0033597513597513474,
+   "KTC 95% cao": 0.06757051811636963,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "cùng ngưỡng 201: mức 3 so với 'hôm nay'",
+   "chỉ số": "precision",
+   "Δ (A trừ B)": 0.046883261076451244,
+   "KTC 95% thấp": 0.0334219040016268,
+   "KTC 95% cao": 0.06506546365601218,
+   "kết luận": "A hơn B"
+  },
+  {
+   "so sánh": "cùng ngưỡng 201: mức 3 so với 'hôm nay'",
+   "chỉ số": "F1",
+   "Δ (A trừ B)": 0.0401503448845566,
+   "KTC 95% thấp": 0.026793847169524324,
+   "KTC 95% cao": 0.05534287150742649,
+   "kết luận": "A hơn B"
+  }
+ ],
+ "03-07/2020": {
+  "Ngày mai = hôm nay": {
+   "MAE": 14.803076923076922,
+   "RMSE": 26.88656131763933,
+   "AQI dự đoán TB": 96.81641025641025
+  },
+  "Ridge L1": {
+   "MAE": 14.08857366789302,
+   "RMSE": 24.27578279468027,
+   "AQI dự đoán TB": 98.84415541478995
+  },
+  "Ridge L2": {
+   "MAE": 13.878652955195303,
+   "RMSE": 22.965372558926276,
+   "AQI dự đoán TB": 98.06425730578431
+  },
+  "Ridge L3": {
+   "MAE": 13.773613970165002,
+   "RMSE": 22.624779189339005,
+   "AQI dự đoán TB": 98.73349654304538
+  },
+  "Ridge L4": {
+   "MAE": 13.670287977071235,
+   "RMSE": 22.388792690346598,
+   "AQI dự đoán TB": 99.22106849165347
+  },
+  "Thực tế": {
+   "MAE": null,
+   "RMSE": null,
+   "AQI dự đoán TB": 96.63282051282052
+  }
+ },
+ "so đường (A/B/C)": {
+  "A. hồi cứu (mã cũ), cohort hồi cứu": {
+   "n train": 5741,
+   "n test": 1947,
+   "n 03-07/2020": 975,
+   "ngày nặng train": 1432,
+   "ngày nặng test": 389,
+   "alpha L1": 10,
+   "alpha L2": 0.1,
+   "alpha L3": 30,
+   "ngưỡng F2 hôm nay": 160.0,
+   "ngưỡng F2 L1": 169.0,
+   "ngưỡng F2 L2": 165.0,
+   "ngưỡng F2 L3": 166.0,
+   "MAE test hôm nay": 23.466358500256806,
+   "MAE test L1": 22.937281210572788,
+   "MAE test L2": 20.918857813732004,
+   "MAE test L3": 19.519174716760126,
+   "MAE 03-07/2020 hôm nay": 14.803076923076922,
+   "MAE 03-07/2020 L1": 14.084705310811293,
+   "MAE 03-07/2020 L2": 13.87954643730394,
+   "MAE 03-07/2020 L3": 13.783268434165521,
+   "L1@201 TP/FP/FN": "340/53/49",
+   "L1@F2 TP/FP/FN": "372/102/17",
+   "L2@201 TP/FP/FN": "339/43/50",
+   "L2@F2 TP/FP/FN": "378/113/11",
+   "L3@201 TP/FP/FN": "346/40/43",
+   "L3@F2 TP/FP/FN": "377/113/12"
+  },
+  "B. dự báo từ raw (mã mới), bỏ mẫu chỉ có ở raw": {
+   "n train": 5741,
+   "n test": 1947,
+   "n 03-07/2020": 975,
+   "ngày nặng train": 1432,
+   "ngày nặng test": 389,
+   "alpha L1": 10,
+   "alpha L2": 0.1,
+   "alpha L3": 30,
+   "ngưỡng F2 hôm nay": 160.0,
+   "ngưỡng F2 L1": 170.0,
+   "ngưỡng F2 L2": 165.0,
+   "ngưỡng F2 L3": 166.0,
+   "MAE test hôm nay": 23.466358500256806,
+   "MAE test L1": 22.93544522771777,
+   "MAE test L2": 20.920674097285048,
+   "MAE test L3": 19.51938214735048,
+   "MAE 03-07/2020 hôm nay": 14.803076923076922,
+   "MAE 03-07/2020 L1": 14.089625507453762,
+   "MAE 03-07/2020 L2": 13.883764772887156,
+   "MAE 03-07/2020 L3": 13.787808612459001,
+   "L1@201 TP/FP/FN": "339/53/50",
+   "L1@F2 TP/FP/FN": "372/100/17",
+   "L2@201 TP/FP/FN": "339/43/50",
+   "L2@F2 TP/FP/FN": "377/114/12",
+   "L3@201 TP/FP/FN": "346/40/43",
+   "L3@F2 TP/FP/FN": "378/113/11"
+  },
+  "C. dự báo từ raw (mã mới), cohort raw": {
+   "n train": 5746,
+   "n test": 1947,
+   "n 03-07/2020": 975,
+   "ngày nặng train": 1436,
+   "ngày nặng test": 389,
+   "alpha L1": 10,
+   "alpha L2": 0.1,
+   "alpha L3": 30,
+   "ngưỡng F2 hôm nay": 160.0,
+   "ngưỡng F2 L1": 170.0,
+   "ngưỡng F2 L2": 166.0,
+   "ngưỡng F2 L3": 167.0,
+   "MAE test hôm nay": 23.466358500256806,
+   "MAE test L1": 22.929907268567856,
+   "MAE test L2": 20.921550787282648,
+   "MAE test L3": 19.52865577931855,
+   "MAE 03-07/2020 hôm nay": 14.803076923076922,
+   "MAE 03-07/2020 L1": 14.08857366789302,
+   "MAE 03-07/2020 L2": 13.878652955195303,
+   "MAE 03-07/2020 L3": 13.773613970165002,
+   "L1@201 TP/FP/FN": "340/53/49",
+   "L1@F2 TP/FP/FN": "372/100/17",
+   "L2@201 TP/FP/FN": "339/43/50",
+   "L2@F2 TP/FP/FN": "377/109/12",
+   "L3@201 TP/FP/FN": "346/40/43",
+   "L3@F2 TP/FP/FN": "377/107/12"
+  }
+ },
+ "so đường, hiệu MAE so cặp": [
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "test",
+   "mức": "L1",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.0018359828550159514,
+   "KTC 95% thấp": -0.01001936414377168,
+   "KTC 95% cao": 0.006343788425901656,
+   "max |lệch dự đoán|": 0.752820450967306
+  },
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "test",
+   "mức": "L2",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.0018162835530500115,
+   "KTC 95% thấp": -0.00735626760674644,
+   "KTC 95% cao": 0.010812848402073897,
+   "max |lệch dự đoán|": 0.7624899933896359
+  },
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "test",
+   "mức": "L3",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.00020743059034996345,
+   "KTC 95% thấp": -0.006924988218685572,
+   "KTC 95% cao": 0.007099979238199119,
+   "max |lệch dự đoán|": 0.7933197193044066
+  },
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "03-07/2020",
+   "mức": "L1",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.004920196642465621,
+   "KTC 95% thấp": -0.0021009432357271137,
+   "KTC 95% cao": 0.011591216529769459,
+   "max |lệch dự đoán|": 0.8992277497854957
+  },
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "03-07/2020",
+   "mức": "L2",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.004218335583211275,
+   "KTC 95% thấp": -0.0011795567075257487,
+   "KTC 95% cao": 0.011396764443497201,
+   "max |lệch dự đoán|": 0.49201901381854896
+  },
+  {
+   "so sánh (A trừ B)": "B. − A.",
+   "tập": "03-07/2020",
+   "mức": "L3",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.004540178293480914,
+   "KTC 95% thấp": -0.003060249919772004,
+   "KTC 95% cao": 0.012839095716591382,
+   "max |lệch dự đoán|": 0.4166883572072493
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "test",
+   "mức": "L1",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.007373942004929256,
+   "KTC 95% thấp": -0.0187194048745225,
+   "KTC 95% cao": 0.002902853742028289,
+   "max |lệch dự đoán|": 0.8525569564657189
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "test",
+   "mức": "L2",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.0026929735506455864,
+   "KTC 95% thấp": -0.01216739909389964,
+   "KTC 95% cao": 0.015734015888937657,
+   "max |lệch dự đoán|": 1.6105279086288817
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "test",
+   "mức": "L3",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.009481062558429232,
+   "KTC 95% thấp": -0.005231437325120075,
+   "KTC 95% cao": 0.023663725414858984,
+   "max |lệch dự đoán|": 1.431569882600229
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "03-07/2020",
+   "mức": "L1",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.0038683570817244265,
+   "KTC 95% thấp": -0.005710961571168406,
+   "KTC 95% cao": 0.012895140258269875,
+   "max |lệch dự đoán|": 0.9916156802046885
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "03-07/2020",
+   "mức": "L2",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.0008934821086381234,
+   "KTC 95% thấp": -0.01562140885258073,
+   "KTC 95% cao": 0.012066571765170958,
+   "max |lệch dự đoán|": 1.1353520204137624
+  },
+  {
+   "so sánh (A trừ B)": "C. − A.",
+   "tập": "03-07/2020",
+   "mức": "L3",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.00965446400052408,
+   "KTC 95% thấp": -0.027731647007369215,
+   "KTC 95% cao": 0.004110615450741003,
+   "max |lệch dự đoán|": 1.1057118436668247
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "test",
+   "mức": "L1",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.005537959149913305,
+   "KTC 95% thấp": -0.017265452646377803,
+   "KTC 95% cao": 0.0031416255266575937,
+   "max |lệch dự đoán|": 1.1946033509341305
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "test",
+   "mức": "L2",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.0008766899975955749,
+   "KTC 95% thấp": -0.009744876751617271,
+   "KTC 95% cao": 0.01039537611904165,
+   "max |lệch dự đoán|": 1.3548550246184163
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "test",
+   "mức": "L3",
+   "n (A)": 1947,
+   "n (B)": 1947,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": 0.009273631968079269,
+   "KTC 95% thấp": -0.0033481079757931216,
+   "KTC 95% cao": 0.0213108834519261,
+   "max |lệch dự đoán|": 1.313322469609247
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "03-07/2020",
+   "mức": "L1",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.0010518395607411945,
+   "KTC 95% thấp": -0.008396986552271097,
+   "KTC 95% cao": 0.00706953199398413,
+   "max |lệch dự đoán|": 0.4944469223997885
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "03-07/2020",
+   "mức": "L2",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.005111817691849398,
+   "KTC 95% thấp": -0.018070791133605456,
+   "KTC 95% cao": 0.006609912106122528,
+   "max |lệch dự đoán|": 0.8065428183706871
+  },
+  {
+   "so sánh (A trừ B)": "C. − B.",
+   "tập": "03-07/2020",
+   "mức": "L3",
+   "n (A)": 975,
+   "n (B)": 975,
+   "cùng khoá": true,
+   "cùng nhãn": true,
+   "ΔMAE": -0.014194642294004996,
+   "KTC 95% thấp": -0.031722471044394095,
+   "KTC 95% cao": 0.0012747276351403897,
+   "max |lệch dự đoán|": 0.860316965207744
+  }
+ ]
+}

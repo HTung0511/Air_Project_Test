@@ -1,0 +1,5 @@
+split,"cặp (thành phố, ngày t) trong khoảng",thiếu AQI(t),"có AQI(t), thiếu AQI(t+1)",giữ (có cả hai),ngày nặng trong số giữ
+train,5968,164,58,5746,1436
+test,1952,3,2,1947,389
+lockdown,984,7,2,975,18
+Cộng,8904,174,62,8668,1843

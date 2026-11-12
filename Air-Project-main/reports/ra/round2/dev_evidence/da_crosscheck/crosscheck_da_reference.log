@@ -1,0 +1,33 @@
+$ python reports/ra/round2/dev_evidence/crosscheck_da_reference.py <work>/da_crosscheck 13e93ae12c483f01a573ee51ef9562a315e45068 <work>/chains/nb06_only/proj/outputs/nb06/nb06_run_summary.json
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:37Z
+KHỚP  raw thật: cùng tập dòng (thành phố, ngày): DA 14,056 dòng, Dev 14,056 dòng
+KHỚP  raw thật: đặc trưng pm25_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng no2_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng co_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng so2_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng o3_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng aqi_0: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng aqi_1: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng aqi_2: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  raw thật: đặc trưng aqi_wk: 14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+KHỚP  cohort: tập khoá (City, Date): DA 8,668 khoá, Dev 8,668 khoá; chỉ có ở DA 0, chỉ có ở Dev 0
+KHỚP  cohort: AQI raw của ngày t: 8,668 khoá chung
+KHỚP  cohort: nhãn = AQI raw của ngày t+1: 8,668 khoá chung
+KHỚP  cohort: ngày được dự đoán: 8,668 khoá chung
+KHỚP  cohort: split theo ngày được dự đoán: tên tập của DA ['holdout', 'test', 'train'], của Dev ['lockdown', 'test', 'train'] ('lockdown' của Dev = 'holdout' của DA); khác 0
+KHỚP  ca biên: script của DA tự kiểm (viết tay khớp tham chiếu DA): 11 + 3 ca, 67 hàng kỳ vọng; ô raw bị đổi ở bộ chính: 56; dòng bị xóa ở bộ thiếu ngày: 3; viết tay khớp bản tham chiếu: 67/67; hàng đổi khi cắt raw ở chính ngày đó: 0
+KHỚP  ca biên bộ 'chinh': giá trị as-of so với kỳ vọng viết tay của DA: 52/52 hàng trùng chính xác với log1p(kỳ vọng); raw 14,056 dòng, Dev chèn 0 ngày lịch thiếu; lệch lớn nhất so với cột `ky_vong_dac_trung` trong CSV (ghi 12 chữ số có nghĩa): 2.8e-12
+KHỚP  ca biên bộ 'chinh': hàng của ngày t khi cắt raw ở t: 0/52 hàng đổi
+KHỚP  ca biên bộ 'thieu_ngay': giá trị as-of so với kỳ vọng viết tay của DA: 15/15 hàng trùng chính xác với log1p(kỳ vọng); raw 14,056 dòng, Dev chèn 3 ngày lịch thiếu; lệch lớn nhất so với cột `ky_vong_dac_trung` trong CSV (ghi 12 chữ số có nghĩa): 3.7e-12
+KHỚP  ca biên bộ 'thieu_ngay': hàng của ngày t khi cắt raw ở t: 0/15 hàng đổi
+KHỚP  metric (máy DA): alpha L1-L3: máy DA {'L1': 10, 'L2': 0.1, 'L3': 30}; NB06 {'L1': 10, 'L2': 0.1, 'L3': 30}
+KHỚP  metric (máy DA): ngưỡng F2: máy DA {'Ridge L1': 170.0, 'Ridge L2': 166.0, 'Ridge L3': 167.0, 'Ngày mai = hôm nay': 160.0}; NB06 {'Ridge L1': 170.0, 'Ridge L2': 166.0, 'Ridge L3': 167.0, 'Ngày mai = hôm nay': 160.0}
+KHỚP  metric (máy DA): MAE, RMSE, R², MAE ngày nặng/còn lại trên test: 6 mô hình (Trung bình theo thành phố, Trung vị cùng tháng (khí hậu), Ngày mai = hôm nay, Ridge L1, Ridge L2, Ridge L3); chênh lớn nhất 0.0e+00
+KHỚP  metric (máy DA): MAE 03-07/2020: 4 mô hình; chênh lớn nhất 0.0e+00
+KHỚP  metric (máy DA): TP/FP/FN/TN trên test, ngưỡng 201 và ngưỡng F2: 8/8 quy tắc so được; 0 quy tắc khác số đếm
+KHỚP  metric (máy DA): hiệu MAE và khoảng 95% (khối 14 ngày) trên test: 4/4 phép so; chênh lớn nhất 0.0e+00
+
+26/26 phép so khớp. Commit DA: 13e93ae12c483f01a573ee51ef9562a315e45068. Đây là đối chiếu sơ bộ của Dev, không thay cho kiểm chứng của DA.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:54Z

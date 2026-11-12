@@ -1,0 +1,21 @@
+$ /home/user/.venv/bin/python /home/user/Air_Project_Test/Air-Project-main/tools/run_chain.py --work /tmp/pytest-of-user/pytest-0/chain0 --name nb04 --notebooks 04,05,06 --weather nb04 --timeout 1500
+[exit 0]
+[10:19:12] chạy 04_weather_merge.ipynb ...
+    -> ok, 16/16 ô mã, 4.3 s, 0 lần thử mạng
+[10:19:16] chạy 05_weather_correlation.ipynb ...
+    -> ok, 10/10 ô mã, 14.7 s, 0 lần thử mạng
+[10:19:31] chạy 06_predict_aqi.ipynb ...
+    -> ok, 27/27 ô mã, 31.3 s, 0 lần thử mạng
+
+Tóm tắt: /tmp/pytest-of-user/pytest-0/chain0/nb04/chain_summary.json
+  các bước: 04_weather_merge.ipynb=ok, 05_weather_correlation.ipynb=ok, 06_predict_aqi.ipynb=ok
+  file trong data/ của bản sao bị đổi: không
+  file trong reports/ của bản sao được notebook ghi lại với nội dung khác: 6 (corr_01_raw_vs_adjusted.png, corr_02_hypothesis_tests.png, corr_03_humidity_deciles.png, corr_04_poor_share_by_humidity.png, model_01_residual_diagnostics.png, model_03_mae_by_city.png)
+  file của repo gốc bị đổi trong lúc chạy: không
+  [05_weather_correlation] đọc thời tiết theo ngày: outputs/nb04/weather_daily_8cities.csv | sha256 2c906e617ec965fe | KHÔNG phải baseline (output mới hoặc đường dẫn tự đặt)
+  [06_predict_aqi] đọc thời tiết theo ngày: outputs/nb04/weather_daily_8cities.csv | sha256 2c906e617ec965fe | KHÔNG phải baseline (output mới hoặc đường dẫn tự đặt)
+
+--- stderr ---
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.

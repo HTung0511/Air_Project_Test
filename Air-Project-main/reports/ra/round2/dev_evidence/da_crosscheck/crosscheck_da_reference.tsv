@@ -1,0 +1,27 @@
+phép so	khớp	chi tiết
+raw thật: cùng tập dòng (thành phố, ngày)	True	DA 14,056 dòng, Dev 14,056 dòng
+raw thật: đặc trưng pm25_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng no2_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng co_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng so2_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng o3_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng aqi_0	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng aqi_1	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng aqi_2	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+raw thật: đặc trưng aqi_wk	True	14,056 ô; mặt nạ NaN khác 0; chênh lớn nhất 0.0e+00
+cohort: tập khoá (City, Date)	True	DA 8,668 khoá, Dev 8,668 khoá; chỉ có ở DA 0, chỉ có ở Dev 0
+cohort: AQI raw của ngày t	True	8,668 khoá chung
+cohort: nhãn = AQI raw của ngày t+1	True	8,668 khoá chung
+cohort: ngày được dự đoán	True	8,668 khoá chung
+cohort: split theo ngày được dự đoán	True	tên tập của DA ['holdout', 'test', 'train'], của Dev ['lockdown', 'test', 'train'] ('lockdown' của Dev = 'holdout' của DA); khác 0
+ca biên: script của DA tự kiểm (viết tay khớp tham chiếu DA)	True	11 + 3 ca, 67 hàng kỳ vọng; ô raw bị đổi ở bộ chính: 56; dòng bị xóa ở bộ thiếu ngày: 3; viết tay khớp bản tham chiếu: 67/67; hàng đổi khi cắt raw ở chính ngày đó: 0
+ca biên bộ 'chinh': giá trị as-of so với kỳ vọng viết tay của DA	True	52/52 hàng trùng chính xác với log1p(kỳ vọng); raw 14,056 dòng, Dev chèn 0 ngày lịch thiếu; lệch lớn nhất so với cột `ky_vong_dac_trung` trong CSV (ghi 12 chữ số có nghĩa): 2.8e-12
+ca biên bộ 'chinh': hàng của ngày t khi cắt raw ở t	True	0/52 hàng đổi
+ca biên bộ 'thieu_ngay': giá trị as-of so với kỳ vọng viết tay của DA	True	15/15 hàng trùng chính xác với log1p(kỳ vọng); raw 14,056 dòng, Dev chèn 3 ngày lịch thiếu; lệch lớn nhất so với cột `ky_vong_dac_trung` trong CSV (ghi 12 chữ số có nghĩa): 3.7e-12
+ca biên bộ 'thieu_ngay': hàng của ngày t khi cắt raw ở t	True	0/15 hàng đổi
+metric (máy DA): alpha L1-L3	True	máy DA {'L1': 10, 'L2': 0.1, 'L3': 30}; NB06 {'L1': 10, 'L2': 0.1, 'L3': 30}
+metric (máy DA): ngưỡng F2	True	máy DA {'Ridge L1': 170.0, 'Ridge L2': 166.0, 'Ridge L3': 167.0, 'Ngày mai = hôm nay': 160.0}; NB06 {'Ridge L1': 170.0, 'Ridge L2': 166.0, 'Ridge L3': 167.0, 'Ngày mai = hôm nay': 160.0}
+metric (máy DA): MAE, RMSE, R², MAE ngày nặng/còn lại trên test	True	6 mô hình (Trung bình theo thành phố, Trung vị cùng tháng (khí hậu), Ngày mai = hôm nay, Ridge L1, Ridge L2, Ridge L3); chênh lớn nhất 0.0e+00
+metric (máy DA): MAE 03-07/2020	True	4 mô hình; chênh lớn nhất 0.0e+00
+metric (máy DA): TP/FP/FN/TN trên test, ngưỡng 201 và ngưỡng F2	True	8/8 quy tắc so được; 0 quy tắc khác số đếm
+metric (máy DA): hiệu MAE và khoảng 95% (khối 14 ngày) trên test	True	4/4 phép so; chênh lớn nhất 0.0e+00

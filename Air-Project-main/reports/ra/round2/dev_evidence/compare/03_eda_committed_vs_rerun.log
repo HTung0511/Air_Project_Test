@@ -1,0 +1,6 @@
+$ python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/03_eda_committed_vs_rerun.md  (A=/home/user/Air_Project_Test/Air-Project-main/notebooks/03_eda.ipynb, B=chains/eda/executed/03_eda.ipynb)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:35Z
+Tổng: 13 ô mã chung, 1 ô có output dạng chữ khác, 2 dòng khác, 0 số khác (trên các dòng ghép được), lệch số lớn nhất 0.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

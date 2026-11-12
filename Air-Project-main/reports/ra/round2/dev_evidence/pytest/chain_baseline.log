@@ -1,0 +1,14 @@
+$ /home/user/.venv/bin/python /home/user/Air_Project_Test/Air-Project-main/tools/run_chain.py --work /tmp/pytest-of-user/pytest-0/chain1 --name baseline --notebooks 06 --weather baseline --timeout 1500
+[exit 0]
+[10:20:32] chạy 06_predict_aqi.ipynb ...
+    -> ok, 27/27 ô mã, 32.3 s, 0 lần thử mạng
+
+Tóm tắt: /tmp/pytest-of-user/pytest-0/chain1/baseline/chain_summary.json
+  các bước: 06_predict_aqi.ipynb=ok
+  file trong data/ của bản sao bị đổi: không
+  file trong reports/ của bản sao được notebook ghi lại với nội dung khác: 0
+  file của repo gốc bị đổi trong lúc chạy: không
+  [06_predict_aqi] đọc thời tiết theo ngày: data/processed/weather_daily_8cities.csv | sha256 45f3579a222c55c0 | baseline đã commit
+
+--- stderr ---
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.

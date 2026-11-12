@@ -1,0 +1,211 @@
+{
+ "name": "eda",
+ "weather": "baseline",
+ "notebooks": [
+  "01",
+  "02",
+  "03",
+  "05"
+ ],
+ "network_blocked": true,
+ "started_from": {
+  "project": "/home/user/Air_Project_Test/Air-Project-main",
+  "commit": "a9757af398ddac2f8536e8019e4eb6b5900b4f75",
+  "branch": "arena/5cb21c04-air-project-test",
+  "dirty_files": []
+ },
+ "python": "3.11.2",
+ "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+ "steps": [
+  {
+   "notebook": "01_cleaning.ipynb",
+   "status": "ok",
+   "runtime_s": 15.5,
+   "code_cells": 11,
+   "cells_executed": 11,
+   "executed_copy": "/home/user/scratch/ev/chains/eda/executed/01_cleaning.ipynb",
+   "network_blocked": true,
+   "network_attempts": 0,
+   "network_attempts_detail": [],
+   "python": "3.11.2",
+   "error_tail": null,
+   "command": "python tools/run_notebook.py /home/user/scratch/ev/chains/eda/proj 01_cleaning.ipynb --out /home/user/scratch/ev/chains/eda/executed --timeout 2400 --block-network --env AIR_PROVENANCE_LOG=/home/user/scratch/ev/chains/eda/provenance.jsonl --env AIR_RUN_LABEL=01_cleaning",
+   "exit_code": 0,
+   "env": {
+    "AIR_PROVENANCE_LOG": "/home/user/scratch/ev/chains/eda/provenance.jsonl",
+    "AIR_RUN_LABEL": "01_cleaning"
+   },
+   "executed_sha256": "ee78186ba3f9b4f12c97dcd2925fe3fa60040da001074a050cb549ae1fde8273"
+  },
+  {
+   "notebook": "02_cleaning_evidence.ipynb",
+   "status": "ok",
+   "runtime_s": 8.4,
+   "code_cells": 12,
+   "cells_executed": 12,
+   "executed_copy": "/home/user/scratch/ev/chains/eda/executed/02_cleaning_evidence.ipynb",
+   "network_blocked": true,
+   "network_attempts": 0,
+   "network_attempts_detail": [],
+   "python": "3.11.2",
+   "error_tail": null,
+   "command": "python tools/run_notebook.py /home/user/scratch/ev/chains/eda/proj 02_cleaning_evidence.ipynb --out /home/user/scratch/ev/chains/eda/executed --timeout 2400 --block-network --env AIR_PROVENANCE_LOG=/home/user/scratch/ev/chains/eda/provenance.jsonl --env AIR_RUN_LABEL=02_cleaning_evidence",
+   "exit_code": 0,
+   "env": {
+    "AIR_PROVENANCE_LOG": "/home/user/scratch/ev/chains/eda/provenance.jsonl",
+    "AIR_RUN_LABEL": "02_cleaning_evidence"
+   },
+   "executed_sha256": "3d3000532e42e2c0a9723862824ad46fccac4f9e1847cb655919b269637866bb"
+  },
+  {
+   "notebook": "03_eda.ipynb",
+   "status": "ok",
+   "runtime_s": 5.8,
+   "code_cells": 13,
+   "cells_executed": 13,
+   "executed_copy": "/home/user/scratch/ev/chains/eda/executed/03_eda.ipynb",
+   "network_blocked": true,
+   "network_attempts": 0,
+   "network_attempts_detail": [],
+   "python": "3.11.2",
+   "error_tail": null,
+   "command": "python tools/run_notebook.py /home/user/scratch/ev/chains/eda/proj 03_eda.ipynb --out /home/user/scratch/ev/chains/eda/executed --timeout 2400 --block-network --env AIR_PROVENANCE_LOG=/home/user/scratch/ev/chains/eda/provenance.jsonl --env AIR_RUN_LABEL=03_eda",
+   "exit_code": 0,
+   "env": {
+    "AIR_PROVENANCE_LOG": "/home/user/scratch/ev/chains/eda/provenance.jsonl",
+    "AIR_RUN_LABEL": "03_eda"
+   },
+   "executed_sha256": "df064efe0dab97dcd4fbd64ea84baffa91c31760edffe96cadeb4279347bca21"
+  },
+  {
+   "notebook": "05_weather_correlation.ipynb",
+   "status": "ok",
+   "runtime_s": 15.3,
+   "code_cells": 10,
+   "cells_executed": 10,
+   "executed_copy": "/home/user/scratch/ev/chains/eda/executed/05_weather_correlation.ipynb",
+   "network_blocked": true,
+   "network_attempts": 0,
+   "network_attempts_detail": [],
+   "python": "3.11.2",
+   "error_tail": null,
+   "command": "python tools/run_notebook.py /home/user/scratch/ev/chains/eda/proj 05_weather_correlation.ipynb --out /home/user/scratch/ev/chains/eda/executed --timeout 2400 --block-network --env AIR_PROVENANCE_LOG=/home/user/scratch/ev/chains/eda/provenance.jsonl --env AIR_RUN_LABEL=05_weather_correlation",
+   "exit_code": 0,
+   "env": {
+    "AIR_PROVENANCE_LOG": "/home/user/scratch/ev/chains/eda/provenance.jsonl",
+    "AIR_RUN_LABEL": "05_weather_correlation"
+   },
+   "executed_sha256": "1a5966ec4efd622ae0d98fa2ed8897a66d118c2c5cb42372d42b09197f5ebb12"
+  }
+ ],
+ "inputs_and_outputs_recorded": [
+  {
+   "run": "05_weather_correlation",
+   "direction": "input",
+   "role": "bảng chất lượng không khí đã làm sạch",
+   "path": "data/processed/air_quality_8cities.csv",
+   "sha256": "f6b033a2d91568c294591c6f4dac04acc4698fd219d8992d59f2964821083feb",
+   "bytes": 3348804,
+   "kind": "Ở VỊ TRÍ baseline/raw nhưng NỘI DUNG KHÁC bản đã commit",
+   "time_utc": "2026-11-12T10:26:02Z"
+  },
+  {
+   "run": "05_weather_correlation",
+   "direction": "input",
+   "role": "thời tiết theo ngày",
+   "path": "data/processed/weather_daily_8cities.csv",
+   "sha256": "45f3579a222c55c0156eb7571565bb7a818b89c64ad9b89eff97da02ef224c77",
+   "bytes": 1505551,
+   "kind": "baseline đã commit",
+   "time_utc": "2026-11-12T10:26:02Z"
+  }
+ ],
+ "new_outputs": {},
+ "source_sha256": {
+  "src/corr_utils.py": "62a439db33fc7700ec2fc9a8eb635c5572a211c8bd6ec18722397fbbbb99a1f3",
+  "src/data_paths.py": "1695afe6657294a7d6d23e961d210bb218699569e47219ed2e1b1aa4a837a9e8",
+  "src/eda_utils.py": "7e5c56a5962562876fdfc8bdbd2c267f2d43b22274099172b1969ceb7c6b74b6",
+  "src/forecast_utils.py": "6feaf61cec5b4203f8392c20b861414bc52730cab1a8dd3390e6408ea6ebf1c2",
+  "src/gap_utils.py": "60b18698a448d860e8d6632844f8d222a6e63c3062fc5e6e1166cb1f721b0e33",
+  "src/model_utils.py": "596e1457b14830206d85b6de98677b018aa3e428a9d52e8e6858ca8f1ae3e89e",
+  "src/pipeline.py": "d7e5b852b15284e08ff865237ed7b4c108539eddfa9c941ab08e458cde9aa0b0",
+  "src/utils.py": "94e96aa6834a0687269d127afa33609757b910f213aa899687dcf74fc799b3cc",
+  "src/weather_utils.py": "31f1dfd799f2d5998befcad1526ea9fb3beec8ad03b22e54b1eb4bcf0e50cff3",
+  "tools/adopt_outputs.py": "5a0783557c199f27ad8a5b369c3f9181420ee7e663559a816b508233f2ffdf6a",
+  "tools/compare_notebook_outputs.py": "c48b7b26ccf1eb27df9c99d3cca9ffa16a52331e38cd07929278db597ae271d4",
+  "tools/run_chain.py": "9c259f050d21f93d5b33f068c5035f0dc1f883ee9b3723d05ff7e6e4a5e06ca5",
+  "tools/run_notebook.py": "758e1a1559af7d660e8e79b46335677118ad87799fd11b1c7f29f50bd317aea3",
+  "tests/netguard/sitecustomize.py": "688cf70a68807d64c08fed957c78c05e6470250fdb261e606f011fd6f2c6f0bd",
+  "notebooks/01_cleaning.ipynb": "8eff28621b590c21f294fc8bcf664a4126749595b30e6ca053b6f5d5717c6092",
+  "notebooks/02_cleaning_evidence.ipynb": "0fd4d690d7bbcc9fbfd407a28ef69d06f5e7c632a0f2ac43da6f9b315e297f39",
+  "notebooks/03_eda.ipynb": "de02c71c5d67d3acbd9734c5c317888d20721ab10d60508331895caf4c0dcc7b",
+  "notebooks/04_weather_merge.ipynb": "62ffada5258c1b4d89f1a2c999cbc33506c8025c0a1e5d827d29575e05e86390",
+  "notebooks/05_weather_correlation.ipynb": "92ff0ee9eb0f285063527625e9d77279a5b720049558ab85529c48e0365832c0",
+  "notebooks/06_predict_aqi.ipynb": "86e2ca17becc2df0759832045566537b4d5df2d602615eace77ef62eebf65f85"
+ },
+ "data_files_changed_in_copy": [
+  "data/processed/air_quality_8cities.csv"
+ ],
+ "unexpected_changes_in_copy": [],
+ "report_files_rewritten_in_copy": {
+  "reports/figures/corr_01_raw_vs_adjusted.png": {
+   "before": "b6217b1bec5e8fd8e159a8d0d6568e4d85d23f5d3cff55caf1418d0f04dd66e7",
+   "after": "5a359ff70c606ce732a01e5714df2a059728c10ea43253f5beed712b2e471132"
+  },
+  "reports/figures/corr_02_hypothesis_tests.png": {
+   "before": "e54c50bf067bd56d9c7e84d0c458bc32e658b4195319aaca5f7609115efc04e4",
+   "after": "ca0be5ab1203ced1f9253490fc9512fd8aac58fef69df233416d976c68b255b0"
+  },
+  "reports/figures/corr_03_humidity_deciles.png": {
+   "before": "c32000a7917e751c7be464fa5b8718d87202f5479ed08029e864ee91d49cfe53",
+   "after": "b217df5188c748deab758bcb5d969c383686bf9caee59ef2d659e3d35976942c"
+  },
+  "reports/figures/corr_04_poor_share_by_humidity.png": {
+   "before": "10ad831c2b5359cba1bfdc00ba827eae6444211e3ae90d5863d8a943b06d86ad",
+   "after": "db3301cf79251a156f606ea52b64d024b50bbe5f9784539eb60b15baccf05c82"
+  },
+  "reports/figures/eda_00_sample_size.png": {
+   "before": "109ddef0bd04280bdf10489766d16b060d517edb22b7453485216c38778a9470",
+   "after": "47c5c1224475b8b4444d9701a64e1f5d3421ca9ac594b14f0761c64664ad56e9"
+  },
+  "reports/figures/eda_01_poor_share_city.png": {
+   "before": "72cc04214ea7fe230a0a58aee88dedba3b74927e151beb984b705af5a6456e51",
+   "after": "5a738086e5289efb4e973f26786de3d44772df3b8627042a6bb91336f72b8770"
+  },
+  "reports/figures/eda_02_heatmap_city_month.png": {
+   "before": "45df835937c617724795abece18de715c32ee1380ad71ab5e5e66faae456aa89",
+   "after": "e0cebde42467b6a70bce467d2e2d513eaddd207a26b1b1869fa564c574511c75"
+  },
+  "reports/figures/eda_03_trend_city_year.png": {
+   "before": "4f6a6885d6e3fbbd2e689a9cbbea9d42299fe3c88f8eacdefbfde5cd748de942",
+   "after": "ad5f2d2a5e5a047a368f2aa146c41a2152037eb2d265589ec3ff3a4cbad0585d"
+  },
+  "reports/figures/eda_04_pm25_aqi.png": {
+   "before": "192f5f59212a9dad74467cf6463e737838ee1fc9d4167a320820d40afba4aafe",
+   "after": "74e7c74c02e77550c0f7ed889e6a0f786d273a13be050a2b5e27ca0a69f9c3c8"
+  },
+  "reports/figures/eda_05_aqi_distribution.png": {
+   "before": "1b61740be1c5e2e0b59eb9bada018a5c1d1ddd9361092b74c844c9e43291bb92",
+   "after": "7e6c232916a96f091f2c8f0312a7f24315e972ef46e8824c52ef9065f49eceae"
+  },
+  "reports/figures/fill_strategies_lucknow_jaipur.png": {
+   "before": "7fc0e4bd91e1f1481ea7899cb4b69ae3fbe906c4ffaaafd9b2b6455d9cd1bd76",
+   "after": "9c2c619603d95b3c15b4039cb4f8bb392a3ef82552db2890929fc0b42d59ad9e"
+  },
+  "reports/figures/missing_after_cleaning_8cities.png": {
+   "before": "37e90eb4e7fe2b2e46d83c24264979e7cfac1eb076789b4deac12fd5631bd468",
+   "after": "287c28a8fbb79a47fa6aa8ddbacd3ec7d23f6f92a723f58688f44fec6bed62af"
+  },
+  "reports/figures/missing_pattern_lucknow_jaipur.png": {
+   "before": "1ad5efad33c26592d6d71b18e5b2ebc2251a98be557f1cf1838368dac90cae69",
+   "after": "fa57840a6212a3e2e77fabd89c762b6f3431a674619a95484de6b584c9951fcb"
+  },
+  "reports/figures/outliers_pm25_lucknow_jaipur.png": {
+   "before": "b2a26305ac2804bee87345eaf1650acebd4cd58e8c8b7e510e24205cf409494f",
+   "after": "d4e1ab1d825c7c2cadf3cb64e61c944f8051442d2c74685ec447b333bd01e5af"
+  }
+ },
+ "data_files_changed_in_repo": [],
+ "files_changed_in_repo": [],
+ "ok": true
+}

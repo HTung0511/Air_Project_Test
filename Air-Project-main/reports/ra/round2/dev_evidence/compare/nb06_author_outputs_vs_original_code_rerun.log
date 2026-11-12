@@ -1,0 +1,6 @@
+$ python tools/compare_notebook_outputs.py <A> <B> --out <work>/compare/nb06_author_outputs_vs_original_code_rerun.md  (A=orig/06_predict_aqi.author.ipynb, B=orig/executed/06_predict_aqi.ipynb)
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:35Z
+Tổng: 26 ô mã chung, 5 ô có output dạng chữ khác, 5 dòng khác, 0 số khác (trên các dòng ghép được), lệch số lớn nhất 0.
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

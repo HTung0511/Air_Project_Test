@@ -1,0 +1,19 @@
+$ python tools/run_notebook.py <work>/orig/Air-Project-main 06_predict_aqi.ipynb --out <work>/orig/executed --timeout 2400 --block-network   # mã và dữ liệu của cd719cf
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:28:11Z
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+{
+ "notebook": "06_predict_aqi.ipynb",
+ "status": "ok",
+ "runtime_s": 23.5,
+ "code_cells": 26,
+ "cells_executed": 26,
+ "executed_copy": "/home/user/scratch/ev/orig/executed/06_predict_aqi.ipynb",
+ "network_blocked": true,
+ "network_attempts": 0,
+ "network_attempts_detail": [],
+ "python": "3.11.2",
+ "error_tail": null
+}
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:28:35Z

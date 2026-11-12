@@ -1,0 +1,33 @@
+$ AIR_TEST_EVIDENCE_DIR=<work>/pytest python -m pytest -q -rs --durations=15 --junitxml=<work>/pytest/junit.xml
+commit: a9757af398ddac2f8536e8019e4eb6b5900b4f75
+bắt đầu (UTC): 2026-11-12T10:18:03Z
+........................................................................ [ 34%]
+........................................................................ [ 68%]
+...........................................s.......................      [100%]
+=============================== warnings summary ===============================
+tests/test_forecast_cohort.py::test_cohort_diff_against_retrospective_path_is_fully_explained
+  /home/user/Air_Project_Test/Air-Project-main/src/model_utils.py:113: Pandas4Warning: Series.dt.dayofyear is deprecated and will be removed in a future version. Use Series.dt.day_of_year instead.
+    doy = d.Date_target.dt.dayofyear
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 15 durations =============================
+81.50s setup    tests/test_notebooks_integration.py::test_retrospective_notebooks_still_reproduce_the_committed_outputs
+51.13s setup    tests/test_notebooks_integration.py::test_nb04_runs_to_the_end_offline_from_cache
+37.74s call     tests/test_forecast_leakage.py::test_walk_forward_every_day_of_the_common_window
+33.00s setup    tests/test_notebooks_integration.py::test_nb06_really_runs_on_the_forecast_path_from_raw
+32.66s call     tests/test_notebooks_integration.py::test_nb06_stops_when_a_narrative_number_is_stale
+20.55s call     tests/test_pipeline_guard.py::test_guarded_investigate_equals_original_on_full_data
+11.70s setup    tests/test_pipeline_guard.py::test_retrospective_cleaning_reproduces_committed_table
+10.68s call     tests/test_forecast_flatline.py::test_real_co_matches_literal_prefix_oracle_in_common_window
+5.78s setup    tests/test_forecast_cohort.py::test_protocol_reproduces_baseline_numbers_on_retrospective_path
+5.67s call     tests/test_forecast_leakage.py::test_cut_at_t_and_perturb_after_t_leave_features_of_t_unchanged
+3.83s call     tests/test_weather_tolerance.py::test_unit_errors_are_not_hidden
+3.80s call     tests/test_notebooks_integration.py::test_weather_override_pointing_nowhere_stops_the_notebook
+3.66s call     tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[\u0111\u1ed5i t\xean m\u1ed9t c\u1ed9t b\u1eaft bu\u1ed9c]
+3.61s call     tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[tr\xf9ng gi\u1edd]
+3.61s call     tests/test_notebooks_integration.py::test_nb04_with_a_broken_cache_stops_clearly_and_writes_nothing[c\u1ee5t 24 gi\u1edd cu\u1ed1i]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_weather_cache.py:277: API thật không gọi được từ môi trường này, chưa kiểm được: tion&timezone=Asia%2FKolkata&wind_speed_unit=ms&models=era5 (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))
+210 passed, 1 skipped, 1 warning in 339.66s (0:05:39)
+[exit 0]
+kết thúc (UTC): 2026-11-12T10:23:44Z
