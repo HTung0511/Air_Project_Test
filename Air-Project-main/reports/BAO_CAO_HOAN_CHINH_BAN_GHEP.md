@@ -1,10 +1,10 @@
 # BÁO CÁO MÔN HỌC KHOA HỌC DỮ LIỆU
 ## Phân tích ô nhiễm không khí theo thời gian tại tám thành phố ở Ấn Độ
 
-**Học phần:** Khoa học dữ liệu — Mã học phần: [Cần bổ sung]  
+**Học phần:** Khoa học dữ liệu — Mã học phần: INFO3020 [Cần đối chiếu mã chính thức trên đề cương/sổ tay sinh viên]  
 **Lớp:** [Cần bổ sung]  
 **Giảng viên hướng dẫn:** [Cần bổ sung]  
-**Nhóm thực hiện:** [Cần bổ sung — 4 thành viên]  
+**Nhóm thực hiện:** [Cần bổ sung — số thành viên và danh sách theo biên bản nộp chính thức; không mặc định số lượng]  
 **Thời gian thực hiện:** [Cần bổ sung]  
 **Repository:** [Cần bổ sung]
 
@@ -69,7 +69,7 @@ Về **dạng bài toán**, báo cáo thực hiện: (i) phân tích mô tả v�
 
 **Dữ liệu và biến:** Nguồn chính `city_day.csv` (Kaggle/rohanrao/air-quality-data-in-india, nguồn gốc CPCB), 29.531 dòng, 26 thành phố; sau khi chọn 8 thành phố còn **14.056 dòng**. 16 cột gốc gồm 11 chất (PM2.5, PM10, NO, NO2, NOx, NH3, CO, SO2, O3, Benzene, Toluene; Xylene đã bỏ), AQI và AQI_Bucket. Nguồn thứ hai: thời tiết ERA5 qua Open-Meteo, 8 điểm tọa độ, theo giờ, gộp thành ngày với 14 cột: `temp_mean/min/max`, `humidity_mean`, `pressure_mean`, `wind_speed_mean/max`, `wind_u/v`, `wind_dir_8`, `precip_sum`, `rain_day`, `blh_mean/min`. Đây là **dữ liệu mô hình trên lưới 0,25° (~25 km), không phải số đo tại trạm**; Delhi và Gurugram ở hai ô lưới sát nhau nên chuỗi thời tiết tương quan cao (r≈0,95 với mưa →0,999 với nhiệt độ). Thời tiết không có giá trị thiếu.
 
-**Phương pháp:** Làm sạch: chuỗi 0 ≥3 ngày → NaN (2.169 ô); chỉ tạo giá trị ước lượng cho khoảng thiếu ≤14 ngày (3.329 ô) với sửa lỗi `limit=14` cũ; khoảng dài hơn giữ NaN; ngoại lai IQR×1,5 theo tháng chỉ đánh dấu; 24 ngày nghi lỗi cảm biến → NaN. EDA: thống kê mô tả, phân bố AQI, tỷ lệ ≥201, heatmap City×Month, xu hướng City×Year, quan hệ PM2.5–AQI, kiểm tra độ nhạy. Thời tiết: tương quan Spearman trước vs. sau điều chỉnh (anomaly = giá trị − trung vị City×Month). Mô hình: Ridge trên log(AQI) với 3 mức đặc trưng (L1 lịch sử AQI + mùa; L2 + chất ô nhiễm; L3 + thời tiết đến hết hôm nay) so với 3 baseline; L4 kịch bản tham chiếu dùng thời tiết ngày mai chỉ để tham chiếu. Chia tập theo thời gian; scaler/imputer chỉ fit trên train.
+**Phương pháp (tóm tắt; chi tiết ở Phần II–III):** Làm sạch thống nhất cho 8 thành phố với cờ truy vết (chuỗi 0 treo, khoảng thiếu ngắn/dài, ngoại lai theo tháng, điểm nghi lỗi); EDA theo mạch Ở đâu/Khi nào/Những chất nào nổi bật với kiểm tra độ nhạy; phân tích thời tiết–AQI trước và sau điều chỉnh mùa vụ; mô hình Ridge trên log(AQI) so với baseline, chia theo thời gian với kiểm định bằng bootstrap theo khối. Kết quả làm sạch chi tiết xem 3.1; lịch sử sửa mã chỉ giữ trong ghi chú nội bộ.
 
 **Ngoài phạm vi:** Không suy diễn nhân quả thời tiết “gây” ô nhiễm; không khẳng định dự báo vận hành thời gian thực; không thay thế tư vấn y tế; không tối ưu ngưỡng mới trong phạm vi báo cáo.
 
@@ -79,7 +79,7 @@ Về **dạng bài toán**, báo cáo thực hiện: (i) phân tích mô tả v�
 
 **Ý nghĩa xã hội và giáo dục:** Kết quả EDA giúp hình dung bức tranh so sánh giữa các thành phố và tính mùa vụ, nâng cao nhận thức về giai đoạn nguy cơ cao; đáp ứng rubric về complete lifecycle và Data Storytelling.
 
-**Ứng dụng minh họa — tệp HTML:** Là **ứng dụng minh họa/phát lại kết quả trên dữ liệu lịch sử** (giai đoạn kiểm thử 01/07/2019–29/02/2020), cho phép chọn (thành phố, ngày) xem ngữ cảnh hôm nay→dự báo mai qua L1→L3, quan sát toàn cảnh giai đoạn kiểm thử với điểm báo đúng/báo nhầm/bỏ sót, thử đổi ngưỡng cảnh báo để cảm nhận đánh đổi Precision–Recall, và đọc diễn giải hệ số cùng KTC bootstrap theo khối 14 ngày. Ứng dụng nêu rõ là phát lại trên dữ liệu lịch sử, chưa khẳng định dự báo trực tuyến.
+**Ứng dụng minh họa — tệp HTML:** Là **ứng dụng minh họa/phát lại kết quả trên dữ liệu lịch sử** (giai đoạn kiểm thử 01/07/2019–29/02/2020), cho phép chọn (thành phố, ngày) xem ngữ cảnh hôm nay→dự báo mai qua L1→L3, quan sát toàn cảnh giai đoạn kiểm thử với điểm báo đúng/báo nhầm/bỏ sót, thử đổi ngưỡng cảnh báo để cảm nhận đánh đổi Precision–Recall, và đọc diễn giải hệ số cùng khoảng tin cậy: hệ số OLS dùng sai số chuẩn bền theo cụm khối 14 ngày, các chênh lệch MAE/Precision/Recall dùng bootstrap theo khối 14 ngày. Ứng dụng nêu rõ là phát lại trên dữ liệu lịch sử, chưa khẳng định dự báo trực tuyến.
 
 ### 1.5. Quy trình thực hiện và phân công nhiệm vụ
 
@@ -122,35 +122,33 @@ Công cụ: Python (pandas, numpy, matplotlib, seaborn, scipy, scikit-learn, sta
 
 **Chuỗi 0 treo:** Chuỗi giá trị đúng 0 liên tiếp ≥3 ngày → NaN (2.169 ô).
 
-**Loại cột:** Bỏ Xylene toàn bộ; PM10 Lucknow để NaN (thiếu 100%); các cột thiếu ≥60% không dùng làm biến trong phép so sánh/mô hình cụ thể.
+**Loại cột và ngưỡng dùng làm biến:** Bỏ Xylene toàn bộ; PM10 Lucknow để NaN; các cột thiếu ≥60% không dùng làm biến trong phép so sánh/mô hình cụ thể (chi tiết số ô xem 3.1).
 
-**Khoảng thiếu ngắn:** Chỉ khoảng thiếu nằm giữa hai giá trị thật và ≤14 ngày được tạo giá trị ước lượng tuyến tính theo thời gian (3.329 ô) với sửa lỗi `limit=14` cũ; khoảng dài hơn giữ NaN (9 cặp thiếu ≥20%, 7.733 ô). Ngưỡng 14 ngày là quy ước thực hành cho phân tích hồi cứu, không phải tối ưu duy nhất; ô ước lượng đã dùng giá trị của các ngày sau nên không mặc nhiên phù hợp cho dự báo thời gian thực.
-
-**Ngoại lai và nghi lỗi:** IQR k=1,5 theo tháng chỉ gắn cờ (6.656 ô); top-5 PM2.5/AQI mỗi TP (93 bản ghi) điều tra, 41 ô trên 24 ngày đặt NaN với nhãn nghi lỗi (giá trị gốc lưu `suspect_points_8cities.csv`); 139 ngày PM2.5>1,2×PM10 chỉ gắn cờ.
+**Khoảng thiếu và ngoại lai:** Chỉ khoảng thiếu nằm giữa hai giá trị thật và ≤14 ngày được tạo giá trị ước lượng tuyến tính theo thời gian; khoảng dài hơn giữ NaN. Ngưỡng 14 ngày là quy ước thực hành cho phân tích hồi cứu; ngoại lai IQR theo tháng chỉ gắn cờ; điểm nghi lỗi được gắn nhãn và lưu giá trị gốc để khôi phục. Kết quả định lượng xem 3.1.
 
 **Thời tiết:** Chuẩn hóa múi giờ, gộp 24 giờ → ngày, tính `wind_u/v` từ tốc độ+hướng, thêm `rain_day`, `blh_mean`, ghép trái; biến đổi `log1p(precip_sum)` để dành cho mô hình sau chia train/test.
 
-### 2.3. EDA và trực quan hóa — gồm Data Storytelling
+### 2.3. EDA và trực quan hóa dữ liệu — gồm Data Storytelling
 
-**Mục tiêu:** Trả lời Ở đâu/Khi nào/Do chất nào, với khoảng chung 14/06/2017–01/07/2020 và tháng 1–6 khi so năm; ngưỡng AQI ≥201 định nghĩa ngày nặng. Thống kê mô tả dùng median/IQR/tỷ lệ ≥201 và Spearman; mỗi phát hiện gắn một biểu đồ theo chuẩn W7 (tiêu đề kết luận có số, trục từ 0, một màu nhấn, chân hình ghi nguồn + cỡ mẫu).
+**Mục tiêu:** Trả lời Ở đâu/Khi nào/Những chất nào nổi bật, với khoảng chung 14/06/2017–01/07/2020 và tháng 1–6 khi so năm; ngưỡng AQI ≥201 định nghĩa ngày nặng. Thống kê mô tả dùng median/IQR/tỷ lệ ≥201 và Spearman; mỗi phát hiện gắn một biểu đồ với tiêu đề kết luận có số, trục rõ nhãn, chân hình ghi nguồn và cỡ mẫu.
 
 **Bộ trực quan:** 6 hình `eda_00`–`eda_05` theo mạch Ở đâu → Khi nào → Do chất nào, kèm ghi chú confounder (vị trí trạm, Diwali, đốt rơm Punjab, cách tính AQI). Kiểm tra độ nhạy đổi khoảng chung, loại giai đoạn giữ lại cuối và thử xếp hạng nhóm thay vì 1–8.
 
 ### 2.4. Mô hình hóa và đánh giá
 
-**Khung bài toán:** Một dòng = (thành phố, ngày hôm nay t); mục tiêu = AQI ngày t+1; mọi đặc trưng chỉ dùng thông tin đến hết t theo thiết kế đầu vào dự kiến. Chia theo thời gian: train đến 30/06/2019; giai đoạn kiểm thử 01/07/2019–29/02/2020; giai đoạn giữ lại cuối tháng 3–7/2020 tách riêng. Ridge trên log(AQI) là chính (diễn giải hệ số), so sánh thêm HGB.
+**Khung bài toán:** Một dòng = (thành phố, ngày hôm nay t); mục tiêu = AQI ngày t+1 theo thiết kế đầu vào dự kiến (chỉ dùng thông tin đến hết t). Chia theo thời gian: train đến 30/06/2019; giai đoạn kiểm thử 01/07/2019–29/02/2020; giai đoạn giữ lại cuối tháng 3–7/2020 tách riêng. **Ridge trên log(AQI) dùng cho dự báo; OLS trên log(AQI) phục vụ diễn giải hệ số**, so sánh thêm HGB làm tham chiếu.
 
 **Đặc trưng:** L1 lịch sử AQI + mùa (aqi_0/1/2/wk + doy_sin/cos); L2 + chất ô nhiễm (log1p); L3 + thời tiết đến hết hôm nay (pressure_dev, d_pressure, wind_u/v, precip_log…); L4 kịch bản tham chiếu dùng thời tiết ngày mai chỉ để tham chiếu.
 
 **Xử lý thiếu và chuẩn hóa:** Ô đã tạo giá trị ước lượng ở bước làm sạch được đặt lại NaN rồi điền lùi 2 ngày trước khi vào Pipeline; mọi imputer/scaler/encoder chỉ fit trên train trong Pipeline/ColumnTransformer.
 
-**Baseline và độ đo:** 3 baseline (trung bình theo TP, trung vị cùng tháng, persistence “ngày mai = hôm nay”); MAE (chính) và R² cho hồi quy (dự đoán trên log rồi exp về điểm AQI); Precision/Recall (F2 chọn ngưỡng trên train-OOF) cho cảnh báo ≥201; OLS trên log(AQI) với sai số chuẩn bền theo cụm khối 14 ngày để diễn giải hệ số.
+**Baseline và độ đo:** 3 baseline (trung bình theo TP, trung vị cùng tháng, persistence “ngày mai = hôm nay”); MAE (chính) và R² cho hồi quy (dự đoán trên log rồi biến đổi ngược về điểm AQI); Precision/Recall (F2 chọn ngưỡng trên train-OOF) cho cảnh báo ≥201; hệ số OLS với sai số chuẩn bền theo cụm khối 14 ngày phục vụ diễn giải.
 
 **Chẩn đoán:** Phần dư vs. dự đoán, QQ-plot, Breusch-Pagan; bootstrap khối 14 ngày cho KTC hiệu ứng và ΔMAE; hiệu chỉnh Bonferroni (family 15) và BH-FDR (48 cặp).
 
 ### 2.5. Đạo đức dữ liệu và sử dụng kết quả có trách nhiệm
 
-Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có PII; thời tiết là mô hình lưới. Nhóm công khai nguồn/giấy phép ở chân mỗi hình. Thiên kiến được ghi nhận: chọn mẫu 8/26, chuỗi dài ngắn khác nhau và giai đoạn giữ lại cuối, đo lường (thiếu Xylene/PM10/NH3, thời tiết lưới, AQI = max chỉ số con). Nhóm không tạo giá trị ước lượng cho khoảng thiếu >14 ngày, không dùng tương lai ở mức thiết kế pipeline và không coi tương quan là nhân quả; mỗi biểu đồ/kết luận kèm hạn chế; AQI ≥201 chỉ dùng cho phân tích, không thay thế tư vấn y tế.
+Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có PII; thời tiết là mô hình lưới. Nhóm công khai nguồn/giấy phép ở chân mỗi hình. Thiên kiến được ghi nhận: chọn mẫu 8/26, chuỗi dài ngắn khác nhau và giai đoạn giữ lại cuối, đo lường (thiếu Xylene/PM10/NH3, thời tiết lưới, AQI = max chỉ số con). Nhóm không tạo giá trị ước lượng cho khoảng thiếu >14 ngày; với bài toán dự báo, thiết kế đầu vào dự kiến chỉ dùng thông tin đến hết hôm nay và mọi scaler/imputer chỉ fit trên train, tuy nhiên quy trình làm sạch hồi cứu có bước tạo giá trị ước lượng đã dùng quan sát sau — giới hạn này được nêu rõ ở 3.1 và 3.5. Nhóm không coi tương quan là nhân quả; mỗi biểu đồ/kết luận kèm hạn chế; AQI ≥201 chỉ dùng cho phân tích, không thay thế tư vấn y tế.
 
 ---
 
@@ -177,7 +175,8 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Hạn chế chính:** Ô ước lượng đã dùng giá trị ngày sau (hồi cứu) nên không mặc nhiên phù hợp dự báo thời gian thực; chuỗi dài ngắn khác nhau nên chỉ so trong khoảng chung; thời tiết là mô hình lưới.
 
-*[Chèn Bảng 1: Tổng quan trước–sau làm sạch. Chèn Hình 1: mẫu cỡ mẫu. Nguồn: `cleaning_log_8cities.md`, `cleaning_summary_8cities.csv`]*
+**Bảng 1.** Tổng quan trước–sau làm sạch (ô thiếu 11 chất + AQI: 16.953 → 15.832; chi tiết `cleaning_log_8cities.md` §1 và `cleaning_summary_8cities.csv`).  
+**Hình 1.** Cỡ mẫu theo thành phố trên khoảng chung (n có AQI 1.029→1.111/1.114) — `reports/figures/eda_00_sample_size.png`. *Nguồn: CPCB qua Kaggle; n và khoảng ngày ghi ở chân hình.*
 
 ### 3.2. Kết quả EDA và các phát hiện chính
 
@@ -189,7 +188,8 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Giới hạn:** Amritsar thiếu 7,6%; độ nhạy xóa 10%×200 cho thấy 3 cặp gần nhau hay đổi chỗ → chia nhóm thay vì xếp hạng 1–8.
 
-*[Chèn Hình 2: % cặp ≥201 theo TP (`eda_01`). Chèn Hình 3: phân bố AQI (`eda_05`).]*
+**Hình 2.** Tỷ lệ cặp thành phố–ngày có AQI ≥201 theo thành phố (`eda_01_poor_share_city.png`).  
+**Hình 3.** Phân bố AQI theo thành phố (`eda_05_aqi_distribution.png`). *Nguồn: CPCB qua Kaggle; khoảng chung 14/06/2017–01/07/2020.*
 
 #### 3.2.2. Khi nào ô nhiễm đạt đỉnh?
 
@@ -197,7 +197,8 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Giới hạn:** Thời tiết/mùa vụ là confounder; chỉ nêu “có liên quan” với 2020.
 
-*[Chèn Hình 4: heatmap City×Month (`eda_02`). Chèn Hình 5: xu hướng City×Year (`eda_03`).]*
+**Hình 4.** Heatmap City×Month — trung vị AQI theo tháng (`eda_02_heatmap_city_month.png`).  
+**Hình 5.** Xu hướng City×Year trên tháng 1–6 (`eda_03_trend_city_year.png`). *Nguồn: CPCB qua Kaggle.*
 
 #### 3.2.3. Chất nào tăng mạnh nhất?
 
@@ -205,7 +206,7 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Giới hạn:** PM10 Chennai không dùng trong phép so sánh cụ thể (thiếu 84,5%); AQI = max chỉ số con nên tương quan cao một phần là hệ quả công thức.
 
-*[Chèn Hình 6: PM2.5 vs AQI (`eda_04`).]*
+**Hình 6.** Quan hệ PM2.5–AQI (`eda_04_pm25_aqi.png`) và bảng Spearman C0/C1. *Nguồn: CPCB qua Kaggle.*
 
 #### 3.2.4. Mối liên hệ thời tiết–AQI trước và sau điều chỉnh mùa vụ
 
@@ -213,7 +214,9 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Giới hạn:** Khử mùa bằng City×Month còn sót chu kỳ trong tháng; do phụ thuộc theo thời gian, kết quả cần diễn giải thận trọng và dùng bootstrap khối 14 ngày; chỉ nói “có liên quan”.
 
-*[Chèn Hình 7: thô vs. điều chỉnh (`corr_01`). Chèn Hình 8: kiểm định 15 so sánh (`corr_02`). Chèn Hình 9–10: độ ẩm deciles (`corr_03`, `corr_04`).]*
+**Hình 7.** Tương quan thời tiết–AQI trước và sau điều chỉnh mùa vụ (`corr_01_raw_vs_adjusted.png`).  
+**Hình 8.** Kiểm định nhóm 15 so sánh nêu trước (Bonferroni) (`corr_02_hypothesis_tests.png`).  
+**Hình 9–10.** Độ ẩm deciles và tỷ lệ cặp có AQI ≥201 theo nhóm ẩm (`corr_03_humidity_deciles.png`, `corr_04_poor_share_by_humidity.png`). *Nguồn: CPCB qua Kaggle + Open-Meteo ERA5.*
 
 ### 3.3. Kết quả mô hình hóa và đánh giá
 
@@ -223,7 +226,7 @@ Dữ liệu CPCB là tổng hợp công khai theo thành phố/ngày, không có
 
 **Chẩn đoán thang log:** Biến đổi log cải thiện hình dạng phần dư quan sát được, nhưng kiểm định Breusch-Pagan vẫn cho thấy phương sai thay đổi (LM 409→311); khoảng tin cậy hệ số dùng sai số chuẩn bền theo cụm khối 14 ngày, còn KTC chênh lệch MAE/Precision/Recall dùng bootstrap khối.
 
-**Hiệu năng kiểm thử:** Trên 1.947 cặp của giai đoạn kiểm thử, Ridge L3 (đủ 3 mức) MAE **19,52 so với 23,47, giảm 3,95 điểm (−16,8%) với KTC bootstrap khối không chứa 0; R² 0,86→0,91**. Đóng góp biên: ΔMAE = MAE(L1)−MAE(persistence) = **−0,53 [−1,2;+0,1] chưa tách khỏi 0**; MAE(L2)−MAE(L1)=**−2,0**; MAE(L3)−MAE(L2)=**−1,4 [−1,9;−0,9]**; kịch bản tham chiếu dùng thời tiết ngày mai chỉ giảm thêm **0,43 [−0,62;−0,26]**.
+**Hiệu năng kiểm thử:** Trên 1.947 cặp của giai đoạn kiểm thử, Ridge L3 (đủ 3 mức) MAE **19,52 so với 23,47, giảm 3,95 điểm (−16,8%) với KTC bootstrap khối không chứa 0; R² 0,86→0,91**. Đóng góp biên: ΔMAE = MAE(L1)−MAE(persistence) = **−0,53 [−1,2;+0,1] chưa tách khỏi 0**; MAE(L2)−MAE(L1)=**−2,0**; MAE(L3)−MAE(L2)=**−1,4 [−1,9;−0,9]**; kịch bản tham chiếu dùng thời tiết ngày mai có **ΔMAE(L4−L3) ≈ −0,43, KTC [−0,62;−0,26]**.
 
 Kết quả này thuộc thực nghiệm trên dữ liệu lịch sử và cần được diễn giải cùng hạn chế của quy trình tiền xử lý; mức cải thiện chưa được xác nhận ổn định ở giai đoạn giữ lại cuối (tháng 3–7/2020 có L3 13,78 vs. 14,80 chênh −1,02 [−2,70;0,48] chưa đủ bằng chứng).
 
@@ -233,7 +236,10 @@ Kết quả này thuộc thực nghiệm trên dữ liệu lịch sử và cần
 
 **Diễn giải hệ số (OLS diễn giải, tách biệt Ridge dự báo):** Độ ẩm +10 điểm % đi cùng AQI mai −1,2% [−2,0;−0,3], gió +1 m/s −1,9% [−3,0;−0,8]; trong mô hình diễn giải, ngày có lượng mưa 10 mm so với không mưa đi cùng AQI ngày kế tiếp thấp hơn khoảng 9,2% khi giữ các biến khác không đổi. Nhiệt độ, BLH, áp suất không tách khỏi 0 sau khi giữ AQI/chất ô nhiễm.
 
-*[Chèn Hình 11: chẩn đoán phần dư (`model_01`). Chèn Hình 12: MAE theo mức (`model_02`). Chèn Hình 13: MAE theo TP (`model_03`). Chèn Hình 14: PR (`model_04`).]*
+**Hình 11.** Chẩn đoán phần dư và QQ-plot trên thang log (`model_01_residual_diagnostics.png`).  
+**Hình 12.** MAE theo mức đặc trưng L1→L3 và persistence (`model_02_mae_by_model.png`).  
+**Hình 13.** MAE theo thành phố (`model_03_mae_by_city.png`).  
+**Hình 14.** Đường Precision–Recall (`model_04_precision_recall.png`). *Nguồn: bảng kết quả `06_predict_aqi.ipynb`.*
 
 ### 3.4. Trình bày sản phẩm ứng dụng
 
@@ -250,7 +256,7 @@ Kết quả này thuộc thực nghiệm trên dữ liệu lịch sử và cần
 
 **Giới hạn sản phẩm:** Tệp tĩnh, phát lại lịch sử, không dự báo trực tuyến; dữ liệu minh họa được nhúng trong tệp, không cần gọi API để lấy các bản ghi này (cần kiểm tra thư viện/font bên ngoài trước khi khẳng định hoàn toàn offline); ngưỡng chọn trên train có thể hơi dễ do tỷ lệ cặp có AQI ≥201 giảm dần; không đánh giá cảnh báo cho miền Nam.
 
-*[Chèn Hình 15: giao diện HTML.]*
+**Hình 15.** Giao diện ứng dụng minh họa/phát lại trên dữ liệu lịch sử (`Canh_bao_o_nhiem_truoc_mot_ngay_Pro_v5.html`) — ảnh chụp cần khớp phiên bản HTML thực tế; nếu HTML chưa sửa cách gọi “mùa đông” hay “chống rò rỉ tuyệt đối”, không mô tả như đã sửa. *Dữ liệu minh họa được nhúng trong tệp.*
 
 ### 3.5. Những hạn chế
 
@@ -276,7 +282,7 @@ Về **hiện trạng**, trong khoảng chung, ba TP đồng bằng Bắc Ấn c
 
 Về **thời tiết–AQI**, sau điều chỉnh mùa vụ, độ ẩm giữ chiều âm nhất quán; nhóm 15 kiểm định nêu trước có 3 ủng hộ, 1 ngược chiều; trên 48 cặp, hai cách đánh giá cho 32 và 33 cặp đạt tiêu chí, không hoàn toàn tương đương.
 
-Về **mô hình (mở rộng)**, trên giai đoạn kiểm thử, Ridge L3 giảm MAE so với persistence (−16,8%) với đóng góp biên của thời tiết −1,4 điểm; kịch bản tham chiếu dùng thời tiết ngày mai chỉ giảm thêm 0,43. Ở cảnh báo, mô hình hơn về precision khi so công bằng cùng quy tắc, nhưng không đánh giá được cho miền Nam và mức cải thiện chưa được xác nhận ở giai đoạn giữ lại cuối.
+Về **mô hình (mở rộng)**, trên giai đoạn kiểm thử, Ridge L3 giảm MAE so với persistence (−16,8%) với đóng góp biên của thời tiết −1,4 điểm so với chỉ dùng chất ô nhiễm. Ở cảnh báo AQI ≥201, khi so công bằng cùng quy tắc chọn ngưỡng, mô hình có precision cao hơn, nhưng không đánh giá được cho miền Nam do mẫu quá nhỏ và mức cải thiện chưa được xác nhận ở giai đoạn giữ lại cuối.
 
 Ứng dụng là minh họa/phát lại trên dữ liệu lịch sử, chưa khẳng định dự báo trực tuyến. Các hạn chế về đại diện, đo lường, thiếu theo khối, dữ liệu lưới và phụ thuộc tương lai đã được nêu, cùng hướng phát triển tập trung vào đối chiếu nguồn, củng cố pipeline và hiệu chuẩn cảnh báo theo bối cảnh địa phương.
 
@@ -284,15 +290,33 @@ Về **mô hình (mở rộng)**, trên giai đoạn kiểm thử, Ridge L3 gi�
 
 ## Tài liệu tham khảo
 
-[Cần bổ sung — trích dẫn đầy đủ theo APA: CPCB, Kaggle Rohan Rao *Air Quality Data in India*, Open-Meteo ERA5 CC BY 4.0, tài liệu học phần, v.v. Kèm URL + ngày truy cập.]
+> Mọi số liệu trong nội dung đều trỏ đến bảng/hình cụ thể nêu trong ngoặc; danh mục dưới đây chỉ liệt kê nguồn gốc và phương pháp, không thay thế trích dẫn tại chỗ.
+
+1. **Central Pollution Control Board (CPCB), Government of India.** Dữ liệu quan trắc chất lượng không khí theo ngày — nguồn gốc của `city_day.csv`. [Cần bổ sung URL CPCB và ngày truy cập thực tế kiểm tra].
+
+2. **Rohan Rao.** *Air Quality Data in India* (2015–2020) — `city_day.csv`. Kaggle. https://www.kaggle.com/datasets/rohanrao/air-quality-data-in-india [Cần kiểm tra URL và ngày truy cập thực tế; đối chiếu `Metadata.json`].
+
+3. **National Air Quality Index — Thang AQI CPCB.** Ngưỡng phân loại Good (0–50), Satisfactory (51–100), Moderate (101–200), Poor (201–300), Very Poor (301–400), Severe (>400). [Cần bổ sung văn bản CPCB quy định thang và ngưỡng 201].
+
+4. **Open-Meteo Historical Weather API.** Dữ liệu thời tiết theo giờ, tái phân tích **ERA5 (ECMWF/Copernicus)**, giấy phép **CC BY 4.0**, ghi công *Weather data by Open-Meteo.com*. https://open-meteo.com/en/docs/historical-weather-api [Cần kiểm tra URL, giấy phép và ngày truy cập; đối chiếu `Data_dictionary.md` §3 và `Metadata.json` §weather_source].
+
+5. **Copernicus Climate Data Store / ECMWF ERA5.** Dữ liệu tái phân tích khí quyển trên lưới 0,25°. [Cần bổ sung trích dẫn ERA5 và ngày truy cập].
+
+6. **Rubric học phần Khoa học dữ liệu (INFO3020).** Ma trận nội dung kiểm tra và yêu cầu báo cáo (Phần 1–4). [Cần bổ sung tên giảng viên, năm và bản PDF rubric đính kèm: `Mau_Rubric_danh_gia_Bai_tap_lon.pdf`].
+
+7. **Phương pháp thống kê:** Spearman rank correlation; Mann-Whitney U; hiệu chỉnh đa kiểm định Bonferroni và Benjamini–Hochberg (FDR); bootstrap theo khối thời gian 14 ngày; hồi quy Ridge (L2), OLS với sai số chuẩn bền theo cụm (cluster-robust), kiểm định Breusch-Pagan. [Cần bổ sung trích dẫn sách/giáo trình cụ thể cho từng phương pháp nếu rubric yêu cầu].
+
+*Ghi chú trích dẫn tại chỗ:* Mỗi bảng/hình trong Phần III đều ghi nguồn (CPCB qua Kaggle; Open-Meteo ERA5) và cỡ mẫu/khoảng ngày ở chân hình; số liệu suy ra (ví dụ MAE, Precision/Recall) trỏ đến bảng/hình trong `notebooks/03_eda`, `05_weather_correlation`, `06_predict_aqi` tương ứng, không chỉ liệt kê chung ở cuối.
 
 ---
 
 ## Phụ lục
 
-### Phụ lục A. Bảng nguồn và checklist biên tập
+### Phụ lục A. Từ điển dữ liệu và provenance
 
-*Bảng nguồn chi tiết 3.1–3.4, log kiểm tra CSV (105 dòng văn bản =104 bản ghi +1 tiêu đề; 94 dòng =93 bản ghi +1 tiêu đề) và lịch sử sửa `limit=14` được lưu riêng trong `PHAN_III_BANG_NGUON_VA_31_32_BAN_THAO.md` để tách khỏi lời văn bài nộp.*
+Từ điển 16 cột gốc và 40 cột sau làm sạch, thông tin nguồn CPCB/Kaggle và Open-Meteo ERA5 (tọa độ, lưới 0,25°, CC BY 4.0), và log làm sạch tổng hợp xem `Data_dictionary.md`, `Metadata.json` và `cleaning_log_8cities.md`. Chi tiết định lượng theo từng cặp (thành phố, cột) xem `cleaning_summary_8cities.csv` (105 dòng văn bản =104 bản ghi +1 tiêu đề) và `suspect_points_8cities.csv` (94 dòng văn bản =93 bản ghi +1 tiêu đề).
+
+*Bảng nguồn chi tiết, checklist biên tập nội bộ và lịch sử sửa `limit=14` được lưu riêng trong `PHAN_III_BANG_NGUON_VA_31_32_BAN_THAO.md` — không thuộc phụ lục bài nộp.*
 
 ### Phụ lục B. Chi tiết độ nhạy mô hình
 
