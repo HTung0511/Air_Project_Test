@@ -1,3 +1,4 @@
 google_drive/
 *.docx
 __pycache__/
+.scratch/

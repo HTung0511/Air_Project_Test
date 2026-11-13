@@ -1,0 +1,359 @@
+{
+ "B10": {
+  "widths": [
+   40,
+   110,
+   300
+  ],
+  "fs": 9,
+  "pin": false,
+  "data": [
+   [
+    "Kịch bản",
+    "Thành phố, ngày",
+    "Tình huống và ý nghĩa minh họa"
+   ],
+   [
+    "1",
+    "Delhi, 24/01/2020",
+    "AQI hôm nay 155, thực tế ngày mai 251, L3 dự báo khoảng 200. Ở ngưỡng 166, L3 phát cảnh báo đúng trong khi persistence 155 chưa vượt ngưỡng 160. Ví dụ minh họa vai trò của ngưỡng vận hành; dự báo 200 vẫn dưới ngưỡng chuẩn 201."
+   ],
+   [
+    "2",
+    "Delhi, 10/07/2019",
+    "cả mô hình và persistence bỏ sót một đợt tăng đột ngột trong bản phát lại. Ví dụ cho thấy giới hạn khi xuất hiện biến động khó dự báo."
+   ],
+   [
+    "3",
+    "Jaipur, 03/11/2019",
+    "cảnh báo giả minh họa chi phí của việc ưu tiên recall."
+   ],
+   [
+    "4",
+    "Bengaluru, 20/12/2019",
+    "hiển thị dự báo AQI nhưng không dùng tỷ lệ cảnh báo từ mẫu quá ít ngày nặng để kết luận hiệu quả."
+   ]
+  ],
+  "span": 678,
+  "rows": 5,
+  "cols": 3
+ },
+ "B9": {
+  "widths": [
+   300,
+   150
+  ],
+  "fs": 9,
+  "pin": true,
+  "data": [
+   [
+    "Cấu hình / mức đặc trưng",
+    "MAE trên tập test (điểm AQI)"
+   ],
+   [
+    "Baseline trung bình theo thành phố",
+    "64,47"
+   ],
+   [
+    "Baseline trung vị cùng tháng",
+    "43,41"
+   ],
+   [
+    "Persistence (ngày mai = hôm nay)",
+    "23,47"
+   ],
+   [
+    "Ridge L1 — lịch sử AQI và mùa",
+    "khoảng 22,94"
+   ],
+   [
+    "Ridge L2 — bổ sung chất ô nhiễm",
+    "khoảng 20,92"
+   ],
+   [
+    "Ridge L3 — bổ sung thời tiết",
+    "19,52"
+   ],
+   [
+    "L4 — kịch bản tham chiếu sử dụng thời tiết ngày mai",
+    "khoảng 19,08"
+   ]
+  ],
+  "span": 383,
+  "rows": 8,
+  "cols": 2
+ },
+ "B8": {
+  "widths": [
+   180,
+   70,
+   200
+  ],
+  "fs": 9,
+  "pin": false,
+  "data": [
+   [
+    "Kết quả theo tiêu chí sử dụng",
+    "Số trường hợp",
+    "Chi tiết"
+   ],
+   [
+    "Theo chiều giả thuyết",
+    "3",
+    "gồm gió yếu tại Delhi và không mưa tại Jaipur, Amritsar."
+   ],
+   [
+    "Ngược chiều giả thuyết",
+    "1",
+    "liên quan BLH tại Jaipur."
+   ],
+   [
+    "Chưa đủ bằng chứng theo tiêu chí sử dụng",
+    "11",
+    "—"
+   ]
+  ],
+  "span": 249,
+  "rows": 4,
+  "cols": 3
+ },
+ "B6": {
+  "widths": [
+   150,
+   150,
+   150
+  ],
+  "fs": 9,
+  "pin": true,
+  "data": [
+   [
+    "Thành phố",
+    "Trung vị AQI",
+    "Tỷ lệ ngày có AQI ≥201"
+   ],
+   [
+    "Delhi",
+    "205",
+    "51,0%"
+   ],
+   [
+    "Lucknow",
+    "188",
+    "46,4%"
+   ],
+   [
+    "Gurugram",
+    "188",
+    "46,3%"
+   ],
+   [
+    "Jaipur",
+    "122",
+    "11,1%"
+   ],
+   [
+    "Amritsar",
+    "104",
+    "11,4%"
+   ],
+   [
+    "Hyderabad",
+    "89",
+    "0,1%"
+   ],
+   [
+    "Chennai",
+    "87",
+    "3,1%"
+   ],
+   [
+    "Bengaluru",
+    "81",
+    "0,2%"
+   ]
+  ],
+  "span": 225,
+  "rows": 9,
+  "cols": 3
+ },
+ "B4": {
+  "widths": [
+   100,
+   350
+  ],
+  "fs": 9,
+  "pin": false,
+  "data": [
+   [
+    "Đơn vị đếm",
+    "Ý nghĩa"
+   ],
+   [
+    "“Ô”",
+    "một giá trị của một biến ở một cặp thành phố–ngày."
+   ],
+   [
+    "“Bản ghi”",
+    "toàn bộ hàng của cặp thành phố–ngày."
+   ],
+   [
+    "“Ngày lịch”",
+    "thời điểm có thể lặp giữa nhiều thành phố."
+   ],
+   [
+    "“Cờ”",
+    "dấu đánh giá theo một quy tắc; nhiều cờ có thể cùng xuất hiện trên một hàng hoặc ô."
+   ]
+  ],
+  "span": 282,
+  "rows": 5,
+  "cols": 2
+ },
+ "B3": {
+  "widths": [
+   230,
+   220
+  ],
+  "fs": 9,
+  "pin": true,
+  "data": [
+   [
+    "Chỉ tiêu xử lý",
+    "Kết quả"
+   ],
+   [
+    "Quy mô tập tám thành phố",
+    "14.056 bản ghi."
+   ],
+   [
+    "Chuỗi zero được chuyển thành thiếu theo quy tắc flatline",
+    "2.169 ô."
+   ],
+   [
+    "Ô được nội suy trong khoảng thiếu ngắn",
+    "3.329 ô."
+   ],
+   [
+    "Ô gắn cờ IQR, không tự động xóa",
+    "6.656 ô."
+   ],
+   [
+    "Quy tắc nghi lỗi",
+    "tác động tới 41 ô tại 24 ngày; số ô thiếu tăng thêm thực tế là 39 vì hai ô đã thiếu trước bước xử lý."
+   ],
+   [
+    "Tổng ô thiếu trên cùng phạm vi 11 chất và AQI",
+    "16.953 trước xử lý và 15.832 sau xử lý."
+   ]
+  ],
+  "span": 447,
+  "rows": 7,
+  "cols": 2
+ },
+ "B1": {
+  "widths": [
+   130,
+   320
+  ],
+  "fs": 9,
+  "pin": false,
+  "data": [
+   [
+    "Nhóm biến",
+    "Vai trò trong nghiên cứu"
+   ],
+   [
+    "Khóa City–Date",
+    "liên kết các nguồn, kiểm trùng và sắp xếp lịch."
+   ],
+   [
+    "Nồng độ chất ô nhiễm",
+    "mô tả phân bố, so sánh nhóm AQI và tạo đặc trưng ở phần mở rộng."
+   ],
+   [
+    "AQI/AQI_Bucket",
+    "mô tả mức độ chất lượng không khí và xác định nhóm vượt ngưỡng."
+   ],
+   [
+    "Thời tiết ngày",
+    "bổ sung bối cảnh và khảo sát liên hệ; không được xem là biến nguồn phát thải."
+   ],
+   [
+    "Cờ xử lý",
+    "cho biết quan sát thuộc trường hợp thiếu, ngoại lai hoặc nghi lỗi theo quy tắc; không xác nhận nguyên nhân vật lý."
+   ]
+  ],
+  "span": 500,
+  "rows": 6,
+  "cols": 2
+ },
+ "_doc": "7 bảng chuyển từ danh sách văn bản sang bảng native (vòng sửa lần 2, 13/11/2026). S = chỉ số ô đầu tiên của bảng sau khi chèn; span = độ dài chỉ số của bảng; w = khổ cột (pt), tổng 450; pin = ghim hàng tiêu đề lặp lại khi sang trang.",
+ "_final_positions": {
+  "B1": {
+   "S": 16718,
+   "span": 500,
+   "w": [
+    130,
+    320
+   ],
+   "pin": false
+  },
+  "B3": {
+   "S": 45127,
+   "span": 447,
+   "w": [
+    230,
+    220
+   ],
+   "pin": true
+  },
+  "B4": {
+   "S": 47420,
+   "span": 282,
+   "w": [
+    100,
+    350
+   ],
+   "pin": false
+  },
+  "B6": {
+   "S": 51911,
+   "span": 225,
+   "w": [
+    150,
+    150,
+    150
+   ],
+   "pin": true
+  },
+  "B8": {
+   "S": 63106,
+   "span": 249,
+   "w": [
+    180,
+    70,
+    200
+   ],
+   "pin": false
+  },
+  "B9": {
+   "S": 65960,
+   "span": 383,
+   "w": [
+    300,
+    150
+   ],
+   "pin": true
+  },
+  "B10": {
+   "S": 75353,
+   "span": 678,
+   "w": [
+    40,
+    110,
+    300
+   ],
+   "pin": false
+  }
+ }
+}
