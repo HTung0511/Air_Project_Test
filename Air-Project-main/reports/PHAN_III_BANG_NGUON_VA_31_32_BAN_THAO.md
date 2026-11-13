@@ -115,7 +115,7 @@ Từ **387.072 dòng giờ** (8 TP ×48.384) gộp thành **16.128 ngày-thành 
 
 ---
 
-## D. Bản thảo 3.3. Kết quả mô hình hóa và đánh giá
+## D. Bản thảo 3.3. Kết quả mô hình hóa và đánh giá (mở rộng — rút gọn) Kết quả mô hình hóa và đánh giá
 
 > Bài toán dự báo AQI ngày mai là **phần mở rộng**, không lấn át trọng tâm phân tích. Nguồn chuẩn cho mọi số dưới đây là **bảng kết quả trong `notebooks/06_predict_aqi.ipynb` và hình `model_*.png`** của phiên bản nhóm nộp; HTML chỉ dùng cho 3.4. Chỉ đối chiếu file/bảng hiện có; không chạy lại phân tích. Các số thuộc đường trước sửa được nêu kèm chú thích phiên bản, không trộn với số của bản sửa Dev chưa tích hợp.
 
@@ -139,7 +139,7 @@ Từ **387.072 dòng giờ** (8 TP ×48.384) gộp thành **16.128 ngày-thành 
 
 **Số liệu:** Mô hình trên **AQI thô** cho phần dư cong và dự đoán AQI âm (đến −150, vô lý). Trên **log(AQI)**, đám mây phần dư quanh 0 và Breusch-Pagan LM giảm từ **409 → 311** nhưng vẫn bác bỏ phương sai đều (phương sai còn khác theo TP/mùa); nhận xét dựa trên hình dạng phần dư và kết quả kiểm định, không dùng tương quan phần dư–giá trị khớp để kết luận đã hết phương sai thay đổi.
 
-**Diễn giải:** Log làm tuyến tính và ổn định phương sai rõ rệt, nhưng phương sai chưa đều hoàn toàn.
+**Diễn giải:** Biến đổi log cải thiện hình dạng phần dư quan sát được, nhưng kiểm định vẫn cho thấy phương sai thay đổi.
 
 **Giới hạn:** Phương sai thay đổi vẫn còn (LM=311); mọi **khoảng tin cậy của hệ số hồi quy** ở D5 dùng **sai số chuẩn bền theo cụm khối 14 ngày**, còn **khoảng tin cậy của chênh lệch MAE/Precision/Recall** ở D2–D4 dùng **bootstrap theo khối 14 ngày**; không dùng p-value mặc định giả định độc lập.
 
@@ -149,7 +149,7 @@ Từ **387.072 dòng giờ** (8 TP ×48.384) gộp thành **16.128 ngày-thành 
 
 **Biểu đồ:** `model_02_mae_by_model.png` (MAE theo mức) + bảng MAE/R² trong notebook + bảng hiệu số bootstrap khối.
 
-**Số liệu (phiên bản nhóm nộp, đường trước sửa — ghi rõ phiên bản):** Trên 1.947 ngày kiểm thử, **Ridge L3 (đủ 3 mức) MAE 19,52 so với persistence 23,47, giảm 3,95 điểm (−16,8%) với KTC bootstrap theo khối 14 ngày không chứa 0; R² 0,86 →0,91, RMSE 37,6 →30,2**. Đóng góp biên: **ΔMAE = MAE(L1) − MAE(persistence) = −0,53 [−1,2;+0,1] chưa tách khỏi 0**; **MAE(L2) − MAE(L1) = −2,0**; **MAE(L3) − MAE(L2) = −1,4 [−1,9;−0,9]** (khoảng 7% MAE của L2). **Kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai chỉ giảm thêm 0,43 [−0,62;−0,26] so với L3 (ΔMAE = MAE(L4) − MAE(L3)).**
+**Số liệu (phiên bản nhóm nộp, đường trước sửa — ghi rõ phiên bản):** Trên 1.947 cặp thành phố–ngày của giai đoạn kiểm thử, **Ridge L3 (đủ 3 mức) MAE 19,52 so với persistence 23,47, giảm 3,95 điểm (−16,8%) với KTC bootstrap theo khối 14 ngày không chứa 0; R² 0,86 →0,91, RMSE 37,6 →30,2**. Đóng góp biên: **ΔMAE = MAE(L1) − MAE(persistence) = −0,53 [−1,2;+0,1] chưa tách khỏi 0**; **MAE(L2) − MAE(L1) = −2,0**; **MAE(L3) − MAE(L2) = −1,4 [−1,9;−0,9]** (khoảng 7% MAE của L2). **Kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai chỉ giảm thêm 0,43 [−0,62;−0,26] so với L3 (ΔMAE = MAE(L4) − MAE(L3)).**
 
 **Diễn giải:** Phần lớn lợi thế so với persistence đến từ việc so sánh các mô hình dùng thêm chất ô nhiễm và thời tiết so với chỉ lịch sử AQI; chênh lệch giữa L1–L2–L3 là **so sánh các mô hình dùng các tập đặc trưng khác nhau**, không phải phân rã nhân quả hay đóng góp chính xác của từng nhóm biến. Đóng góp riêng của thời tiết khiêm tốn nhưng có bằng chứng tách khỏi 0 trên MAE.
 
@@ -189,13 +189,13 @@ Từ **387.072 dòng giờ** (8 TP ×48.384) gộp thành **16.128 ngày-thành 
 
 **Số liệu:** Trên train, **độ ẩm +10 điểm % đi cùng AQI mai −1,2% [−2,0;−0,3], gió +1 m/s −1,9% [−3,0;−0,8], mưa 10 mm vs. 0 mm −9,2% [−11,7;−6,5]** (đều loại trừ 0 với SE bền khối); gió Đông +1 m/s +1,8% [1,3;2,2]; **nhiệt độ, BLH, áp suất không tách khỏi 0** sau khi đã giữ AQI/chất ô nhiễm (BLH +0,1% [−0,5;+0,7] mỗi 100 m). Độ ẩm giữ chiều âm ở **9/10 trường hợp train/kiểm thử** (ngoại lệ Lucknow kiểm thử −0,01), và **tỷ lệ ngày nặng nhóm ẩm thấp > nhóm ẩm cao** ở Delhi/Gurugram/Lucknow cả hai giai đoạn (Delhi +18 điểm % train lẫn kiểm thử) **nhưng KTC chênh lệch chứa 0 ở 5/6 trường hợp (chỉ Delhi train tách khỏi 0)**.
 
-**Diễn giải:** Độ ẩm là biến thời tiết có chiều âm nhất quán nhất; mưa rửa trôi có độ lớn lớn nhất trong các hệ số thời tiết; BLH không ủng hộ trực giác “nén sát mặt đất” sau khi đã giữ các biến khác.
+**Diễn giải:** Trong mô hình diễn giải, ngày có lượng mưa 10 mm so với không mưa đi cùng AQI ngày kế tiếp thấp hơn khoảng 9,2%, khi giữ các biến khác không đổi. Độ ẩm có chiều âm nhất quán nhất; BLH không ủng hộ trực giác “nén sát mặt đất” sau khi đã giữ các biến khác. Kết quả không chứng minh quan hệ nhân quả.
 
 **Giới hạn:** Hệ số là **có điều kiện** theo AQI hôm nay/chất ô nhiễm và chỉ trong khoảng đã quan sát; **chỉ nói về chiều và khoảng, không nói độ lớn tuyệt đối** cho nhiệt độ/áp suất do phụ thuộc cách khử mùa. Độ ẩm cao có thể đại diện cho mưa/sương/mây.
 
 ---
 
-## D. Bản thảo 3.4. Trình bày sản phẩm ứng dụng — giao diện, tính năng và kịch bản minh họa
+## E. Bản thảo 3.4. Trình bày sản phẩm ứng dụng — giao diện, tính năng và kịch bản minh họa
 
 > HTML là **ứng dụng minh họa/phát lại kết quả trên dữ liệu lịch sử** (giai đoạn kiểm thử 01/07/2019–29/02/2020), chưa khẳng định dự báo trực tuyến. Số liệu trong HTML là lớp trình bày; nguồn chuẩn cho hiệu năng là bảng/biểu đồ trong notebook.
 
@@ -205,7 +205,7 @@ Từ **387.072 dòng giờ** (8 TP ×48.384) gộp thành **16.128 ngày-thành 
 
 - **Thanh tiêu đề và chỉ số tổng quan:** tóm tắt MAE theo mức (thông tin từ notebook), không dùng làm nguồn chuẩn; nhấn mạnh **thiết kế đầu vào dự kiến** của mô hình Ridge trên log(AQI) là chỉ dùng dữ liệu đến hết hôm nay (t) để dự báo ngày mai (t+1), kèm giới hạn preprocessing đã nêu ở 3.1 (ô ước lượng dùng tương lai).
 - **Tab 1 — Xem một ngày & giải phẫu dự báo:** chọn nhanh 4 tình huống minh họa (bắt đúng/bỏ sót/báo nhầm/khóa miền Nam), chọn (TP, ngày), hiển thị hai ngưỡng vận hành (**ngưỡng chuẩn 201** và **ngưỡng ưu tiên không bỏ sót** L3 ≥166 / persistence ≥160 chọn bằng F2 trên train), thang CPCB, số đo chất ô nhiễm hôm nay (màu theo mốc CPCB riêng từng chất) + thời tiết hôm nay, và bảng **dịch chuyển dự báo qua 3 mức**: baseline → L1 (+24 điểm ví dụ Delhi 24/01/2020) → L2 (+5) → L3 (+16) với sai số so với thực tế.
-- **Tab 2 — Toàn cảnh giai đoạn kiểm thử:** đường AQI thực tế ngày mai (xám) vs. dự báo L3 (xanh) trên 1.947 ngày, điểm **○ báo nhầm (FP)** / **✕ bỏ sót (FN)**; rê chuột soi từng ngày, bấm để mở Tab 1; kéo thử ngưỡng cảnh báo để cảm nhận đánh đổi Precision/Recall.
+- **Tab 2 — Toàn cảnh giai đoạn kiểm thử:** đường AQI thực tế ngày mai (xám) vs. dự báo L3 (xanh) trên 1.947 cặp thành phố–ngày của giai đoạn kiểm thử, điểm **○ báo nhầm (FP)** / **✕ bỏ sót (FN)**; rê chuột soi từng ngày, bấm để mở Tab 1; kéo thử ngưỡng cảnh báo để cảm nhận đánh đổi Precision/Recall.
 - **Tab 3 — Thời tiết giúp được gì:** diễn giải MAE biên (−2,0 khi thêm chất; −1,4 khi thêm thời tiết) và bảng hệ số **OLS phục vụ diễn giải (tách biệt với Ridge dùng dự báo)** với KTC 95% bền khối. Chênh lệch dự báo giữa L1–L2–L3 là so sánh các mô hình dùng các tập đặc trưng khác nhau, không phải phân rã nhân quả hay đóng góp chính xác của từng nhóm biến.
 - **Tab 4 — Giới hạn & phạm vi:** nêu không thay thế tư vấn y tế, không dùng cho miền Nam do mẫu cảnh báo quá nhỏ, và ghi chú **phát lại trên dữ liệu lịch sử**.
 
@@ -215,7 +215,7 @@ Thiết kế giao diện dùng **Be Vietnam Pro**, sáng/tối, một màu nhấ
 
 | # | Kịch bản | Ý minh họa | Kết quả mô hình vs. persistence |
 |---|---|---|---|
-| 1 | **Bắt đúng** Delhi 24/01/2020 (AQI hôm nay 155 → mai thực tế 251) | Hạ ngưỡng tránh bỏ sót | L3 đoán **200 ≥166 báo đúng (TP, sai 51)**, persistence 155 <160 bỏ sót (sai 96); L2 +5 và L3 +16 cho thấy đóng góp chất ô nhiễm + thời tiết |
+| 1 | **Bắt đúng** Delhi 24/01/2020 (AQI hôm nay 155 → mai thực tế 251) | Hạ ngưỡng tránh bỏ sót | L3 đoán **200 ≥166 báo đúng (TP, sai 51)**, persistence 155 <160 bỏ sót (sai 96); dự báo thay đổi khi so sánh các mô hình sử dụng tập đặc trưng khác nhau (L1, L2, L3) |
 | 2 | **Điểm mù đột biến** Delhi 10/07/2019 | Đợt tăng đột ngột mà cả hai phương pháp bỏ sót trong ví dụ | Cả hai bỏ sót — minh họa đuôi phải nặng của QQ-plot |
 | 3 | **Báo nhầm** Jaipur 03/11/2019 | AQI hạ nhiệt sau đỉnh | L3 báo thừa khi ngưỡng hạ — minh họa đánh đổi precision |
 | 4 | **Khóa miền Nam** Bengaluru 20/12/2019 (AQI hôm nay 91 → mai 94) | Mẫu cảnh báo quá nhỏ | Không dùng % recall/precision; chỉ xem sai số điểm |
@@ -226,7 +226,7 @@ Mọi tình huống đều **phát lại** trên dữ liệu lịch sử; bấm 
 
 **Giới hạn:** Một tệp tĩnh, **phát lại kết quả trên dữ liệu lịch sử** (không phải dự báo trực tuyến), không có API thời tiết trực tiếp; **báo cáo đã thống nhất dùng “giai đoạn kiểm thử (01/07/2019–29/02/2020)” và bỏ tuyên bố “chống rò rỉ dữ liệu tuyệt đối”, nhưng ảnh chụp/HTML hiện tại vẫn chứa cách gọi cũ và cần sửa để khớp;** ngưỡng cảnh báo chọn trên train có thể hơi “dễ” do tỷ lệ ngày nặng giảm dần 24,9%→20,0%→1,8%; không đánh giá cảnh báo cho miền Nam; phụ thuộc vào chất lượng dữ liệu CPCB và không có thông tin nguồn phát thải.
 
-**Hướng phát triển (chưa phải chức năng đã nghiệm thu):** Đề xuất trên bản sao thử nghiệm về đọc cache offline và dựng đặc trưng trực tiếp từ dữ liệu gốc được ghi nhận ở lớp biên tập, không đưa vào lời văn bài nộp; việc xác minh toàn bộ và tích hợp vào bản chính chưa hoàn tất nên báo cáo không mô tả như chức năng đã triển khai.
+**Hướng phát triển:** Hoàn thiện quy trình đọc dữ liệu và kiểm soát phụ thuộc thời gian cho dự báo, thử hiệu chuẩn ngưỡng theo địa phương và mở rộng đánh giá trên nhiều cửa sổ thời gian.
 
 ---
 
@@ -241,13 +241,13 @@ Mọi tình huống đều **phát lại** trên dữ liệu lịch sử; bấm 
 
 ---
 
-## E. Bản thảo 3.5. Những hạn chế
+## F. Bản thảo 3.5. Những hạn chế
 
 > Tổng hợp từ `cleaning_log_8cities.md` §3 (15 dòng rủi ro) và các ghi chú trong `03_eda`, `05_weather_correlation`, `06_predict_aqi`. Mỗi hạn chế nêu tác động đến kết luận và cách đã áp dụng để hạn chế ảnh hưởng; không mở rộng suy diễn vượt dữ liệu.
 
 **Về phạm vi và đại diện:** Tám thành phố được chọn vì **khoảng thời gian tương đối đồng nhất và độ phủ AQI tương đối đầy đủ**, không phải mẫu đại diện cho 26 thành phố hay cho toàn Ấn Độ, cũng không phải xếp hạng ô nhiễm nhất. Chuỗi quan trắc dài ngắn khác nhau (Gurugram từ 27/11/2015, Amritsar từ 27/02/2017, Jaipur từ 14/06/2017) nên mọi so sánh giữa các thành phố được giới hạn trong **khoảng chung 14/06/2017–01/07/2020**; khi so theo năm chỉ dùng tháng 1–6. Dữ liệu kết thúc 01/07/2020 nên có chứa **giai đoạn giữ lại cuối (tháng 3–7/2020)** với tỷ lệ cặp có AQI ≥201 rất thấp (1,8%); báo cáo chỉ nêu “có liên quan” và không đồng nhất toàn kỳ này với phong tỏa.
 
-**Về đo lường và thiếu dữ liệu:** Xylene được bỏ toàn bộ và PM10 Lucknow để trống do thiếu rất nặng; PM10 Chennai thiếu 84,5% và NH3 Gurugram thiếu 92,9% không dùng làm biến trong phép so sánh/mô hình cụ thể (phân biệt với xóa cột khỏi toàn bộ dữ liệu). Thiếu dữ liệu chủ yếu theo khối thời gian (cảm biến chưa lắp) mang tính MAR theo thời gian, không loại trừ MNAR. Chuỗi 0 treo ≥3 ngày, ngoại lai IQR theo tháng và điểm nghi lỗi cảm biến (41 ô trên 24 ngày) được gắn cờ/dán nhãn “nghi lỗi” nhưng **chưa đối chiếu nguồn CPCB**, nên có rủi ro xóa nhầm đỉnh thật — giá trị gốc được lưu trong `suspect_points_8cities.csv` để khôi phục. Còn vài điểm rải rác chưa quyết (ví dụ Gurugram 30/08/2017) và xu hướng Benzene/Toluene 2015 ở Chennai/Bengaluru bị chi phối bởi năm 2015.
+**Về đo lường và thiếu dữ liệu:** Xylene được bỏ toàn bộ và PM10 Lucknow để trống do thiếu rất nặng; PM10 Chennai thiếu 84,5% và NH3 Gurugram thiếu 92,9% không dùng làm biến trong phép so sánh/mô hình cụ thể (phân biệt với xóa cột khỏi toàn bộ dữ liệu). Dữ liệu thiếu có xu hướng tập trung thành các khối thời gian. Bộ dữ liệu hiện có chưa cho phép xác định đầy đủ nguyên nhân và cơ chế thiếu; không loại trừ khả năng thiếu liên quan đến các giá trị chưa quan sát. Chuỗi 0 treo ≥3 ngày, ngoại lai IQR theo tháng và điểm nghi lỗi cảm biến (41 ô trên 24 ngày) được gắn cờ/dán nhãn “nghi lỗi” nhưng **chưa đối chiếu nguồn CPCB**, nên có rủi ro xóa nhầm đỉnh thật — giá trị gốc được lưu trong `suspect_points_8cities.csv` để khôi phục. Còn vài điểm rải rác chưa quyết (ví dụ Gurugram 30/08/2017) và xu hướng Benzene/Toluene 2015 ở Chennai/Bengaluru bị chi phối bởi năm 2015.
 
 **Về thời tiết và suy diễn:** Thời tiết là **dữ liệu mô hình tái phân tích trên lưới 0,25°**, không phải đo tại trạm; chuỗi thời tiết Delhi–Gurugram tương quan cao nên không được coi là hai bằng chứng không gian độc lập. Thời tiết “ngày mai” trong dữ liệu là số đã xảy ra (tái phân tích), chỉ dùng cho **kịch bản tham chiếu**. Mùa vụ, Diwali, đốt rơm Punjab là confounder chưa có biến đo trực tiếp; khử mùa bằng anomaly City×Month còn sót chu kỳ trong tháng. Mọi quan hệ chỉ nêu **“có liên quan/đi cùng”**, không suy nhân quả.
 
@@ -255,7 +255,7 @@ Mọi tình huống đều **phát lại** trên dữ liệu lịch sử; bấm 
 
 ---
 
-## F. Bản thảo 3.6. Hướng phát triển
+## G. Bản thảo 3.6. Hướng phát triển
 
 - **Đối chiếu và mở rộng dữ liệu:** Kiểm tra lại các đỉnh “nghi lỗi” với nguồn CPCB hoặc nhật ký trạm khi có; thử bổ sung Xylene ở 4 TP có dữ liệu và PM10 Chennai khi chuỗi đủ dài, nhưng chỉ dùng trong phép so sánh riêng, không gộp toàn bộ.
 - **Củng cố pipeline hồi cứu → dự báo:** Trên bản sao thử nghiệm đã đề xuất đọc cache offline và dựng đặc trưng trực tiếp từ dữ liệu gốc để giảm phụ thuộc tương lai; việc xác minh toàn bộ và tích hợp vào bản chính được ghi nhận ở lớp biên tập và là hướng phát triển, không phải chức năng đã nghiệm thu.
@@ -289,7 +289,7 @@ Các hạn chế về đại diện, đo lường, thiếu theo khối, dữ li�
 | Loại Gurugram | Bỏ toàn bộ cặp Gurugram khỏi train/test | L3 vẫn hơn persistence 3,36 [2,11;4,63] |
 | Giữ ô đã tạo giá trị ước lượng | Không đặt lại NaN, dùng luôn giá trị nội suy | MAE đổi 0,01 (L2) / 0,03 (L3) trên 1,1% cặp bị ảnh hưởng — không loại trừ các nguồn phụ thuộc tương lai khác |
 | Tách giai đoạn kiểm thử | Mùa ô nhiễm cao vs. mưa/sau mưa | Giảm MAE 21% (28,2→22,1) ở mùa cao điểm vs. 13% (20,7→18,0) ở mùa thấp |
-| So sánh mô hình | Ridge vs. HGB | Tương đương ở L3 (22,3 vs. 22,3); L2 HGB hơn Ridge ~0,9 |
+| So sánh mô hình | Ridge vs. HGB | [Bỏ khỏi báo cáo — chưa đối chiếu được tập đánh giá/cấu hình tương ứng] |
 
 *Ghi chú tổng thể khi ghép Phần I–III: giữ thống nhất “giai đoạn kiểm thử (01/07/2019–29/02/2020)”, “kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai”, “tạo giá trị ước lượng tại khoảng thiếu”, “cặp thành phố–ngày” và “giai đoạn giữ lại cuối (tháng 3–7/2020)”.*
 
