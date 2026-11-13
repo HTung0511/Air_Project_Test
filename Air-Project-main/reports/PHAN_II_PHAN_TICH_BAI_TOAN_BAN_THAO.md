@@ -62,7 +62,7 @@ Với các chất ô nhiễm, chuỗi **giá trị đúng 0 liên tiếp ≥3 ng
 
 Đối với 11 chất ô nhiễm, **khoảng thiếu nằm giữa hai giá trị thật và có độ dài ≤14 ngày** được **nội suy tuyến tính theo thời gian** (`_interpolate_short_gaps`, `limit_area='inside'`). Ngưỡng **14 ngày** được dùng như **quy ước thực hành cho phân tích hồi cứu, không phải tối ưu duy nhất**; nội suy tuyến tính chỉ hợp lý cho khoảng ngắn và có thể làm trơn biến động, ảnh hưởng thống kê đợt ngắn hạn (`GOI_BO_SUNG_BAO_CAO.md` §1).
 
-Thiết kế có **sửa lỗi hàm cũ** `interpolate(limit=14)` của pandas — hàm này vốn điền 14 ngày đầu của khoảng dài rồi mới dừng, tức vẫn bịa số cho khoảng >14 ngày; bản sửa trả các ô vượt ngưỡng về NaN toàn khoảng. **Khoảng thiếu >14 ngày được giữ nguyên NaN** và giữ cờ `_was_missing`. Lý do: thiếu theo khối thời gian (cảm biến chưa lắp/ngừng hoạt động) gần **MAR theo thời gian** hơn là MCAR; nội suy xuyên khối dài là bịa số. AQI không nằm trong danh sách nội suy.
+Thiết kế có **sửa lỗi hàm cũ** `interpolate(limit=14)` của pandas — hàm này vốn điền 14 ngày đầu của khoảng dài rồi mới dừng, tức vẫn tạo giá trị ước lượng tại khoảng thiếu cho khoảng >14 ngày; bản sửa trả các ô vượt ngưỡng về NaN toàn khoảng. **Khoảng thiếu >14 ngày được giữ nguyên NaN** và giữ cờ `_was_missing`. Lý do: thiếu theo khối thời gian (cảm biến chưa lắp/ngừng hoạt động) gần **MAR theo thời gian** hơn là MCAR; nội suy xuyên khối dài là tạo giá trị ước lượng không phù hợp. AQI không nằm trong danh sách nội suy.
 
 > **Hạn chế thiết kế cần lưu ý (sẽ phân tích ở Phần III):** Ô nội suy trong bước này **sử dụng giá trị của các ngày sau** (nội suy hồi cứu). Do đó **quy trình hồi cứu không mặc nhiên phù hợp cho dự báo tại thời điểm thực tế**; mọi mô hình dự báo cần xử lý riêng các ô này (xem §2.4) và báo cáo không tuyên bố pipeline hồi cứu đã sạch leakage cho bài toán dự báo.
 
@@ -117,7 +117,7 @@ Mỗi hình có **ghi chú confounder** tiềm ẩn: vị trí/trọng số tr�
 
 ### 2.3.4. Kiểm tra độ nhạy và tính vững
 
-EDA có **kiểm tra độ nhạy** theo thiết kế: đổi **khoảng chung** (ví dụ: so sánh toàn chuỗi vs. khoảng chung), **loại giai đoạn phong tỏa COVID-19**, và thử **xếp hạng nhóm thay vì xếp hạng 1–8** khi các tỷ lệ gần nhau — để đánh giá độ vững của thứ hạng và tỷ số mùa. Hai cách tổng hợp **tỷ số mùa** trả lời hai câu hỏi khác nhau và được phân biệt trong thiết kế: (i) trung vị tỷ số mùa cao/mùa mưa **trên các thành phố trong phép tính tương ứng** và (ii) tỷ số của **số liệu gộp 8 thành phố**; định nghĩa mùa, tập thành phố và loại khoảng sẽ được đối chiếu trước khi trích dẫn ở Phần III (`GOI_BO_SUNG_BAO_CAO.md` §1).
+EDA có **kiểm tra độ nhạy** theo thiết kế: đổi **khoảng chung** (ví dụ: so sánh toàn chuỗi vs. khoảng chung), **loại giai đoạn phong tỏa COVID-19**, và thử **xếp hạng nhóm thay vì xếp hạng 1–8** khi các tỷ lệ gần nhau — để đánh giá độ vững của thứ hạng. Hai cách tổng hợp **tỷ số PM2.5 giữa ngày AQI nặng và ngày thường** trả lời hai câu hỏi khác nhau và được phân biệt trong thiết kế: (i) trung vị tỷ số trên các thành phố đủ điều kiện và (ii) tỷ số của số liệu gộp 8 thành phố; định nghĩa tập thành phố và loại khoảng sẽ được đối chiếu trước khi trích dẫn ở Phần III.
 
 ---
 
@@ -139,7 +139,7 @@ EDA có **kiểm tra độ nhạy** theo thiết kế: đổi **khoảng chung**
 - **L1 (lịch sử AQI + mùa):** `aqi_0, aqi_1, aqi_2, aqi_wk` (log AQI hôm nay/hôm qua/hôm kia/trung bình 7 ngày trước) + `doy_sin/cos` (ngày trong năm của **ngày được dự đoán**, biết trước).
 - **L2 (L1 + chất ô nhiễm hôm nay):** `pm25_0, no2_0, co_0, so2_0, o3_0` ở dạng **log(1 + nồng độ)**; chỉ các chất đủ dữ liệu ở cả 8 TP (`USABLE`) được dùng.
 - **L3 (L2 + thời tiết đến hết hôm nay):** `temp_mean, humidity_mean, pressure_dev, d_pressure, wind_speed_mean, wind_u, wind_v, blh_mean, precip_log` (trong đó `pressure_dev` = lệch so với trung bình 30 ngày trước của chính thành phố, chỉ nhìn quá khứ; `precip_log = log1p(precip_sum)`).
-- **L4 (cận trên):** L3 **+ thời tiết ngày mai** (`*_next`) — **chỉ để tham chiếu** và được gắn nhãn **“Cận trên: dự báo thời tiết hoàn hảo”** (do thời tiết “ngày mai” trong dữ liệu là số tái phân tích đã xảy ra, không phải dự báo thời tiết có sai số).
+- **L4 (kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai):** L3 **+ thời tiết ngày mai** (`*_next`) — **chỉ để tham chiếu** và được gắn nhãn **“Kịch bản tham chiếu: sử dụng thông tin thời tiết ngày mai”** (do thời tiết “ngày mai” trong dữ liệu là số tái phân tích đã xảy ra, không phải dự báo thời tiết có sai số).
 
 Biến phân loại **City** được mã hóa **OneHot** (Delhi làm mức tham chiếu) và đưa vào Pipeline.
 
@@ -169,7 +169,7 @@ Thiết kế bao gồm:
 
 - **Chẩn đoán phần dư:** phần dư vs. dự đoán, **QQ-plot**; kiểm tra phương sai thay đổi.
 - **Bootstrap theo khối 14 ngày** (`block_id` theo City–Year–khối) cho **khoảng tin cậy** của hiệu ứng (trung vị nhóm bất lợi – thuận lợi) và của ΔMAE giữa các mức; **hiệu chỉnh đa kiểm định** (Bonferroni cho family 15 giả thuyết nêu trước; FDR Benjamini-Hochberg cho bảng tương quan).
-- **Kiểm tra độ nhạy:** bỏ cờ `_was_missing`, đổi ngưỡng nội suy, so sánh L1/L2/L3 và so sánh khi **không dùng thời tiết ngày mai** vs. **cận trên** có thời tiết ngày mai.
+- **Kiểm tra độ nhạy:** bỏ cờ `_was_missing`, đổi ngưỡng nội suy, so sánh L1/L2/L3 và so sánh khi **không dùng thời tiết ngày mai** vs. **kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai**.
 
 ---
 
@@ -185,7 +185,7 @@ Thiết kế bao gồm:
 - **Bias thời gian:** chuỗi dài ngắn khác nhau và nửa cuối 2020 có phong tỏa; so sánh theo năm chỉ dùng tháng 1–6 và tách lockdown;
 - **Bias đo lường:** Xylene/PM10/NH3 thiếu nặng ở một số TP, thời tiết là mô hình lưới (Delhi–Gurugram trùng nhau), AQI là max chỉ số con nên tương quan PM2.5–AQI mang tính cấu trúc.
 
-**AI có trách nhiệm & sử dụng kết quả:** Nhóm **không bịa số** cho khoảng thiếu >14 ngày (giữ NaN), **không dùng tương lai khi dự đoán** ở mức thiết kế pipeline (mask_interp + chỉ fit trên train), và **không coi tương quan là nhân quả** (chỉ nói “có liên quan/đi cùng với 95% KTC”). Mỗi biểu đồ/kết luận kèm ghi chú hạn chế; AQI ≥201 chỉ dùng cho phân tích, **không thay thế tư vấn y tế hay quyết định quản lý**.
+**AI có trách nhiệm & sử dụng kết quả:** Nhóm **không tạo giá trị ước lượng** cho khoảng thiếu >14 ngày (giữ NaN) (giữ NaN), **không dùng tương lai khi dự đoán** ở mức thiết kế pipeline (mask_interp + chỉ fit trên train), và **không coi tương quan là nhân quả** (chỉ nói “có liên quan/đi cùng với 95% KTC”). Mỗi biểu đồ/kết luận kèm ghi chú hạn chế; AQI ≥201 chỉ dùng cho phân tích, **không thay thế tư vấn y tế hay quyết định quản lý**.
 
 **Tái tạo được:** `Requirements.txt` liệt kê phiên bản thư viện (pandas, numpy, matplotlib, seaborn, scipy, scikit-learn, statsmodels, jupyter, requests); `README.md` §4 nêu thứ tự chạy 01→06; mỗi notebook chạy *Restart & Run All* từ `notebooks/` không lỗi trên bản nhóm nộp [Cần đối chiếu phiên bản `Requirements.txt` nhóm nộp].
 

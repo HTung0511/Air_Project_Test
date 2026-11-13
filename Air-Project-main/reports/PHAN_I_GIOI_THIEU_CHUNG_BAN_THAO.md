@@ -51,10 +51,10 @@ Cuối cùng, việc bổ sung thời tiết như một hợp phần phân tích
 **Câu hỏi phân tích** được phát biểu tường minh để dẫn dắt Phần II–III:
 
 - **CQ1 (Không gian):** Trong khoảng chung 14/06/2017–01/07/2020, mức độ và tần suất ngày ô nhiễm nặng (AQI ≥201, ngưỡng Poor theo thang CPCB) phân bố như thế nào giữa 8 thành phố? Thứ hạng có vững khi thay đổi cách tổng hợp hay khi loại giai đoạn phong tỏa COVID-19?
-- **CQ2 (Thời gian):** Biến động theo tháng/mùa và theo năm có hình thái gì? Tỷ số mùa (ví dụ: mùa ô nhiễm cao so với mùa mưa) khác nhau ra sao giữa các thành phố, và cần lưu ý gì khi diễn giải trung vị tỷ số trên 5 thành phố so với tỷ số gộp 8 thành phố?
+- **CQ2 (Thời gian):** Biến động theo tháng/mùa và theo năm có hình thái gì? So sánh năm cần lưu ý gì khi chỉ dùng tháng 1–6 và loại 2020 H2 có phong tỏa?
 - **CQ3 (Thành phần):** Chất ô nhiễm nào có tương quan mạnh nhất với AQI, và mối quan hệ PM2.5–AQI (Spearman ≈0,91 trong EDA) cần được diễn giải như thế nào khi AQI được tính theo nguyên tắc max chỉ số con?
 - **CQ4 (Thời tiết):** Sau khi khử mùa vụ, các biến gió, mưa, độ ẩm, áp suất, chiều cao lớp biên (BLH) còn “đi cùng” với AQI ngày hôm sau ở mức nào? Ba giả thuyết nêu trước (gió yếu/BLH thấp/không mưa đi cùng AQI cao) được ủng hộ ở bao nhiêu kiểm định sau hiệu chỉnh?
-- **CQ5 (Dự báo — mở rộng):** Với đặc trưng chỉ đến hết hôm nay, mô hình Ridge cải thiện MAE và Precision/Recall cho cảnh báo ≥201 ra sao so với baseline? Việc bổ sung thời tiết đóng góp bao nhiêu, và kịch bản “dùng thời tiết ngày mai” chỉ nên được gọi là **cận trên (dự báo hoàn hảo)**?
+- **CQ5 (Dự báo — mở rộng):** Với đặc trưng chỉ đến hết hôm nay, mô hình Ridge cải thiện MAE và Precision/Recall cho cảnh báo ≥201 ra sao so với baseline? Việc bổ sung thời tiết đóng góp bao nhiêu, và kịch bản sử dụng thời tiết ngày mai chỉ nên được gọi là **kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai**?
 
 Về **dạng bài toán**, báo cáo thực hiện: (i) phân tích mô tả và trực quan hóa; (ii) phân tích tương quan có kiểm định; (iii) hồi quy dự báo AQI (biến liên tục) và (iv) phân loại nhị phân cho cảnh báo AQI ≥201 (đánh giá bằng Precision/Recall, ngưỡng vận hành được chọn trên tập huấn luyện).
 
@@ -76,7 +76,7 @@ Về **dạng bài toán**, báo cáo thực hiện: (i) phân tích mô tả v�
 - Làm sạch: chuỗi 0 liên tiếp ≥3 ngày → NaN (2.169 ô); nội suy tuyến tính theo thời gian chỉ cho khoảng thiếu ≤14 ngày (3.329 ô), giữ cờ `_was_missing`; khoảng dài hơn giữ NaN; ngoại lai IQR×1,5 theo tháng chỉ đánh dấu; 24 ngày nghi lỗi cảm biến (top 5 PM2.5/AQI mỗi thành phố) → NaN, lưu vết trong `suspect_points_8cities.csv`. Quy tắc nội suy ≤14 ngày là **quy ước thực hành cho phân tích hồi cứu, không phải ngưỡng tối ưu duy nhất**; nội suy có thể làm trơn biến động và ảnh hưởng thống kê đợt ngắn hạn (`GOI_BO_SUNG_BAO_CAO.md` §1).
 - EDA: thống kê mô tả, phân bố AQI, tỷ lệ ngày ≥201, heatmap City×Month, xu hướng City×Year, quan hệ PM2.5–AQI, kiểm tra độ nhạy (bootstrap, đổi khoảng chung, bỏ COVID).
 - Thời tiết: tương quan Spearman thô vs. khử mùa (anomaly = giá trị − trung vị City×Month), kiểm định 3 giả thuyết nêu trước có hiệu chỉnh Bonferroni/FDR; không suy diễn nhân quả.
-- Mô hình: Ridge (chính) trên log(AQI) với 3 mức đặc trưng (L1: lịch sử AQI + mùa; L2: + chất ô nhiễm hôm nay; L3: + thời tiết đến hết hôm nay) so với 3 baseline; L4 (“cận trên: dự báo hoàn hảo” nếu dùng thời tiết ngày mai) chỉ để tham chiếu. Chia tập theo thời gian; scaler/imputer chỉ fit trên train; đánh giá MAE/R² và Precision/Recall cho cảnh báo, kèm chẩn đoán phần dư và bootstrap theo khối 14 ngày.
+- Mô hình: Ridge (chính) trên log(AQI) với 3 mức đặc trưng (L1: lịch sử AQI + mùa; L2: + chất ô nhiễm hôm nay; L3: + thời tiết đến hết hôm nay) so với 3 baseline; L4 (kịch bản tham chiếu sử dụng thông tin thời tiết ngày mai) chỉ để tham chiếu. Chia tập theo thời gian; scaler/imputer chỉ fit trên train; đánh giá MAE/R² và Precision/Recall cho cảnh báo, kèm chẩn đoán phần dư và bootstrap theo khối 14 ngày.
 
 **Những gì ngoài phạm vi:**
 
