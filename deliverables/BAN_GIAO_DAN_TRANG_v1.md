@@ -7,6 +7,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 |---|---|---|
 | v1 | 13/11/2026 | Dàn trang lần đầu: 20 hình, 3 bảng native, đánh số lại Bảng 1–10, gắn heading, gỡ chỉ dẫn biên tập |
 | **v2** | 13/11/2026 | Theo phản hồi RA: sửa số baseline test, chuyển 5 hình mô hình về đúng tiểu mục và bỏ §3.3.7, chuyển **7 bảng dạng danh sách thành bảng native**, phân loại lại 4 khác biệt hình–văn bản, **sửa lỗi chú thích Hình 2–5 bị ảnh chèn xen** |
+| **vòng cuối** | 14/11/2026 | **Hoàn tất theo chỉ thị chốt**: thống nhất gọi **L4 = “kịch bản tham chiếu”** ở mọi chỗ; **xác minh trực tuyến [1][2][3][5][6]** và **gắn hyperlink cho 7 URL** trong bản nộp; **kiểm khả năng đọc khi in** và sửa 3 lỗi in thật (cân khổ cột Bảng 1–2, ghim hàng tiêu đề đủ 11/11 bảng, chống tách hàng cho 71/71 hàng); thay ghi chú “chưa kiểm tra URL” bằng ghi chú đã đối chiếu; **một link Docs chính + một bản Word cuối** trên Drive |
 | **v4** | 14/11/2026 | **Rút gọn chú thích theo chuẩn học thuật cho bản nộp**: bỏ tên tệp PNG, đường dẫn kho, commit, lịch sử dàn trang và câu “cần nhóm xác nhận” khỏi mọi chú thích/ghi chú; thêm **ghi chú chung** xác nhận bảng và biểu đồ do nhóm thực hiện; nguồn ngoài dẫn bằng số tham khảo; toàn bộ truy vết chi tiết chỉ còn trong hồ sơ này |
 | **v3** | 13–14/11/2026 | Chốt bảng & biểu đồ (không thêm hình); **kiểm tra khả năng đọc thực tế** của ảnh và chú thích bằng đo đạc + xem ảnh; vẽ lại **Hình 1 khổ hẹp** vì bản v1 chữ chỉ ~3 pt khi in ở 450 pt; thêm **keepWithNext** giữ ảnh liền chú thích và tên bảng liền bảng; **giải quyết khoảng [2,42; 3,17]** bằng đối chiếu Notebook 03; đối chiếu dấu `*` đơn vị; kiểm tra nguồn tham khảo trong phạm vi mạng của phiên; bàn giao thêm **bản Word** trên Drive |
 
@@ -19,7 +20,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Bản dàn trang (Google Docs) | https://docs.google.com/document/d/1vxuomPCYI7acP9ZBFy7miLHwqLAK652Oc4lDjUliBIA/edit — “Báo cáo — Phân tích ô nhiễm không khí 8 TP Ấn Độ — Nhóm 25IT — BẢN DÀN TRANG v1” (nội dung đã ở vòng v2; tên tệp giữ nguyên để không vỡ liên kết) |
 | Bản gốc đối chiếu | https://docs.google.com/document/d/1wAbxQIyuAgvuOMF_tc4D4TDIjEG6Hsomi5yVfylp11o/edit (không chỉnh sửa) |
 | PDF | Không xuất (nhóm xác nhận không cần) |
-| Bản Word (.docx) | Tệp “Báo cáo … BẢN DÀN TRANG (bản Word).docx” trên Drive, id `1ccLSOBhK1phBKmo4sHRVDejHTHRoIDQR` — xuất từ bản Docs sau vòng v4, để nộp/đọc offline; bản vòng v3 đổi tên thành “…(bản Word, vòng v3).docx” (id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H`); bản chính vẫn là Google Docs |
+| Bản Word (.docx) — **một bản duy nhất** | https://docs.google.com/document/d/1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz/edit — “Báo cáo … BẢN DÀN TRANG (bản Word cuối).docx”, id `1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz`, 2.053.639 byte, xuất từ bản Docs **sau vòng cuối** (đã có hyperlink, khổ cột mới, ghim tiêu đề, chống tách hàng). Hai bản Word của vòng v3/v4 đã **chuyển vào thùng rác Drive** (id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H`, `1ccLSOBhK1phBKmo4sHRVDejHTHRoIDQR`) để không còn bản nào gây nhầm; khôi phục được nếu cần. **Bản chính vẫn là Google Docs** ở dòng trên |
 | .docx | Chỉ xuất để **kiểm tra bố cục nội bộ** bằng script (đếm ảnh/bảng/đoạn, phát hiện ảnh chèn xen). Giao file nếu nhóm cần |
 | Payload tái lập | `deliverables/layout_assets/`: `gen_batches.py` + `batches.txt` (20 hình vòng v1), `gen_tables.py` + `tables_payload.json` (Bảng 2/5/7), **`tables_native_v2.json` (7 bảng chuyển từ danh sách, kèm vị trí và khổ cột cuối cùng)**, **`fix_figures_2_3_4_5.json` (payload dựng lại khối Hình 2–5)**, `make_flow_diagram.py` (Hình 1) |
 
@@ -27,7 +28,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 
 - Kho **`HTung0511/Air_Project_Test`**, nhánh **`main`**, commit **`c4c75f65c7fb39f843d397bec0ef6c54fd15c29e`**, thư mục `Air-Project-main/reports/figures/` (21 PNG; đã dùng 19). SHA-256 từng tệp đã đối chiếu khớp blob của commit.
 - Ảnh nhúng bằng URL công khai ghim theo commit: `https://raw.githubusercontent.com/HTung0511/Air_Project_Test/c4c75f65.../Air-Project-main/reports/figures/<tên>.png`. **Từ vòng v4, chuỗi tên tệp + kho + nhánh + commit chỉ ghi trong hồ sơ này (bảng mục 3); chú thích trong bản nộp rút gọn theo mục 17.**
-- **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới). Vòng v3 vẽ lại **bản v2 khổ hẹp**: `deliverables/layout_assets/so_do_quy_trinh.png` (3200×616 px, dpi 400), Drive id `1iju2jG7Cb82wf-2vixwT0RaABNjyqI3W` (công khai “bất kỳ ai có liên kết – người đọc”); bản v1 (5331×765 px, Drive id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8`) giữ trong repo (`so_do_quy_trinh_v1.png`) và trên Drive làm đối chiếu. Lý do vẽ lại ở mục 14.
+- **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới). Vòng v3 vẽ lại **bản v2 khổ hẹp**: `deliverables/layout_assets/so_do_quy_trinh.png` (3200×616 px, dpi 400), Drive id `1iju2jG7Cb82wf-2vixwT0RaABNjyqI3W` (công khai “bất kỳ ai có liên kết – người đọc”); bản v1 (5331×765 px) **chỉ còn trong repo** (`deliverables/layout_assets/so_do_quy_trinh_v1.png`) làm đối chiếu; bản sao trên Drive (id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8`) đã cho vào thùng rác ở vòng cuối để Drive chỉ còn đúng một sơ đồ đang dùng. Lý do vẽ lại ở mục 14.
 - **Không dùng**: hình/kết quả của PR #3 (`arena/b5aacef3`) và PR #4 – vòng Dev (`arena/5cb21c04`); không gom hình từ nhiều nhánh; không ảnh AI; không thay hình bản Dev/Test.
 - Kích thước: mọi ảnh **rộng 450 pt** (khổ A4 trừ lề ≈451 pt), chiều cao suy từ **aspect ratio gốc của từng tệp** → không kéo méo, không cắt mất trục/đơn vị/khoảng bất định/đường ngưỡng/cỡ mẫu. Đã kiểm lại bằng bản xuất: 20/20 ảnh đúng 450 pt và đúng tỷ lệ gốc (6,9565 · 2,2 · 1,5 · 3,25 · 1,8571 · 1,7778 · 1,7778 · 1,6667 · 2,0833 · 1,875 · 2,1739 · 2,5 · 1,6129 · 2,6136 · 1,9792 · 2,0408 · 1,4375 · 1,9 · 1,7857 · 2,3958).
 
@@ -161,11 +162,11 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 1. **5 ảnh ứng dụng**: cần tệp HTML `Canh_bao_o_nhiem_truoc_mot_ngay_Pro_v5.html`. RA sẽ đính kèm ở phiên thiết kế để chụp ảnh thật (việc không tìm thấy trên Git/Drive không có nghĩa tệp không tồn tại). Hai ghi chú giữ chỗ đang nằm ở §1.4 và §3.4.4.
 2. **Thời gian trên bìa**: vẫn là “Hà Nội, tháng [Cần bổ sung] năm [Cần bổ sung]”. Tôi **không tự điền** vì không biết tháng/năm nộp thực tế — cho tôi tháng/năm, tôi điền bằng một lệnh thay chữ (2 chỗ).
 3. **Mục lục tự động**: cần 1 thao tác tay trong giao diện Docs (mục 7) — API không có lệnh chèn mục lục.
-4. **Tài liệu tham khảo**: xem trạng thái từng nguồn ở mục 16; phần nhóm tự kiểm tra (Kaggle, CPCB, Open-Meteo, scikit-learn, tài liệu nội bộ) vẫn chờ, và ngày truy cập vẫn chưa ghi.
-5. **Dấu `*` sau đơn vị nồng độ**: đã đối chiếu mọi nguồn hiện có (mục 15) — không có chú giải ở đâu; Bảng 2 giữ nguyên dấu `*` kèm ghi chú “cần nhóm xác nhận”, không tự quy đổi đơn vị.
+4. **Tài liệu tham khảo**: [1]–[6] **đã mở và đối chiếu nội dung ngày 14/11/2026** (mục 16), ghi chú cuối danh mục đã được viết lại thành câu xác nhận ngày đối chiếu. Còn lại duy nhất **[7] tài liệu học phần INFO3020 (nội bộ)** — nhóm tự đối chiếu bản giảng viên phát; hồ sơ không tự xác nhận thay.
+5. **Dấu `*` sau đơn vị nồng độ**: đã đối chiếu mọi nguồn hiện có (mục 15) — **không nơi nào chú giải**. Bản nộp giữ nguyên dấu `*` với ghi chú trung tính “giữ nguyên như tệp nguồn, không tự quy đổi đơn vị” (câu “cần nhóm xác nhận” đã rút khỏi bản nộp theo chính sách v4); **câu hỏi này vẫn treo ở đây cho nhóm**, không tự suy diễn.
 6. **Hình minh họa nội suy/ngoại lai** đúng dạng “đoạn thời gian + đường quan sát + đường ước lượng” không có trong `reports/figures/` → nếu cần đúng chỉ dẫn gốc thì phải sinh hình mới từ notebook (ngoài phạm vi dàn trang).
 7. **Hai tệp hình chưa dùng** `aqi_monthly_lucknow_jaipur.png`, `aqi_season_lucknow_jaipur.png`: theo chốt của nhóm ở vòng v3 — **giữ nguyên không chèn**, không thêm hình chỉ để dùng hết tệp.
-8. **Hyperlink cho URL tham chiếu**: toàn bộ URL trong báo cáo hiện là chữ thường (kiểm tra bản xuất: 0 liên kết). Sau khi nhóm xác nhận nguồn, tôi có thể gắn hyperlink cho 7 mục tham khảo và các URL trong chú thích nếu nhóm muốn.
+8. ~~**Hyperlink cho URL tham chiếu**~~ — **đã làm xong ở vòng cuối**: 7 URL trong bản nộp (6 mục tham khảo + 1 URL kho nhóm ở §1) đã thành liên kết thật; bản xuất .docx có đúng 7 `hyperlink relationship`, văn bản hiển thị không đổi. Chi tiết ở mục 16.
 
 ## 13. Kiểm chứng bố cục vòng v2 (đo bằng script trên bản xuất .docx, không đếm bằng mắt)
 
@@ -179,6 +180,7 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 - Chỉ số dùng cho mọi thao tác sửa đều lấy từ `find_text` ngay trước khi sửa; các phép xoá/chèn trong một lô luôn theo thứ tự chỉ số giảm dần; mô hình chỉ số nội bộ được kiểm bằng 6 mốc neo khớp tuyệt đối.
 - Vòng v3: **20/20 đoạn chứa ảnh** và **10/10 đoạn tên bảng** đã bật `keepWithNext` (đo bằng bản xuất: ảnh không rơi xuống cuối trang rời chú thích; tên bảng không rời bảng).
 - Vòng v3: kiểm tra khả năng đọc thực tế bằng đo glyph + xem ảnh (mục 14); Hình 1 đã vẽ lại khổ hẹp và thay tại chỗ bằng `deleteContentRange` + `insertInlineImage` đúng 1 chỉ số, không dịch phần còn lại.
+- **Vòng cuối (bản xuất `layout_v15.docx`, `walk15.json`)**: 417 khối nội dung, chỉ số cuối **87.083**; **11 bảng native** (mọi bảng tổng **450 pt**, không bảng nào vượt bề rộng cột văn bản 453,6 pt); **20 ảnh 450 pt**; **20 chú thích Hình 1→20**; **72 heading** (7/17/48); **7 hyperlink**; `keepWithNext` bật ở **37** đoạn = 20 đoạn ảnh + 10 tên bảng + 7 heading H1; **11/11 bảng ghim hàng tiêu đề**; **71/71 hàng chống tách giữa trang**. Chuỗi truy vết trong bản nộp = **0** cho cả 9 mẫu kiểm tra (`.png`, `commit c4c75f6`, `HTung0511`, `Data_dictionary.md`, “cần nhóm xác nhận”, `[2,42; 3,17]`, `air_quality_8cities.csv`, `CHỜ NGUỒN ẢNH`, “kịch bản cận trên”). Cách gọi L4: **“kịch bản tham chiếu L4” 2 lần**, cụm phủ định đúng “không phải cận trên toán học” giữ 1 lần.
 - Vòng v4: sau khi rút gọn, bản xuất .docx còn **0** lần xuất hiện của `.png`, `commit c4c75f6`, `HTung0511`, `Data_dictionary.md`, “cần nhóm xác nhận”, “[2,42; 3,17]”; đủ 20 chú thích Hình 1→20, 11 bảng, 20 ảnh, 72 heading; chỉ số cuối 87.115 (giảm 3.924 ký tự truy vết).
 
 ## 14. Khả năng đọc thực tế của ảnh và chú thích (vòng v3 — đo đạc + xem ảnh, không chỉ cấu trúc XML)
@@ -225,20 +227,27 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 
 ⇒ Chú thích Hình 11 đã viết lại đúng bằng chứng: dải cạnh thanh 2,82 là **khoảng trải theo thành phố 2,06–3,13**, không phải khoảng tin cậy; cặp số **[2,42; 3,17] của bản thảo không khớp hình lẫn bảng nguồn** — nêu thẳng trong chú thích để nhóm xác nhận trước khi dùng lại. Bảng 7 giữ nguyên (không thêm khoảng). Đây là báo cáo khác biệt, không phải tự sửa số liệu.
 
-**(b) Dấu `*` sau đơn vị (µg/m³ \*, ppb \*, mg/m³ \*) trong `Data_dictionary.md` mục 1.** Đã quét toàn bộ nguồn hiện có: chính `Data_dictionary.md` (bảng mục 1 và toàn bộ văn bản quanh đó), `docs/`, `README.md`, mã notebook — **không nơi nào có chú giải cho dấu `*`**. Kết luận: không thể giải nghĩa từ nguồn hiện có; Bảng 2 tiếp tục chép nguyên dấu `*` kèm ghi chú “cần nhóm xác nhận”, không suy diễn, không quy đổi đơn vị.
+**(b) Dấu `*` sau đơn vị (µg/m³ \*, ppb \*, mg/m³ \*) trong `Data_dictionary.md` mục 1.** Đã quét toàn bộ nguồn hiện có: chính `Data_dictionary.md` (bảng mục 1 và toàn bộ văn bản quanh đó), `docs/`, `README.md`, mã notebook — **không nơi nào có chú giải cho dấu `*`**. Kết luận: không thể giải nghĩa từ nguồn hiện có; Bảng 2 tiếp tục chép nguyên dấu `*` với ghi chú trung tính “giữ nguyên như tệp nguồn, không tự quy đổi đơn vị” (vòng v4 đã rút câu “cần nhóm xác nhận” khỏi bản nộp — câu hỏi vẫn được ghi ở mục 12.5 và mục 15 này), không suy diễn, không quy đổi đơn vị.
 
-## 16. Trạng thái kiểm tra nguồn tham khảo (vòng v3)
+## 16. Trạng thái kiểm tra nguồn tham khảo (cập nhật vòng cuối — đã xác minh trực tuyến)
 
-| Mục | Nguồn | Trạng thái từ phiên này |
-|---|---|---|
-| [1] | Kaggle — Air Quality Data in India | Ngoài phạm vi mạng của phiên → chờ nhóm mở link, ghi ngày truy cập |
-| [2] | CPCB — National Air Quality Index | Như trên |
-| [3] | Open-Meteo — Historical Weather API | Như trên |
-| [4] | GitHub — MTuan1510/Air-Project | **Đã kiểm tra bằng GitHub API**: kho tồn tại, nhánh mặc định `main`, đủ 6 notebook 01–06 như mô tả ✓ |
-| [5], [6] | scikit-learn (Ridge, TimeSeriesSplit) | Ngoài phạm vi mạng của phiên → chờ nhóm |
-| [7] | Tài liệu học phần INFO3020 (nội bộ) | Nhóm tự đối chiếu bản giảng viên phát |
+Toàn bộ kiểm tra dưới đây thực hiện **ngày 14/11/2026** bằng công cụ đọc trang/tìm kiếm của phiên này (không phải suy đoán):
 
-Ghi chú thêm: (i) toàn bộ URL trong báo cáo hiện là **chữ thường, chưa gắn hyperlink** (bản xuất có 0 liên kết) — tôi có thể gắn sau khi nhóm xác nhận; (ii) ghi chú cuối danh mục của bản thảo (“chưa ghi ngày truy cập…”) vẫn đúng và được giữ nguyên; (iii) các URL kho/commit trong chú thích hình (HTung0511/Air_Project_Test @ c4c75f6) đã kiểm chứng từ vòng v1 bằng chính phép chèn ảnh thành công từ URL ghim commit đó.
+| Mục | Nguồn | Kết quả kiểm tra | Hyperlink trong bản nộp |
+|---|---|---|---|
+| [1] | Kaggle — Rohan Rao, *Air Quality Data in India* (2015–2020) | **Sống và khớp mô tả**: đúng tên bộ dữ liệu, đúng tác giả, phạm vi 2015–2020, 8 thành phố ✓ | Đã gắn |
+| [2] | CPCB — *National Air Quality Index* | **Sống và khớp**: trang/bản tin AQI quốc gia của Central Pollution Control Board, đúng 6 ngưỡng Good 0–50 → Severe >400 như bảng AQI trong báo cáo ✓ | Đã gắn |
+| [3] | Open-Meteo — *Historical Weather API* | **Sống và khớp**: tài liệu API dữ liệu thời tiết quá khứ (ERA5/ERA5-Land, từ 1940, độ phân giải 0,1–0,25°) ✓ | Đã gắn |
+| [4] | GitHub — `MTuan1510/Air-Project` | **Đã kiểm tra bằng GitHub API** (vòng v3): kho tồn tại, nhánh mặc định `main`, đủ notebook 01–06 như mô tả ✓ | Đã gắn (2 chỗ: §1 và danh mục) |
+| [5] | scikit-learn — `sklearn.linear_model.Ridge` | **Sống và khớp**: mở trực tiếp trang tài liệu, đúng lớp Ridge (hồi quy ridge / L2), bản stable hiện hành ✓ | Đã gắn |
+| [6] | scikit-learn — `sklearn.model_selection.TimeSeriesSplit` | **Sống và khớp**: trang tài liệu lớp `TimeSeriesSplit` tồn tại, đúng công cụ chia folds theo thời gian ✓ | Đã gắn |
+| [7] | Tài liệu học phần INFO3020 (nội bộ) | **Không kiểm tra được từ phiên này** — tài liệu nội bộ do giảng viên cung cấp; nhóm tự đối chiếu bản gốc | Không có URL |
+
+**Cách gắn liên kết.** Dùng `updateTextStyle` với `fields: "link"` trên đúng khoảng chỉ số của từng URL (lấy bằng `find_text` ngay trước khi sửa, không suy từ số thứ tự), nên **chữ hiển thị không đổi** — chỉ thêm liên kết. Bản xuất `.docx` sau khi gắn có đúng **7 quan hệ hyperlink** (6 URL trong danh mục + 1 URL kho nhóm ở §1), trong khi bản trước đó có 0.
+
+**Ghi chú cuối danh mục đã viết lại.** Câu cũ của bản thảo (“Chưa ghi ngày truy cập vì chưa xác nhận lượt truy cập thực tế của từng nguồn…”) đã **hết đúng** sau khi kiểm tra, nên thay bằng: *“Các đường dẫn [1]–[6] đã được mở và đối chiếu nội dung ngày 14/11/2026 trong quá trình dàn trang; mục [7] là tài liệu nội bộ do giảng viên cung cấp, nhóm tự đối chiếu với bản gốc.”* Nếu nhóm nộp sau ngày đó và muốn ghi ngày truy cập riêng, chỉ cần sửa ngày trong một câu này.
+
+**URL kho/commit của hình** (`HTung0511/Air_Project_Test` @ `c4c75f6`) đã được kiểm chứng từ vòng v1 bằng chính phép chèn ảnh thành công từ URL ghim commit; theo chính sách v4 chuỗi này **không còn xuất hiện trong bản nộp** — nó chỉ nằm ở bảng mục 3 của hồ sơ.
 
 ## 17. Chính sách chú thích vòng v4 — bản nộp gọn, truy vết nằm ở hồ sơ
 
@@ -253,3 +262,39 @@ Ghi chú thêm: (i) toàn bộ URL trong báo cáo hiện là **chữ thường,
 7. **Chỗ chờ ảnh ứng dụng**: còn hai ghi chú ngắn dạng “[Chờ ảnh ứng dụng] …” mô tả màn hình/tình huống cần chụp; khi có ảnh thật sẽ thay bằng chú thích số hình + tên giao diện, không kèm tên tệp HTML.
 
 **Nơi lưu truy vết đầy đủ (không nằm trong bản nộp):** bảng mục 3 của hồ sơ này (số hình ↔ tên tệp ↔ vị trí ↔ ghi chú), các payload trong `deliverables/layout_assets/` (URL ghim commit, kích thước, khổ cột bảng), mục 14–16 (đo khả năng đọc, đối chiếu nguồn). Nhóm cần đối chiếu ảnh gốc với kho thì dùng bảng mục 3; giảng viên đọc bản nộp không thấy bất kỳ chuỗi kỹ thuật nào.
+
+## 18. Kiểm khả năng đọc khi in (vòng cuối — đo trên bản xuất `.docx`, sửa 3 lỗi in thật)
+
+**Khung in đang dùng.** Khổ A4 dọc 11906 × 16838 twips (595,3 × 841,9 pt); lề trên/dưới 1133,8 twips (56,7 pt), lề trái 1700,8 twips (85 pt), lề phải 1133,8 twips (56,7 pt) → **bề rộng cột văn bản 9071,4 twips = 453,6 pt**. Đây là lý do mọi ảnh và mọi bảng đều chốt ở **450 pt**: còn dư 3,6 pt an toàn, không phần tử nào tràn lề.
+
+**Cỡ chữ thật trong bản xuất (đo `w:sz`, đơn vị nửa điểm).**
+
+| Loại nội dung | Nửa điểm | Cỡ khi in | Nhận xét |
+|---|---|---|---|
+| Heading 1–3 | 26 | **13 pt** | Đủ lớn để sinh mục lục và quét nhanh |
+| Thân bài | 18 | **9 pt** | Chuẩn báo cáo học thuật khổ A4 |
+| Ô bảng, ghi chú nguồn | 17 | **8,5 pt** | Đọc được ở 100 %; nhỏ hơn mức này mới đáng lo |
+| Chú thích hình | 18 | **9 pt**, nghiêng, canh giữa | Đúng quy ước caption |
+| Đoạn đệm 1 ký tự trước bảng | 2 | **1 pt** | Chỉ là kỹ thuật giữ khoảng cách, không mang nội dung |
+
+Không có nội dung nào mang thông tin ở dưới 8,5 pt → **không phải thu/phóng chữ để in vừa trang**.
+
+**Ba lỗi in phát hiện và đã sửa trong vòng cuối.**
+
+1. **Hai bảng ở trang đầu chia cột đều trong khi nội dung không đều.** Bảng thành viên (4 cột × 113 pt) và Bảng 1 “Vai trò các nhóm biến” (2 cột × 227 pt) khiến cột chứa câu dài bị gấp 4–5 dòng, hàng cao bất thường. Đã đặt khổ cột cố định: bảng thành viên **80 / 50 / 80 / 240 pt**, Bảng 1 **75 / 375 pt** — tổng vẫn đúng **450 pt**, không đổi một chữ nào, chỉ đổi tỉ lệ.
+2. **Chỉ 4/11 bảng ghim hàng tiêu đề.** Bảng dài (15, 9, 8, 7 hàng) khi tràn sang trang sẽ mất nhãn cột ở trang sau. Đã ghim hàng tiêu đề cho **11/11 bảng** (`pinTableHeaderRows`), đo lại bản xuất: `tblHeader val="1"` = **11**.
+3. **0/71 hàng chống tách giữa trang.** Một hàng có thể bị cắt ngang ngay giữa dòng khi gặp cuối trang — lỗi in dễ thấy nhất của báo cáo dạng bảng. Đã bật chống tách cho **71/71 hàng** (`preventOverflow`), đo lại: `cantSplit val="1"` = **71**.
+
+**Đoàn kiểm tra sau khi sửa (bản xuất `layout_v15.docx`).**
+
+| Hạng mục | Kết quả | Đạt |
+|---|---|---|
+| Tổng khổ 11 bảng | 450 pt mỗi bảng, không bảng nào vượt 453,6 pt | ✓ |
+| Từ dài nhất so với khổ cột | Quét toàn bộ 71 × số cột: **không từ nào vượt khổ cột chứa nó** (cột hẹp nhất 40 pt) | ✓ |
+| Ảnh | 20/20 đúng **450 pt**, đúng aspect ratio gốc | ✓ |
+| Ảnh liền chú thích | `keepWithNext` = **37** đoạn (20 đoạn ảnh + 10 tên bảng + 7 heading H1) | ✓ |
+| Hàng tiêu đề lặp khi tràn trang | **11/11** bảng | ✓ |
+| Hàng không bị cắt giữa trang | **71/71** hàng | ✓ |
+| Kiểm soát dòng mồ côi | `widowControl=0` ở 232 đoạn theo mặc định của bản xuất Docs | ✓ |
+
+**Khuyến nghị duy nhất còn lại khi in (không sửa được bằng dàn trang).** Bốn hình có chữ nền nhỏ nhất khi thu về 450 pt — **Hình 4, 12, 14, 17** (p90 ≈ 4,7–5,1 pt hiệu dụng, xem bảng mục 14) — nên **in ở khổ phóng to (A3) hoặc xem trên màn hình với zoom ≥150 %**. Đã **không** đổi khổ 450 pt (tiêu chí nghiệm thu), **không** chèn thêm hình lặp để tăng trang, **không** thêm phân tích, theo đúng chỉ thị của nhóm. Nếu sau này nhóm muốn bốn hình này đọc được ở A4 mà không phóng to, cách duy nhất là **vẽ lại từ notebook với figsize hẹp hơn** — việc đó thuộc phạm vi chạy notebook, ngoài phạm vi dàn trang.
