@@ -20,9 +20,9 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Bản dàn trang (Google Docs) | https://docs.google.com/document/d/1vxuomPCYI7acP9ZBFy7miLHwqLAK652Oc4lDjUliBIA/edit — “Báo cáo — Phân tích ô nhiễm không khí 8 TP Ấn Độ — Nhóm 25IT — BẢN DÀN TRANG v1” (nội dung đã ở vòng v2; tên tệp giữ nguyên để không vỡ liên kết) |
 | Bản gốc đối chiếu | https://docs.google.com/document/d/1wAbxQIyuAgvuOMF_tc4D4TDIjEG6Hsomi5yVfylp11o/edit (không chỉnh sửa) |
 | PDF | Không xuất (nhóm xác nhận không cần) |
-| Bản Word (.docx) — **một bản duy nhất** | https://docs.google.com/document/d/1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz/edit — “Báo cáo … BẢN DÀN TRANG (bản Word cuối).docx”, id `1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz`, 2.053.639 byte, xuất từ bản Docs **sau vòng cuối** (đã có hyperlink, khổ cột mới, ghim tiêu đề, chống tách hàng). Hai bản Word của vòng v3/v4 đã **chuyển vào thùng rác Drive** (id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H`, `1ccLSOBhK1phBKmo4sHRVDejHTHRoIDQR`) để không còn bản nào gây nhầm; khôi phục được nếu cần. **Bản chính vẫn là Google Docs** ở dòng trên |
+| Bản Word (.docx) | Bản **mới nhất (vòng trình bày)**: “Báo cáo … BẢN DÀN TRANG (bản Word cuối, vòng trình bày).docx”, id `1hhJqQE2oaPz7yttGVW1ytwMiWS2c8Ka-`, xuất từ bản Docs sau khi hoàn thiện phông chữ/cỡ chữ và tách ô 4 hình. Bản Word vòng cuối trước đó id `1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz` **được giữ nguyên** (nhóm yêu cầu không xóa thêm bản cũ). Hai bản Word vòng v3/v4 vẫn ở thùng rác Drive (id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H`, `1ccLSOBhK1phBKmo4sHRVDejHTHRoIDQR`). **Bản chính vẫn là Google Docs** ở dòng trên |
 | .docx | Chỉ xuất để **kiểm tra bố cục nội bộ** bằng script (đếm ảnh/bảng/đoạn, phát hiện ảnh chèn xen). Giao file nếu nhóm cần |
-| Payload tái lập | `deliverables/layout_assets/`: `gen_batches.py` + `batches.txt` (20 hình vòng v1), `gen_tables.py` + `tables_payload.json` (Bảng 2/5/7), **`tables_native_v2.json` (7 bảng chuyển từ danh sách, kèm vị trí và khổ cột cuối cùng)**, **`fix_figures_2_3_4_5.json` (payload dựng lại khối Hình 2–5)**, `make_flow_diagram.py` (Hình 1) |
+| Payload tái lập | `deliverables/layout_assets/`: `gen_batches.py` + `batches.txt` (20 hình vòng v1), `gen_tables.py` + `tables_payload.json` (Bảng 2/5/7), **`tables_native_v2.json` (7 bảng chuyển từ danh sách, kèm vị trí và khổ cột cuối cùng)**, **`fix_figures_2_3_4_5.json` (payload dựng lại khối Hình 2–5)**, `make_flow_diagram.py` (Hình 1), `mktype.py`/`mkwalk.py` (đo typography và chỉ số từ bản xuất .docx), **`split_panels.py` + `panels/` (11 PNG ô tách của Hình 4/12/14/17 + `plan.json` khổ hiển thị + bản pixels dải tiêu đề/ghi chú chung)** |
 
 ## 2. Nguồn hình — một nguồn duy nhất, dùng nhất quán
 
@@ -30,6 +30,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 - Ảnh nhúng bằng URL công khai ghim theo commit: `https://raw.githubusercontent.com/HTung0511/Air_Project_Test/c4c75f65.../Air-Project-main/reports/figures/<tên>.png`. **Từ vòng v4, chuỗi tên tệp + kho + nhánh + commit chỉ ghi trong hồ sơ này (bảng mục 3); chú thích trong bản nộp rút gọn theo mục 17.**
 - **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới). Vòng v3 vẽ lại **bản v2 khổ hẹp**: `deliverables/layout_assets/so_do_quy_trinh.png` (3200×616 px, dpi 400), Drive id `1iju2jG7Cb82wf-2vixwT0RaABNjyqI3W` (công khai “bất kỳ ai có liên kết – người đọc”); bản v1 (5331×765 px) **chỉ còn trong repo** (`deliverables/layout_assets/so_do_quy_trinh_v1.png`) làm đối chiếu; bản sao trên Drive (id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8`) đã cho vào thùng rác ở vòng cuối để Drive chỉ còn đúng một sơ đồ đang dùng. Lý do vẽ lại ở mục 14.
 - **Không dùng**: hình/kết quả của PR #3 (`arena/b5aacef3`) và PR #4 – vòng Dev (`arena/5cb21c04`); không gom hình từ nhiều nhánh; không ảnh AI; không thay hình bản Dev/Test.
+- **Vòng trình bày — ô tách của 4 hình lớn:** 11 PNG ô cắt từ chính PNG nguồn (không notebook, không ảnh AI) nằm ở `deliverables/layout_assets/panels/` và thư mục Drive **`AQ25IT_layout_panels`** (id `1p0tYEsHcOrh8dW4b_-qEZAVYweujQrV_`, công khai “bất kỳ ai có liên kết – người đọc” để Docs nhúng được); ảnh chèn bằng link `lh3.googleusercontent.com/d/<id>`. Chi tiết kỹ thuật và kiểm chứng ở mục 14 khoản 5 và mục 18.
 - Kích thước: mọi ảnh **rộng 450 pt** (khổ A4 trừ lề ≈451 pt), chiều cao suy từ **aspect ratio gốc của từng tệp** → không kéo méo, không cắt mất trục/đơn vị/khoảng bất định/đường ngưỡng/cỡ mẫu. Đã kiểm lại bằng bản xuất: 20/20 ảnh đúng 450 pt và đúng tỷ lệ gốc (6,9565 · 2,2 · 1,5 · 3,25 · 1,8571 · 1,7778 · 1,7778 · 1,6667 · 2,0833 · 1,875 · 2,1739 · 2,5 · 1,6129 · 2,6136 · 1,9792 · 2,0408 · 1,4375 · 1,9 · 1,7857 · 2,3958).
 
 ## 3. Bảng bàn giao hình (Số hình | Tệp nguồn | Vị trí | Vấn đề còn thiếu)
@@ -39,7 +40,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Hình 1 | `so_do_quy_trinh.png` **v2** (vẽ lại từ §1.5, khổ hẹp) | §1.5 Quy trình thực hiện và phân công | Bản v2: chữ trong sơ đồ ≈7 pt hiệu dụng khi in ở 450 pt (bản v1 chỉ ≈3 pt, không đọc được — đo ở mục 14). Không phải kết quả phân tích; giữ ghi chú phân biệt xử lý hồi cứu với yêu cầu kiểm soát thông tin theo thời điểm của nhánh dự báo |
 | Hình 2 | `missing_after_cleaning_8cities.png` | §2.2.8 Các kiểm tra sau xử lý | Đã dựng lại ở vòng v2 (xem mục 10) |
 | Hình 3 | `missing_pattern_lucknow_jaipur.png` | §2.2.8 | Chỉ dẫn gốc muốn “hình minh họa nội suy/ngoại lai có đoạn thời gian, đường quan sát và đường ước lượng”; **không tệp nào trong `reports/figures/` đúng dạng đó** → dùng hai hình gần nhất (Hình 4, 5) và nói rõ trong chú thích. Muốn đúng yêu cầu phải sinh hình mới từ notebook (ngoài phạm vi) |
-| Hình 4 | `fill_strategies_lucknow_jaipur.png` | §2.2.8 | Nhãn (D) trong hình là nội suy **≤1 ngày**. Theo RA: **không dùng hình làm bằng chứng trực tiếp cho quy tắc 14 ngày** → chú thích đã viết lại: bốn cấu hình là minh họa so sánh chiến lược điền của Notebook 02 trên hai thành phố ví dụ, quy tắc pipeline (≤14 ngày, `Data_dictionary.md`) nêu riêng. Giữ hình vì vẫn giúp giải thích mục “xử lý thiếu” |
+| Hình 4 | `fill_strategies_lucknow_jaipur.png` | §2.2.8 | Nhãn (D) trong hình là nội suy **≤1 ngày**. Theo RA: **không dùng hình làm bằng chứng trực tiếp cho quy tắc 14 ngày** → chú thích đã viết lại: bốn cấu hình là minh họa so sánh chiến lược điền của Notebook 02 trên hai thành phố ví dụ, quy tắc pipeline (≤14 ngày, `Data_dictionary.md`) nêu riêng. Giữ hình vì vẫn giúp giải thích mục “xử lý thiếu”. **Vòng trình bày:** chèn dạng 2 ô tách, chữ hiệu dụng 9,5 pt (mục 14, 18) |
 | Hình 5 | `outliers_pm25_lucknow_jaipur.png` | §2.2.8 | Đã dựng lại ở vòng v2 |
 | Hình 6 | `eda_00_sample_size.png` | §3.2.1 Khác biệt giữa các thành phố | — |
 | Hình 7 | `eda_01_poor_share_city.png` | §3.2.1 | — |
@@ -47,12 +48,12 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Hình 9 | `eda_02_heatmap_city_month.png` | §3.2.2 Biến động theo thời gian | — |
 | Hình 10 | `eda_03_trend_city_year.png` | §3.2.2 | — |
 | Hình 11 | `eda_04_pm25_aqi.png` | §3.2.3 Các chất nổi bật trong ngày AQI cao | **Đã đối chiếu nguồn (mục 15)**: hình **không vẽ khoảng nào**; cạnh thanh 2,82 là năm chấm xám = tỷ số riêng từng thành phố (2,06–3,13). Chú thích đã viết lại theo đúng bằng chứng; cặp số [2,42; 3,17] của bản thảo không khớp hình và bảng nguồn → báo nhóm, Bảng 7 giữ nguyên |
-| Hình 12 | `corr_01_raw_vs_adjusted.png` | §3.2.4 Thời tiết–AQI trước và sau điều chỉnh mùa vụ | — |
+| Hình 12 | `corr_01_raw_vs_adjusted.png` | §3.2.4 Thời tiết–AQI trước và sau điều chỉnh mùa vụ | **Vòng trình bày:** 2 ô tách (ô phải giữ colorbar chung) + đoạn Nguồn nguyên văn; chữ hiệu dụng 9,5 pt (mục 14, 18) |
 | Hình 13 | `corr_02_hypothesis_tests.png` | §3.2.4 | — |
-| Hình 14 | `corr_03_humidity_deciles.png` | §3.2.4 | — |
+| Hình 14 | `corr_03_humidity_deciles.png` | §3.2.4 | **Vòng trình bày:** 3 ô tách (Delhi/Lucknow/Gurugram) + đoạn Nguồn nguyên văn; chữ hiệu dụng 9,5 pt (mục 14, 18) |
 | Hình 15 | `corr_04_poor_share_by_humidity.png` | §3.2.4 | — |
 | **Hình 16** | `model_02_mae_by_model.png` | **§3.3.1 Hiệu năng hồi quy** (ngay sau Bảng 9) | **Đã chuyển về cạnh đoạn phân tích theo RA.** Hai cột đối chứng 64,5 và 43,4 **không còn bị coi là xung đột**: đó là MAE **test** làm tròn của 64,47 và 43,41; chú thích đã ghi rõ và tách khỏi 60,49/55,82 (validation) |
-| **Hình 17** | `model_01_residual_diagnostics.png` | **§3.3.2 Chẩn đoán và độ ổn định** | Đã chuyển về phần chẩn đoán; **đổi số từ Hình 16 → Hình 17** |
+| **Hình 17** | `model_01_residual_diagnostics.png` | **§3.3.2 Chẩn đoán và độ ổn định** | Đã chuyển về phần chẩn đoán; **đổi số từ Hình 16 → Hình 17**. **Vòng trình bày:** 4 ô tách, trải 2 trang, đoạn Nguồn nguyên văn; chữ hiệu dụng 9,5 pt (mục 14, 18) |
 | **Hình 18** | `model_03_mae_by_city.png` | **§3.3.2** (cạnh câu “MAE của L3 giảm cùng chiều ở tám thành phố”) | Thứ tự thành phố xếp theo **số ngày AQI ≥201 trong tập test** — theo RA **không phải lỗi**; tiêu chí đã ghi trong chú thích và bổ sung một câu “khác thứ tự xếp theo trung vị AQI ở Hình 6–Hình 8 vì tiêu chí sắp xếp khác nhau” |
 | **Hình 19** | `model_04_precision_recall.png` | **§3.3.3 Kết quả cảnh báo** | Hai cặp số là **hai điểm vận hành khác ngưỡng**, không mâu thuẫn: chú thích ghi rõ điểm mở = ngưỡng 201 (precision ≈0,90 L3 / ≈0,85 persistence) và điểm đặc = ngưỡng chọn theo quy tắc F2 trên validation của train (166 cho L3, 160 cho persistence; hình hiển thị ≈77% và 72%) |
 | **Hình 20** | `model_05_humidity_recheck.png` | **§3.3.4 Diễn giải liên hệ có điều kiện** (cạnh hệ số độ ẩm của OLS) | Đã chuyển về đúng đoạn; số không đổi |
@@ -217,6 +218,7 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 2. **19 hình nghiên cứu giữ nguyên** (chốt của nhóm). Độ phân giải nguồn 192–300 DPI tại 450 pt là đủ nét để phóng to trên màn hình; chữ nền trong hình ở mức 4,7–8,7 pt hiệu dụng — đọc được khi xem 100–200 % trên màn hình, **nhỏ khi in 100 %**. Bốn hình nhỏ chữ nhất (Hình 4, 12, 14, 17) được nêu tên để người đọc/phòng in biết cần phóng to; **không** tự đổi khổ ảnh vì khổ 450 pt là tiêu chí nghiệm thu và lề trang chỉ còn 3,6 pt dư.
 3. **Chú thích đã gánh phần số liệu**: mọi chú thích 9 pt nghiêng đều chép lại các con số then chốt của hình (đo kiểm: đủ 20/20), nên việc đọc hiểu không phụ thuộc vào chữ nhỏ trong hình. Chú thích dài nhất nay là Hình 11 (~860 ký tự ≈ 9 dòng ở khổ 450 pt) vì mang thêm bảng tỷ số theo thành phố — chấp nhận đổi độ dài lấy tính tự chứng minh; nếu nhóm muốn ngắn hơn, có thể chuyển phần tỷ số xuống ghi chú Bảng 7.
 4. **Giữ liền khối khi sang trang**: bật `keepWithNext` cho 20 đoạn chứa ảnh (ảnh không rời chú thích) và 10 đoạn tên bảng (tên không rời bảng). Trước vòng v3 cả 30 đoạn này đều chưa có thuộc tính này.
+5. **Vòng trình bày — tách ô bốn hình chữ nhỏ nhất (4, 12, 14, 17):** thay vì giữ khổ 450 pt (chữ hiệu dụng 5,1–6,1 pt) hoặc chuyển trang sang A4 ngang, mỗi hình được **tách thành các panel độc lập** cắt từ PNG gốc theo rãnh trắng sạch mực: Hình 4 → 2 ô; Hình 12 → 2 ô (ô phải mang theo colorbar chung); Hình 14 → 3 ô; Hình 17 → 4 ô. Mỗi ô chèn ở bề rộng sao cho **chữ hiệu dụng khi in ≈ 9,5 pt** (kế hoạch khổ trong `deliverables/layout_assets/panels/plan.json`; script tách kèm hai kiểm chứng — đường cắt sạch mực ±4 px và **0 điểm mực bị mất** — trong `split_panels.py`). Dải tiêu đề/ghi chú chung không chèn dạng ảnh mà chép nguyên văn vào caption/đoạn “Nguồn:” (mục 17 khoản 8). Kết quả đo: 11/11 ô đạt 9,5 pt; Hình 17 là hình duy nhất **trải 2 trang** (4 ô × ≈213 pt); nhãn trục y của Hình 12/14 chỉ có ở panel trái nhất — đúng thiết kế gốc của hình nhóm, không thêm/bớt thông tin.
 
 ## 15. Đối chiếu hai điểm treo còn lại — chỉ dùng nguồn hiện có, không chạy notebook
 
@@ -260,41 +262,60 @@ Toàn bộ kiểm tra dưới đây thực hiện **ngày 14/11/2026** bằng c�
 5. **Giữ nguyên mọi thông tin giúp đọc đúng hình**: đơn vị, trục, chú giải, khoảng thời gian, ngưỡng (201, IQR×1,5, F2/166/160…), cỡ mẫu (n = 8.734; 1.947 cặp test; 5.741 cặp train…), và các cảnh báo diễn giải (test ≠ validation; dải chấm 2,06–3,13 không phải khoảng tin cậy; hai điểm vận hành khác ngưỡng; tiêu chí sắp xếp của Hình 18…).
 6. **Ghi chú dưới bảng**: bỏ tên tệp CSV/PNG và câu “cần nhóm xác nhận”; giữ nội dung diễn giải cách đọc bảng; nguồn ghi ngắn dạng “sổ tay tổng hợp của quy trình làm sạch trong hồ sơ dự án [4]”, “bảng kết quả của Notebook 06 [4]”.
 7. **Chỗ chờ ảnh ứng dụng**: còn hai ghi chú ngắn dạng “[Chờ ảnh ứng dụng] …” mô tả màn hình/tình huống cần chụp; khi có ảnh thật sẽ thay bằng chú thích số hình + tên giao diện, không kèm tên tệp HTML.
+8. **Vòng trình bày (ô tách từ 4 hình lớn):** khi tách panel từ PNG gốc, hai dải *tiêu đề chung* và *ghi chú nguồn chung* không được chèn lại dạng ảnh (chữ sẽ vẫn nhỏ); chữ của chúng được chép **nguyên văn** vào bản nộp: ghi chú nguồn thành đoạn “Nguồn: …” riêng sau caption (10,5 pt, canh giữa); số liệu đọc hình chủ chốt của tiêu đề Hình 12 và Hình 14 được nối vào caption bằng câu “Đọc hình: …” (tiêu đề Hình 17 đã nằm đủ trong caption hiện có nên không lặp). Bản pixels của hai dải giữ trong `deliverables/layout_assets/panels/` (`*_tieu_de.png`, `*_ghi_chu.png`) để truy vết.
 
 **Nơi lưu truy vết đầy đủ (không nằm trong bản nộp):** bảng mục 3 của hồ sơ này (số hình ↔ tên tệp ↔ vị trí ↔ ghi chú), các payload trong `deliverables/layout_assets/` (URL ghim commit, kích thước, khổ cột bảng), mục 14–16 (đo khả năng đọc, đối chiếu nguồn). Nhóm cần đối chiếu ảnh gốc với kho thì dùng bảng mục 3; giảng viên đọc bản nộp không thấy bất kỳ chuỗi kỹ thuật nào.
 
-## 18. Kiểm khả năng đọc khi in (vòng cuối — đo trên bản xuất `.docx`, sửa 3 lỗi in thật)
+## 18. Hồ sơ kiểm in — vòng trình bày (TNR 13/1,5; bảng 11 pt; chú thích 10,5 pt; tách ô 4 hình lớn)
 
-**Khung in đang dùng.** Khổ A4 dọc 11906 × 16838 twips (595,3 × 841,9 pt); lề trên/dưới 1133,8 twips (56,7 pt), lề trái 1700,8 twips (85 pt), lề phải 1133,8 twips (56,7 pt) → **bề rộng cột văn bản 9071,4 twips = 453,6 pt**. Đây là lý do mọi ảnh và mọi bảng đều chốt ở **450 pt**: còn dư 3,6 pt an toàn, không phần tử nào tràn lề.
+**Căn cứ khôi phục chuẩn chữ.** Đo từ bản **gốc** của nhóm (export `1wAbxQIyuAgvuOMF_tc4D4TDIjEG6Hsomi5yVfylp11o`): bản gốc tự nó trộn lẫn — `docDefaults` Arial 11/1,15 nhưng các đoạn thân định dạng trực tiếp là Times New Roman 13 pt giãn 1,5 (129 run `sz=26`, 73 đoạn `line=360`). Theo chuẩn nhóm nêu ở vòng này: **thân bài khôi phục thống nhất Times New Roman 13 pt, giãn dòng 1,5**; không giữ số trang bằng cách thu nhỏ chữ.
 
-**Cỡ chữ thật trong bản xuất (đo `w:sz`, đơn vị nửa điểm).**
+**Typography bản nộp (đo trên bản xuất `.docx` sau vòng trình bày).**
 
-| Loại nội dung | Nửa điểm | Cỡ khi in | Nhận xét |
+| Loại nội dung | Phông / cỡ | Giãn dòng | Ghi chú |
 |---|---|---|---|
-| Heading 1–3 | 26 | **13 pt** | Đủ lớn để sinh mục lục và quét nhanh |
-| Thân bài | 18 | **9 pt** | Chuẩn báo cáo học thuật khổ A4 |
-| Ô bảng, ghi chú nguồn | 17 | **8,5 pt** | Đọc được ở 100 %; nhỏ hơn mức này mới đáng lo |
-| Chú thích hình | 18 | **9 pt**, nghiêng, canh giữa | Đúng quy ước caption |
-| Đoạn đệm 1 ký tự trước bảng | 2 | **1 pt** | Chỉ là kỹ thuật giữ khoảng cách, không mang nội dung |
+| Thân bài | Times New Roman **13 pt** (`docDefaults` `rPrDefault sz26`) | **1,5** (`pPrDefault 360`) | đặt lại named style NORMAL_TEXT; đoạn định dạng trực tiếp cũ cùng chuẩn nên hoà nhập |
+| Heading H1/H2/H3 | TNR bold 15/14/13 | theo style heading | keepWithNext phục vụ mục lục |
+| Caption hình (20) | 10,5 pt nghiêng, canh giữa | single | gắn lại italic sau khi đổi named style |
+| Đoạn “Nguồn: …” (12 cũ + 3 mới) | 10,5 pt, canh giữa | single | 3 đoạn mới = ghi chú nguồn nguyên văn của Hình 12/14/17 |
+| Ghi chú đọc bảng/hình (5) | 10,5 pt | 1,5 | — |
+| Tên bảng (10) | 11 pt bold | single | — |
+| Ô bảng (11 bảng) | 11 pt | single | — |
+| Bìa (14 đoạn) | 13 pt | 1,5 | — |
+| “[Chờ ảnh ứng dụng]” (2) | 10,5 pt nghiêng | 1,5 | placeholder còn chặn — báo đúng, không che |
 
-Không có nội dung nào mang thông tin ở dưới 8,5 pt → **không phải thu/phóng chữ để in vừa trang**.
+**Tách 4 hình chữ nhỏ (Hình 4, 12, 14, 17).** Chọn tách panel thay vì trang A4 ngang: giữ mạch trang A4 dọc thống nhất, không đổi hồ sơ in của toàn bộ phần còn lại, và đạt chữ hiệu dụng 9,5 pt.
 
-**Ba lỗi in phát hiện và đã sửa trong vòng cuối.**
+| Hình | Số ô | Khổ hiển thị mỗi ô (pt) | Chữ hiệu dụng | Dải chung xử lý |
+|---|---|---|---|---|
+| 4 | 2 | 418,8×245,5 và 417,8×245,5 | 9,5 | không có dải chung |
+| 12 | 2 | 404,5×244,4 và 406,7×244,4 (ô phải giữ colorbar) | 9,5 | tiêu đề → câu “Đọc hình:” trong caption; nguồn → đoạn “Nguồn:” |
+| 14 | 3 | 258,0×206,2; 234,4×206,2; 210,7×206,2 | 9,5 | như Hình 12 |
+| 17 | 4 | 370,2×213,2; 375,8×213,2; 361,6×212,8; 384,5×212,8 | 9,5 | tiêu đề đã đủ trong caption; nguồn → đoạn “Nguồn:”; **hình trải 2 trang** |
 
-1. **Hai bảng ở trang đầu chia cột đều trong khi nội dung không đều.** Bảng thành viên (4 cột × 113 pt) và Bảng 1 “Vai trò các nhóm biến” (2 cột × 227 pt) khiến cột chứa câu dài bị gấp 4–5 dòng, hàng cao bất thường. Đã đặt khổ cột cố định: bảng thành viên **80 / 50 / 80 / 240 pt**, Bảng 1 **75 / 375 pt** — tổng vẫn đúng **450 pt**, không đổi một chữ nào, chỉ đổi tỉ lệ.
-2. **Chỉ 4/11 bảng ghim hàng tiêu đề.** Bảng dài (15, 9, 8, 7 hàng) khi tràn sang trang sẽ mất nhãn cột ở trang sau. Đã ghim hàng tiêu đề cho **11/11 bảng** (`pinTableHeaderRows`), đo lại bản xuất: `tblHeader val="1"` = **11**.
-3. **0/71 hàng chống tách giữa trang.** Một hàng có thể bị cắt ngang ngay giữa dòng khi gặp cuối trang — lỗi in dễ thấy nhất của báo cáo dạng bảng. Đã bật chống tách cho **71/71 hàng** (`preventOverflow`), đo lại: `cantSplit val="1"` = **71**.
+Kiểm chứng tách (script `deliverables/layout_assets/split_panels.py`): mọi đường cắt là rãnh sạch mực ±4 px trong khoảng ô đi qua; hợp các ô + dải phủ **100% điểm mực của ảnh gốc (mất = 0)** ở cả 4 hình. PNG ô + `plan.json` nằm trong `deliverables/layout_assets/panels/`; bản dùng để chèn Docs upload lên thư mục Drive `AQ25IT_layout_panels` (link công khai).
 
-**Đoàn kiểm tra sau khi sửa (bản xuất `layout_v15.docx`).**
+**Khổ cột bảng ở 11 pt.** Ba bảng có chuỗi dài không ngắt được đã cân lại để không từ nào tràn cột: Bảng 1 [70/60/70/250], Bảng 3 [118/80/76/50/126], Bảng 5 tên tệp [176/44/30/200] — tổng mỗi bảng vẫn đúng 450 pt. Tám bảng còn lại giữ khổ cũ; từ dài nhất từng cột đã đối chiếu khổ cột ở 11 pt.
+
+**Đoàn kiểm tra sau vòng trình bày (bản xuất `.docx`).**
 
 | Hạng mục | Kết quả | Đạt |
 |---|---|---|
-| Tổng khổ 11 bảng | 450 pt mỗi bảng, không bảng nào vượt 453,6 pt | ✓ |
-| Từ dài nhất so với khổ cột | Quét toàn bộ 71 × số cột: **không từ nào vượt khổ cột chứa nó** (cột hẹp nhất 40 pt) | ✓ |
-| Ảnh | 20/20 đúng **450 pt**, đúng aspect ratio gốc | ✓ |
-| Ảnh liền chú thích | `keepWithNext` = **37** đoạn (20 đoạn ảnh + 10 tên bảng + 7 heading H1) | ✓ |
-| Hàng tiêu đề lặp khi tràn trang | **11/11** bảng | ✓ |
-| Hàng không bị cắt giữa trang | **71/71** hàng | ✓ |
-| Kiểm soát dòng mồ côi | `widowControl=0` ở 232 đoạn theo mặc định của bản xuất Docs | ✓ |
+| Thân bài phông/cỡ/giãn | TNR 13 / 1,5 qua docDefaults | ✓ |
+| Caption / Nguồn / tên bảng / ô bảng | 10,5 nghiêng / 10,5 / 11 bold / 11 | ✓ |
+| Tổng khổ 11 bảng | 450 pt mỗi bảng | ✓ |
+| Hàng tiêu đề lặp khi tràn trang | tblHeader 11/11 | ✓ |
+| Hàng chống tách giữa trang | cantSplit 71/71 | ✓ |
+| Ảnh liền chú thích | keepWithNext 47 (27 đoạn ảnh + 10 tên bảng + heading) | ✓ |
+| Ảnh inline | 27 (16 hình đơn + 11 ô tách), đúng aspect ratio gốc | ✓ |
+| Chỉ số cuối tài liệu | 87.951 | ✓ |
 
-**Khuyến nghị duy nhất còn lại khi in (không sửa được bằng dàn trang).** Bốn hình có chữ nền nhỏ nhất khi thu về 450 pt — **Hình 4, 12, 14, 17** (p90 ≈ 4,7–5,1 pt hiệu dụng, xem bảng mục 14) — nên **in ở khổ phóng to (A3) hoặc xem trên màn hình với zoom ≥150 %**. Đã **không** đổi khổ 450 pt (tiêu chí nghiệm thu), **không** chèn thêm hình lặp để tăng trang, **không** thêm phân tích, theo đúng chỉ thị của nhóm. Nếu sau này nhóm muốn bốn hình này đọc được ở A4 mà không phóng to, cách duy nhất là **vẽ lại từ notebook với figsize hẹp hơn** — việc đó thuộc phạm vi chạy notebook, ngoài phạm vi dàn trang.
+**Bản Word.** Xuất lại và upload tệp mới “Báo cáo … — BẢN DÀN TRANG (bản Word cuối, vòng trình bày).docx” (ID `1hhJqQE2oaPz7yttGVW1ytwMiWS2c8Ka-`) cùng thư mục với bản Word cũ `1Mq-uVG6RZRRovTc0uPFUH0ETLpDWm6Pz` — **bản cũ được giữ**, không xóa, theo yêu cầu nhóm.
+
+**Phần chưa đạt / chặn phía nhóm (báo đúng, không che):**
+
+1. Hai placeholder “[Chờ ảnh ứng dụng]” (§1.4 và §3.4) còn nguyên — chờ ảnh chụp thật từ tệp `Canh_bao_o_nhiem_truoc_mot_ngay_Pro_v5.html` của nhóm; tệp này không có trong nhánh nào của hai kho đã quét.
+2. Tháng/năm bìa “[Cần bổ sung]” — nhóm chưa cung cấp; không tự điền.
+3. Mục lục: heading đã đủ cấp để chèn TOC tự động trong Docs; không dựng TOC tay (API không có lệnh chèn TOC).
+4. Hình 17 trải 2 trang (4 ô xếp dọc) — đánh đổi để chữ 9,5 pt trên A4 dọc; muốn gọn 1 trang chỉ còn cách A4 ngang riêng mục đó hoặc vẽ lại từ notebook (ngoài phạm vi, nhóm cấm chạy notebook).
+5. Nhãn trục y của Hình 12/14 chỉ ở panel trái nhất — đúng thiết kế gốc của hình nhóm; tách ô giữ nguyên, không thêm/bớt thông tin.

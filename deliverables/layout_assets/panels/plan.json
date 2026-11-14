@@ -1,0 +1,225 @@
+{
+ "hinh04": {
+  "src": "fill_strategies_lucknow_jaipur.png",
+  "label": "Hình 4",
+  "size": [
+   1690,
+   520
+  ],
+  "glyph_px": 19.19,
+  "total_ink": 40361,
+  "lost_ink": 0,
+  "shared_title": false,
+  "pieces": [
+   {
+    "file": "hinh04_a.png",
+    "box": [
+     0,
+     0,
+     846,
+     496
+    ],
+    "w_px": 846,
+    "h_px": 496,
+    "display_pt": 418.8,
+    "height_pt": 245.5,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh04_b.png",
+    "box": [
+     846,
+     0,
+     1690,
+     496
+    ],
+    "w_px": 844,
+    "h_px": 496,
+    "display_pt": 417.8,
+    "height_pt": 245.5,
+    "eff_pt": 9.5
+   }
+  ],
+  "strips": []
+ },
+ "hinh12": {
+  "src": "corr_01_raw_vs_adjusted.png",
+  "label": "Hình 12",
+  "size": [
+   1875,
+   750
+  ],
+  "glyph_px": 21.96,
+  "total_ink": 687163,
+  "lost_ink": 0,
+  "shared_title": true,
+  "pieces": [
+   {
+    "file": "hinh12_a.png",
+    "box": [
+     0,
+     115,
+     935,
+     680
+    ],
+    "w_px": 935,
+    "h_px": 565,
+    "display_pt": 404.5,
+    "height_pt": 244.4,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh12_b.png",
+    "box": [
+     935,
+     115,
+     1875,
+     680
+    ],
+    "w_px": 940,
+    "h_px": 565,
+    "display_pt": 406.7,
+    "height_pt": 244.4,
+    "eff_pt": 9.5
+   }
+  ],
+  "strips": [
+   "tieu_de",
+   "ghi_chu"
+  ]
+ },
+ "hinh14": {
+  "src": "corr_03_humidity_deciles.png",
+  "label": "Hình 14",
+  "size": [
+   1725,
+   660
+  ],
+  "glyph_px": 23.31,
+  "total_ink": 104764,
+  "lost_ink": 0,
+  "shared_title": true,
+  "pieces": [
+   {
+    "file": "hinh14_a.png",
+    "box": [
+     0,
+     87,
+     633,
+     593
+    ],
+    "w_px": 633,
+    "h_px": 506,
+    "display_pt": 258.0,
+    "height_pt": 206.2,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh14_b.png",
+    "box": [
+     633,
+     87,
+     1208,
+     593
+    ],
+    "w_px": 575,
+    "h_px": 506,
+    "display_pt": 234.4,
+    "height_pt": 206.2,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh14_c.png",
+    "box": [
+     1208,
+     87,
+     1725,
+     593
+    ],
+    "w_px": 517,
+    "h_px": 506,
+    "display_pt": 210.7,
+    "height_pt": 206.2,
+    "eff_pt": 9.5
+   }
+  ],
+  "strips": [
+   "tieu_de",
+   "ghi_chu"
+  ]
+ },
+ "hinh17": {
+  "src": "model_01_residual_diagnostics.png",
+  "label": "Hình 17",
+  "size": [
+   1725,
+   1200
+  ],
+  "glyph_px": 21.96,
+  "total_ink": 188746,
+  "lost_ink": 0,
+  "shared_title": true,
+  "pieces": [
+   {
+    "file": "hinh17_a.png",
+    "box": [
+     0,
+     119,
+     856,
+     612
+    ],
+    "w_px": 856,
+    "h_px": 493,
+    "display_pt": 370.2,
+    "height_pt": 213.2,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh17_b.png",
+    "box": [
+     856,
+     119,
+     1725,
+     612
+    ],
+    "w_px": 869,
+    "h_px": 493,
+    "display_pt": 375.8,
+    "height_pt": 213.2,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh17_c.png",
+    "box": [
+     0,
+     612,
+     836,
+     1104
+    ],
+    "w_px": 836,
+    "h_px": 492,
+    "display_pt": 361.6,
+    "height_pt": 212.8,
+    "eff_pt": 9.5
+   },
+   {
+    "file": "hinh17_d.png",
+    "box": [
+     836,
+     612,
+     1725,
+     1104
+    ],
+    "w_px": 889,
+    "h_px": 492,
+    "display_pt": 384.5,
+    "height_pt": 212.8,
+    "eff_pt": 9.5
+   }
+  ],
+  "strips": [
+   "tieu_de",
+   "ghi_chu"
+  ]
+ }
+}
