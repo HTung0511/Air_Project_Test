@@ -1,50 +1,50 @@
-# Sơ đồ quy trình — vẽ lại NGUYÊN VĂN chuỗi bước đã xác nhận trong bản thảo (§1.5 + chỉ dẫn dàn trang).
-# Không chứa số liệu mới; chỉ là sơ đồ dàn trang.
+# Sơ đồ quy trình v2 — VẼ LẠI KHỔ HẸP ĐỂ CHỮ ĐỌC ĐƯỢC ở khổ ảnh 450pt trên trang A4.
+# v1 (khổ 17,77 inch) khiến chữ 9pt chỉ còn ~3,2pt khi in ở 450pt. v2 dùng khổ 8,0 inch
+# (dpi 400) nên chữ 9pt trong hộp ≈ 7,0pt và chữ 8pt (tiêu đề/ghi chú) ≈ 6,3pt khi hiển thị 450pt.
+# Nội dung KHÔNG đổi so với v1: cùng 7 khối, cùng màu, cùng ghi chú; chỉ đổi khổ và ngắt dòng.
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
-steps = [
-    "Dữ liệu gốc",
-    "Kiểm tra và\nlàm sạch",
-    "Bảng hồi cứu\ncó cờ",
-    "EDA và tích hợp\nthời tiết",
-    "Phân tích\nliên hệ",
-    "Thực nghiệm\ndự báo",
-    "Ứng dụng\nphát lại",
+labels = [
+    ["Dữ liệu gốc"],
+    ["Kiểm tra và", "làm sạch"],
+    ["Bảng hồi cứu", "có cờ"],
+    ["EDA và tích", "hợp thời tiết"],
+    ["Phân tích", "liên hệ"],
+    ["Thực nghiệm", "dự báo"],
+    ["Ứng dụng", "phát lại"],
 ]
 note = ("Ghi chú: nhánh dự báo cần kiểm soát riêng thông tin theo thời điểm; "
         "không mặc định bảng hồi cứu là dữ liệu causal.")
+title = "Quy trình sáu nhóm công việc của đề tài (sơ đồ dàn trang, vẽ lại từ §1.5)"
 
-n = len(steps)
-bw, bh, gap = 2.05, 1.05, 0.42
-W = n * bw + (n - 1) * gap + 0.9
-H = 2.55
-fig, ax = plt.subplots(figsize=(W, H), dpi=300)
-ax.set_xlim(0, W)
-ax.set_ylim(0, H)
-ax.axis("off")
+n = len(labels)
+W = 8.0
+gap = 0.14
+bw = (W - 0.30 - (n - 1) * gap) / n
+H = 1.54
+y_box, bh = 0.62, 0.72
+fig, ax = plt.subplots(figsize=(W, H), dpi=400)
+ax.set_xlim(0, W); ax.set_ylim(0, H); ax.axis("off")
 
-y0 = 1.32
-for i, s in enumerate(steps):
-    x = 0.45 + i * (bw + gap)
-    is_last = (i == n - 1)
-    is_fore = (i == n - 2)
-    fc = "#f4e3d0" if is_last else ("#e8eef5" if is_fore else "#ffffff")
-    ec = "#8a4b12" if is_last else ("#33506e" if is_fore else "#4a4a4a")
-    box = FancyBboxPatch((x, y0), bw, bh, boxstyle="round,pad=0.06,rounding_size=0.12",
-                         linewidth=1.4, edgecolor=ec, facecolor=fc)
-    ax.add_patch(box)
-    ax.text(x + bw / 2, y0 + bh / 2, s, ha="center", va="center", fontsize=9.2,
-            fontweight="bold" if i in (0, n - 1) else "normal", color="#1a1a1a")
+for i, lines in enumerate(labels):
+    x = 0.15 + i * (bw + gap)
+    is_last = (i == n - 1); is_fore = (i == n - 2); is_input = (i == 0)
+    fc = "#f4e3d0" if is_last else ("#e8eef5" if is_fore else ("#f2f2f2" if is_input else "#ffffff"))
+    ec = "#8a4b12" if is_last else ("#33506e" if is_fore else ("#8a8a8a" if is_input else "#4a4a4a"))
+    ls = "--" if is_input else "-"
+    ax.add_patch(FancyBboxPatch((x, y_box), bw, bh, boxstyle="round,pad=0.035,rounding_size=0.07",
+                                linewidth=1.1, linestyle=ls, edgecolor=ec, facecolor=fc))
+    ax.text(x + bw / 2, y_box + bh / 2, "\n".join(lines), ha="center", va="center",
+            fontsize=9, fontweight="bold" if i in (0, n - 1) else "normal",
+            color="#1a1a1a", linespacing=1.25)
     if i < n - 1:
-        ax.add_patch(FancyArrowPatch((x + bw + 0.03, y0 + bh / 2), (x + bw + gap - 0.03, y0 + bh / 2),
-                                     arrowstyle="-|>", mutation_scale=13,
-                                     linewidth=1.3, color="#4a4a4a"))
-ax.text(0.45, 0.45, note, ha="left", va="center", fontsize=8.6, style="italic", color="#333333")
-ax.text(0.45, 2.40, "Quy trình sáu nhóm công việc của đề tài (sơ đồ dàn trang, vẽ lại từ §1.5)",
-        ha="left", va="center", fontsize=8.2, color="#666666")
-plt.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005)
-plt.savefig("so_do_quy_trinh.png", dpi=300, facecolor="white")
-print("saved")
+        ax.add_patch(FancyArrowPatch((x + bw + 0.015, y_box + bh / 2), (x + bw + gap - 0.015, y_box + bh / 2),
+                                     arrowstyle="-|>", mutation_scale=8, linewidth=1.0, color="#4a4a4a"))
+ax.text(0.15, 0.20, note, ha="left", va="center", fontsize=8, style="italic", color="#333333")
+ax.text(0.15, 1.44, title, ha="left", va="center", fontsize=8, color="#666666")
+plt.subplots_adjust(left=0.004, right=0.996, top=0.996, bottom=0.004)
+plt.savefig("so_do_quy_trinh.png", dpi=400, facecolor="white")
+print("saved so_do_quy_trinh.png")

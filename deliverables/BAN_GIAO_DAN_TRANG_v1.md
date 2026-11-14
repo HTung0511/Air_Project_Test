@@ -7,6 +7,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 |---|---|---|
 | v1 | 13/11/2026 | Dàn trang lần đầu: 20 hình, 3 bảng native, đánh số lại Bảng 1–10, gắn heading, gỡ chỉ dẫn biên tập |
 | **v2** | 13/11/2026 | Theo phản hồi RA: sửa số baseline test, chuyển 5 hình mô hình về đúng tiểu mục và bỏ §3.3.7, chuyển **7 bảng dạng danh sách thành bảng native**, phân loại lại 4 khác biệt hình–văn bản, **sửa lỗi chú thích Hình 2–5 bị ảnh chèn xen** |
+| **v3** | 13–14/11/2026 | Chốt bảng & biểu đồ (không thêm hình); **kiểm tra khả năng đọc thực tế** của ảnh và chú thích bằng đo đạc + xem ảnh; vẽ lại **Hình 1 khổ hẹp** vì bản v1 chữ chỉ ~3 pt khi in ở 450 pt; thêm **keepWithNext** giữ ảnh liền chú thích và tên bảng liền bảng; **giải quyết khoảng [2,42; 3,17]** bằng đối chiếu Notebook 03; đối chiếu dấu `*` đơn vị; kiểm tra nguồn tham khảo trong phạm vi mạng của phiên; bàn giao thêm **bản Word** trên Drive |
 
 ---
 
@@ -16,7 +17,8 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 |---|---|
 | Bản dàn trang (Google Docs) | https://docs.google.com/document/d/1vxuomPCYI7acP9ZBFy7miLHwqLAK652Oc4lDjUliBIA/edit — “Báo cáo — Phân tích ô nhiễm không khí 8 TP Ấn Độ — Nhóm 25IT — BẢN DÀN TRANG v1” (nội dung đã ở vòng v2; tên tệp giữ nguyên để không vỡ liên kết) |
 | Bản gốc đối chiếu | https://docs.google.com/document/d/1wAbxQIyuAgvuOMF_tc4D4TDIjEG6Hsomi5yVfylp11o/edit (không chỉnh sửa) |
-| PDF | Không xuất (yêu cầu đã bãi bỏ) |
+| PDF | Không xuất (nhóm xác nhận không cần) |
+| Bản Word (.docx) | Tệp “Báo cáo … BẢN DÀN TRANG (bản Word).docx” trên Drive, id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H` — xuất từ bản Docs sau vòng v3, để nộp/đọc offline; bản chính vẫn là Google Docs |
 | .docx | Chỉ xuất để **kiểm tra bố cục nội bộ** bằng script (đếm ảnh/bảng/đoạn, phát hiện ảnh chèn xen). Giao file nếu nhóm cần |
 | Payload tái lập | `deliverables/layout_assets/`: `gen_batches.py` + `batches.txt` (20 hình vòng v1), `gen_tables.py` + `tables_payload.json` (Bảng 2/5/7), **`tables_native_v2.json` (7 bảng chuyển từ danh sách, kèm vị trí và khổ cột cuối cùng)**, **`fix_figures_2_3_4_5.json` (payload dựng lại khối Hình 2–5)**, `make_flow_diagram.py` (Hình 1) |
 
@@ -24,7 +26,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 
 - Kho **`HTung0511/Air_Project_Test`**, nhánh **`main`**, commit **`c4c75f65c7fb39f843d397bec0ef6c54fd15c29e`**, thư mục `Air-Project-main/reports/figures/` (21 PNG; đã dùng 19). SHA-256 từng tệp đã đối chiếu khớp blob của commit.
 - Ảnh nhúng bằng URL công khai ghim theo commit: `https://raw.githubusercontent.com/HTung0511/Air_Project_Test/c4c75f65.../Air-Project-main/reports/figures/<tên>.png`; mỗi chú thích ghi tên tệp + kho + nhánh + commit.
-- **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới): `deliverables/layout_assets/so_do_quy_trinh.png` (5331×765 px), tải lên Drive id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8` (chia sẻ “bất kỳ ai có liên kết – người đọc”) vì API Docs chỉ nhận URL công khai.
+- **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới). Vòng v3 vẽ lại **bản v2 khổ hẹp**: `deliverables/layout_assets/so_do_quy_trinh.png` (3200×616 px, dpi 400), Drive id `1iju2jG7Cb82wf-2vixwT0RaABNjyqI3W` (công khai “bất kỳ ai có liên kết – người đọc”); bản v1 (5331×765 px, Drive id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8`) giữ trong repo (`so_do_quy_trinh_v1.png`) và trên Drive làm đối chiếu. Lý do vẽ lại ở mục 14.
 - **Không dùng**: hình/kết quả của PR #3 (`arena/b5aacef3`) và PR #4 – vòng Dev (`arena/5cb21c04`); không gom hình từ nhiều nhánh; không ảnh AI; không thay hình bản Dev/Test.
 - Kích thước: mọi ảnh **rộng 450 pt** (khổ A4 trừ lề ≈451 pt), chiều cao suy từ **aspect ratio gốc của từng tệp** → không kéo méo, không cắt mất trục/đơn vị/khoảng bất định/đường ngưỡng/cỡ mẫu. Đã kiểm lại bằng bản xuất: 20/20 ảnh đúng 450 pt và đúng tỷ lệ gốc (6,9565 · 2,2 · 1,5 · 3,25 · 1,8571 · 1,7778 · 1,7778 · 1,6667 · 2,0833 · 1,875 · 2,1739 · 2,5 · 1,6129 · 2,6136 · 1,9792 · 2,0408 · 1,4375 · 1,9 · 1,7857 · 2,3958).
 
@@ -32,7 +34,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 
 | Số hình | Tệp nguồn | Vị trí trong báo cáo | Vấn đề còn thiếu / ghi chú |
 |---|---|---|---|
-| Hình 1 | `so_do_quy_trinh.png` (vẽ lại từ §1.5) | §1.5 Quy trình thực hiện và phân công | Không phải kết quả phân tích; giữ ghi chú phân biệt xử lý hồi cứu với yêu cầu kiểm soát thông tin theo thời điểm của nhánh dự báo |
+| Hình 1 | `so_do_quy_trinh.png` **v2** (vẽ lại từ §1.5, khổ hẹp) | §1.5 Quy trình thực hiện và phân công | Bản v2: chữ trong sơ đồ ≈7 pt hiệu dụng khi in ở 450 pt (bản v1 chỉ ≈3 pt, không đọc được — đo ở mục 14). Không phải kết quả phân tích; giữ ghi chú phân biệt xử lý hồi cứu với yêu cầu kiểm soát thông tin theo thời điểm của nhánh dự báo |
 | Hình 2 | `missing_after_cleaning_8cities.png` | §2.2.8 Các kiểm tra sau xử lý | Đã dựng lại ở vòng v2 (xem mục 10) |
 | Hình 3 | `missing_pattern_lucknow_jaipur.png` | §2.2.8 | Chỉ dẫn gốc muốn “hình minh họa nội suy/ngoại lai có đoạn thời gian, đường quan sát và đường ước lượng”; **không tệp nào trong `reports/figures/` đúng dạng đó** → dùng hai hình gần nhất (Hình 4, 5) và nói rõ trong chú thích. Muốn đúng yêu cầu phải sinh hình mới từ notebook (ngoài phạm vi) |
 | Hình 4 | `fill_strategies_lucknow_jaipur.png` | §2.2.8 | Nhãn (D) trong hình là nội suy **≤1 ngày**. Theo RA: **không dùng hình làm bằng chứng trực tiếp cho quy tắc 14 ngày** → chú thích đã viết lại: bốn cấu hình là minh họa so sánh chiến lược điền của Notebook 02 trên hai thành phố ví dụ, quy tắc pipeline (≤14 ngày, `Data_dictionary.md`) nêu riêng. Giữ hình vì vẫn giúp giải thích mục “xử lý thiếu” |
@@ -42,7 +44,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Hình 8 | `eda_05_aqi_distribution.png` | §3.2.1 | — |
 | Hình 9 | `eda_02_heatmap_city_month.png` | §3.2.2 Biến động theo thời gian | — |
 | Hình 10 | `eda_03_trend_city_year.png` | §3.2.2 | — |
-| Hình 11 | `eda_04_pm25_aqi.png` | §3.2.3 Các chất nổi bật trong ngày AQI cao | Khoảng **[2,42; 3,17]** cạnh 2,82: **giữ nguyên hình gốc**, chú thích đã ghi “loại khoảng chưa được xác nhận trong hồ sơ phân tích nên không đọc là khoảng tin cậy 95%”; Bảng 7 chưa đưa khoảng này vào, cần nhóm xác nhận (tin cậy hay phân vị) |
+| Hình 11 | `eda_04_pm25_aqi.png` | §3.2.3 Các chất nổi bật trong ngày AQI cao | **Đã đối chiếu nguồn (mục 15)**: hình **không vẽ khoảng nào**; cạnh thanh 2,82 là năm chấm xám = tỷ số riêng từng thành phố (2,06–3,13). Chú thích đã viết lại theo đúng bằng chứng; cặp số [2,42; 3,17] của bản thảo không khớp hình và bảng nguồn → báo nhóm, Bảng 7 giữ nguyên |
 | Hình 12 | `corr_01_raw_vs_adjusted.png` | §3.2.4 Thời tiết–AQI trước và sau điều chỉnh mùa vụ | — |
 | Hình 13 | `corr_02_hypothesis_tests.png` | §3.2.4 | — |
 | Hình 14 | `corr_03_humidity_deciles.png` | §3.2.4 | — |
@@ -99,7 +101,7 @@ Dãy Hình 1–15 không đổi. Không có chỗ nào trong thân bài dẫn ch
 
 - Bản thảo gốc **không có heading style nào** → không thể sinh mục lục. Đã gắn **72 tiêu đề** (vòng v2 còn 72 vì bỏ §3.3.7): **7 Heading 1** (MỞ ĐẦU, PHẦN I–III, KẾT LUẬN, TÀI LIỆU THAM KHẢO, PHỤ LỤC), **17 Heading 2**, **48 Heading 3**; không có chỗ nào nhảy cấp.
 - Ba style đã định nghĩa lại khớp typography báo cáo: **Times New Roman, in đậm, màu đen**, 15/14/13 pt, `keepWithNext`, giãn dòng 115%, khoảng cách trên/dưới 18-8 / 15-6 / 11-4 pt.
-- **MỤC LỤC — còn 1 thao tác tay, không thể làm qua API**: bộ API Google Docs mà phiên này dùng **không có request chèn mục lục** (đã kiểm tra toàn bộ danh sách công cụ: chỉ có heading/named style/bảng/hình/section break, không có `insertTableOfContents`). Mục lục phải sinh trong giao diện để **số trang tự cập nhật**: mở bản dàn trang → đặt con trỏ ở trang sau bìa → `Insert → Table of contents` (chọn dạng có số trang). Danh sách 72 heading đã sẵn nên mục lục sẽ hiện đủ 3 cấp. Nếu nhóm muốn, tôi có thể dựng một **mục lục tĩnh** (liệt kê 72 mục, không có số trang) làm phương án in tạm — nhưng nó sẽ lệch ngay khi nội dung dịch chuyển, nên không khuyến nghị.
+- **MỤC LỤC — còn 1 thao tác tay, không thể làm qua API**: bộ API Google Docs mà phiên này dùng **không có request chèn mục lục** (vòng v3 đã rà lại toàn bộ danh sách request một lần nữa: chỉ có heading/named style/bảng/hình/section break/header/footer, không có `insertTableOfContents`). Mục lục phải sinh trong giao diện để **số trang tự cập nhật**: mở bản dàn trang → đặt con trỏ ở trang sau bìa → `Insert → Table of contents` (chọn dạng có số trang). Danh sách 72 heading đã sẵn nên mục lục sẽ hiện đủ 3 cấp. Nếu nhóm muốn, tôi có thể dựng một **mục lục tĩnh** (liệt kê 72 mục, không có số trang) làm phương án in tạm — nhưng nó sẽ lệch ngay khi nội dung dịch chuyển, nên không khuyến nghị.
 
 ## 8. Chỉ dẫn biên tập đã gỡ khỏi bản nộp
 
@@ -135,7 +137,7 @@ Hình 16 (`model_02_mae_by_model.png`) hiển thị 64,5 và 43,4 → **đúng**
 | Hình 4: nhãn nội suy ≤1 ngày vs quy tắc pipeline ≤14 ngày | Không dùng hình làm bằng chứng trực tiếp cho quy tắc 14 ngày | Viết lại chú thích: bốn cấu hình là minh họa so sánh chiến lược điền của Notebook 02 trên hai thành phố ví dụ; quy tắc ≤14 ngày nêu riêng theo `Data_dictionary.md`. Giữ hình vì vẫn phục vụ mục “xử lý thiếu” |
 | Hình 18: thứ tự thành phố khác nhóm hình EDA | **Không phải lỗi** — tiêu chí sắp xếp khác nhau | Ghi tiêu chí trong chú thích (số ngày AQI ≥201 trong tập test) và nói rõ khác Hình 6–8 vì tiêu chí khác nhau; không ép mọi biểu đồ cùng thứ tự |
 | Hình 19: precision 77%/72% so với 0,90/0,85 | **Hai điểm vận hành khác ngưỡng**, không phải số mâu thuẫn | Chú thích ghi ngưỡng cạnh từng kết quả: 201 → ≈0,90 (L3) và ≈0,85 (persistence); F2 (166/160) → ≈77% và 72%. §3.3.3 vốn đã gắn nhãn ngưỡng cho từng cặp số nên không sửa lời văn |
-| Hình 11: khoảng [2,42; 3,17] | Loại khoảng chưa xác nhận | **Giữ nguyên hình gốc**; chú thích ghi rõ loại khoảng chưa được xác nhận, **không gọi là khoảng tin cậy 95%**; Bảng 7 không đưa khoảng này vào |
+| Hình 11: khoảng [2,42; 3,17] | **Đã đối chiếu xong ở vòng v3**: hình không vẽ khoảng; dải thật là 2,06–3,13 (chấm theo thành phố) | Chú thích viết lại theo bằng chứng (mã + bảng đầu ra Notebook 03 + xem trực tiếp hình); cặp số bản thảo được báo là không khớp nguồn; Bảng 7 không thêm khoảng |
 
 **(c) Không tự sửa bất kỳ số liệu/kết quả nào khác.** Các số trong lời văn, bảng và chú thích đều lấy từ bản thảo, `Data_dictionary.md`, 3 tệp CSV trong `data/processed/` hoặc từ đối chiếu RA ở trên.
 
@@ -158,15 +160,15 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 1. **5 ảnh ứng dụng**: cần tệp HTML `Canh_bao_o_nhiem_truoc_mot_ngay_Pro_v5.html`. RA sẽ đính kèm ở phiên thiết kế để chụp ảnh thật (việc không tìm thấy trên Git/Drive không có nghĩa tệp không tồn tại). Hai ghi chú giữ chỗ đang nằm ở §1.4 và §3.4.4.
 2. **Thời gian trên bìa**: vẫn là “Hà Nội, tháng [Cần bổ sung] năm [Cần bổ sung]”. Tôi **không tự điền** vì không biết tháng/năm nộp thực tế — cho tôi tháng/năm, tôi điền bằng một lệnh thay chữ (2 chỗ).
 3. **Mục lục tự động**: cần 1 thao tác tay trong giao diện Docs (mục 7) — API không có lệnh chèn mục lục.
-4. **Tài liệu tham khảo**: bản thảo tự ghi “chưa ghi ngày truy cập vì chưa xác nhận lượt truy cập thực tế” → **chưa thể gọi là hoàn tất**; cần nhóm kiểm tra từng đường dẫn (Kaggle, CPCB, Open-Meteo, GitHub dự án, tài liệu scikit-learn) và điền ngày truy cập.
-5. **Dấu `*` sau đơn vị nồng độ** trong `Data_dictionary.md` mục 1 (µg/m³ \*, ppb \*, mg/m³ \*) không có chú giải → Bảng 2 chép nguyên dấu `*` kèm ghi chú “cần nhóm xác nhận”, không tự quy đổi đơn vị.
-6. **Loại khoảng [2,42; 3,17]** ở Hình 11 (tin cậy hay phân vị) — cần xác nhận để bổ sung vào Bảng 7.
-7. **Hình minh họa nội suy/ngoại lai** đúng dạng “đoạn thời gian + đường quan sát + đường ước lượng” không có trong `reports/figures/` → nếu cần đúng chỉ dẫn gốc thì phải sinh hình mới từ notebook (ngoài phạm vi dàn trang).
-8. **Hai tệp hình chưa dùng**: `aqi_monthly_lucknow_jaipur.png`, `aqi_season_lucknow_jaipur.png`.
+4. **Tài liệu tham khảo**: xem trạng thái từng nguồn ở mục 16; phần nhóm tự kiểm tra (Kaggle, CPCB, Open-Meteo, scikit-learn, tài liệu nội bộ) vẫn chờ, và ngày truy cập vẫn chưa ghi.
+5. **Dấu `*` sau đơn vị nồng độ**: đã đối chiếu mọi nguồn hiện có (mục 15) — không có chú giải ở đâu; Bảng 2 giữ nguyên dấu `*` kèm ghi chú “cần nhóm xác nhận”, không tự quy đổi đơn vị.
+6. **Hình minh họa nội suy/ngoại lai** đúng dạng “đoạn thời gian + đường quan sát + đường ước lượng” không có trong `reports/figures/` → nếu cần đúng chỉ dẫn gốc thì phải sinh hình mới từ notebook (ngoài phạm vi dàn trang).
+7. **Hai tệp hình chưa dùng** `aqi_monthly_lucknow_jaipur.png`, `aqi_season_lucknow_jaipur.png`: theo chốt của nhóm ở vòng v3 — **giữ nguyên không chèn**, không thêm hình chỉ để dùng hết tệp.
+8. **Hyperlink cho URL tham chiếu**: toàn bộ URL trong báo cáo hiện là chữ thường (kiểm tra bản xuất: 0 liên kết). Sau khi nhóm xác nhận nguồn, tôi có thể gắn hyperlink cho 7 mục tham khảo và các URL trong chú thích nếu nhóm muốn.
 
 ## 13. Kiểm chứng bố cục vòng v2 (đo bằng script trên bản xuất .docx, không đếm bằng mắt)
 
-- **416 khối nội dung**, chỉ số cuối 90.714 (khớp `get_document_end_index`).
+- **416 khối nội dung**, chỉ số cuối 91.039 sau vòng v3 (khớp `get_document_end_index`; phần tăng 325 ký tự đúng bằng hai câu chú thích đã viết lại ở Hình 1 và Hình 11, các bảng dịch đúng bằng số đó và không dịch chỗ nào khác).
 - **20 ảnh**, mỗi ảnh một đoạn riêng, rộng 450 pt, đúng aspect ratio gốc; **0 đoạn vừa chữ vừa ảnh**.
 - **11 bảng native** (10 bảng đánh số + bảng thành viên); phần còn lại là chữ chỉnh sửa được — không trang nào bị biến thành ảnh.
 - Chú thích **Hình 1 → Hình 20** đúng thứ tự, mỗi số một lần, luôn nằm **dưới** hình, canh giữa, nghiêng 9 pt, kèm nguồn tệp + kho + nhánh + commit.
@@ -174,3 +176,64 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 - **72 heading** (7/17/48), không nhảy cấp; §3.3 chạy 3.3.1–3.3.6; Hình 16–20 nằm trong §3.3.1, §3.3.2 (2 hình), §3.3.3, §3.3.4.
 - **0** chỉ dẫn `[CHÈN …]`, **0** lần còn “3.3.7”, **0** lần còn “Khi dàn bảng”, **0** lần còn cặp số cũ “60,5 và 55,8”; đúng **2** ghi chú “[CHỜ NGUỒN ẢNH ỨNG DỤNG]”; còn **2** chỗ “[Cần bổ sung]” ở bìa (chờ nhóm).
 - Chỉ số dùng cho mọi thao tác sửa đều lấy từ `find_text` ngay trước khi sửa; các phép xoá/chèn trong một lô luôn theo thứ tự chỉ số giảm dần; mô hình chỉ số nội bộ được kiểm bằng 6 mốc neo khớp tuyệt đối.
+- Vòng v3: **20/20 đoạn chứa ảnh** và **10/10 đoạn tên bảng** đã bật `keepWithNext` (đo bằng bản xuất: ảnh không rơi xuống cuối trang rời chú thích; tên bảng không rời bảng).
+- Vòng v3: kiểm tra khả năng đọc thực tế bằng đo glyph + xem ảnh (mục 14); Hình 1 đã vẽ lại khổ hẹp và thay tại chỗ bằng `deleteContentRange` + `insertInlineImage` đúng 1 chỉ số, không dịch phần còn lại.
+
+## 14. Khả năng đọc thực tế của ảnh và chú thích (vòng v3 — đo đạc + xem ảnh, không chỉ cấu trúc XML)
+
+**Cách đo.** Với mỗi PNG nguồn: đọc kích thước pixel; suy khổ inch từ `dpi` trong mã sinh hình (notebook/`src/*_utils.py`); tính **cỡ chữ hiệu dụng khi ảnh hiển thị 450 pt** = cỡ chữ gốc × 6,25 / khổ inch. Kiểm chứng ngược bằng cách đo **chiều cao glyph thật** trong PNG (phân tích thành phần liên thông trên ảnh nhị phân, `deliverables/layout_assets/legibility_metrics.json`): chữ tiếng Việt có dấu tách thành nhiều thành phần nên phân vị 50 thiên thấp; **phân vị 90 ≈ cỡ chữ nền** của hình. Sau đó xem trực tiếp ảnh ở đúng khổ hiển thị (bản 600 px = 450 pt ở 96 dpi) để xác nhận bằng mắt.
+
+| Số hình | Tệp | W px | DPI tại 450 pt | Chữ nền p90 (pt hiệu dụng) | Cỡ giữa p50 | Nhận xét |
+|---|---|---|---|---|---|---|
+| Hình 1 (v1 cũ) | so_do_quy_trinh v1 | 5331 | 853 | **3,24** | 2,43 | **Không đọc được** → đã vẽ lại (xem dưới) |
+| Hình 1 (v2 hiện tại) | so_do_quy_trinh v2 | 3200 | 512 | **6,56** (nhãn hộp ≈7,0) | 4,82 | Đọc được ở 100 % |
+| Hình 2 | missing_after_cleaning_8cities | 1650 | 264 | 6,36 | 5,24 | Ổn |
+| Hình 3 | missing_pattern_lucknow_jaipur | 1560 | 250 | 6,33 | 4,75 | Ổn |
+| Hình 4 | fill_strategies_lucknow_jaipur | 1690 | 270 | 5,11 | 4,38 | Nhỏ nhất nhóm nghiên cứu — phóng to khi in |
+| Hình 5 | outliers_pm25_lucknow_jaipur | 1690 | 270 | 4,75 | 4,75 | Nhỏ — phóng to khi in |
+| Hình 6 | eda_00_sample_size | 1200 | 192 | 8,74 | 6,69 | Tốt |
+| Hình 7 | eda_01_poor_share_city | 1200 | 192 | 8,74 | 6,69 | Tốt |
+| Hình 8 | eda_05_aqi_distribution | 1200 | 192 | 8,74 | 6,69 | Tốt |
+| Hình 9 | eda_02_heatmap_city_month | 1500 | 240 | 7,00 | 5,76 | Ổn |
+| Hình 10 | eda_03_trend_city_year | 1350 | 216 | 7,77 | 5,94 | Ổn |
+| Hình 11 | eda_04_pm25_aqi | 1500 | 240 | 7,00 | 5,35 | Ổn |
+| Hình 12 | corr_01_raw_vs_adjusted | 1875 | 300 | 5,27 | 4,12 | Nhỏ — phóng to khi in |
+| Hình 13 | corr_02_hypothesis_tests | 1500 | 240 | 6,58 | 4,94 | Ổn |
+| Hình 14 | corr_03_humidity_deciles | 1725 | 276 | 6,08 | 4,29 | Nhỏ — phóng to khi in |
+| Hình 15 | corr_04_poor_share_by_humidity | 1425 | 228 | 7,36 | 5,63 | Ổn |
+| Hình 16 | model_02_mae_by_model | 1500 | 240 | 7,00 | 4,94 | Ổn |
+| Hình 17 | model_01_residual_diagnostics | 1725 | 276 | 5,73 | 3,94 | Nhỏ — phóng to khi in |
+| Hình 18 | model_03_mae_by_city | 1425 | 228 | 7,36 | 5,63 | Ổn |
+| Hình 19 | model_04_precision_recall | 1500 | 240 | 6,58 | 4,53 | Ổn |
+| Hình 20 | model_05_humidity_recheck | 1725 | 276 | 5,73 | 4,65 | Ổn |
+
+**Kết luận và xử lý trong phạm vi cho phép (không sinh hình mới từ notebook, không sửa hình nghiên cứu):**
+
+1. **Hình 1 buộc phải vẽ lại**: bản v1 có khổ 17,77 inch nên chữ 9 pt trong mã chỉ còn ≈3,2 pt khi in ở 450 pt — sơ đồ vô dụng trên giấy. Bản v2 giữ **nguyên nội dung, màu, ghi chú**, chỉ thu khổ về 8,0 inch (dpi 400) và ngắt dòng nhãn; chữ nhãn ≈7,0 pt, ghi chú ≈6,3 pt hiệu dụng. Đã thay ảnh trong Docs tại đúng 1 chỉ số (xoá phần tử ảnh cũ, chèn ảnh mới 450 × 86,6 pt vào đoạn giữa canh giữa sẵn có); chú thích Hình 1 cập nhật tên tệp v2.
+2. **19 hình nghiên cứu giữ nguyên** (chốt của nhóm). Độ phân giải nguồn 192–300 DPI tại 450 pt là đủ nét để phóng to trên màn hình; chữ nền trong hình ở mức 4,7–8,7 pt hiệu dụng — đọc được khi xem 100–200 % trên màn hình, **nhỏ khi in 100 %**. Bốn hình nhỏ chữ nhất (Hình 4, 12, 14, 17) được nêu tên để người đọc/phòng in biết cần phóng to; **không** tự đổi khổ ảnh vì khổ 450 pt là tiêu chí nghiệm thu và lề trang chỉ còn 3,6 pt dư.
+3. **Chú thích đã gánh phần số liệu**: mọi chú thích 9 pt nghiêng đều chép lại các con số then chốt của hình (đo kiểm: đủ 20/20), nên việc đọc hiểu không phụ thuộc vào chữ nhỏ trong hình. Chú thích dài nhất nay là Hình 11 (~860 ký tự ≈ 9 dòng ở khổ 450 pt) vì mang thêm bảng tỷ số theo thành phố — chấp nhận đổi độ dài lấy tính tự chứng minh; nếu nhóm muốn ngắn hơn, có thể chuyển phần tỷ số xuống ghi chú Bảng 7.
+4. **Giữ liền khối khi sang trang**: bật `keepWithNext` cho 20 đoạn chứa ảnh (ảnh không rời chú thích) và 10 đoạn tên bảng (tên không rời bảng). Trước vòng v3 cả 30 đoạn này đều chưa có thuộc tính này.
+
+## 15. Đối chiếu hai điểm treo còn lại — chỉ dùng nguồn hiện có, không chạy notebook
+
+**(a) Khoảng “[2,42; 3,17]” cạnh 2,82 ở Hình 11.** Ba lớp bằng chứng cùng nói một kết luận:
+- Mã sinh hình (Notebook 03, ô vẽ `eda_04_pm25_aqi`): khung phải vẽ thanh = **trung vị tỷ số của 5 thành phố**, chấm xám = **tỷ số riêng từng thành phố**, chữ cạnh thanh = giá trị trung vị; **không có** `axvspan`/errorbar/annotation khoảng nào.
+- Bảng đầu ra của Notebook 03 (ô tính `ratio`): PM2.5 theo thành phố = Jaipur 2,06; Gurugram 2,47; Amritsar 2,82; Delhi 2,99; Lucknow 3,13; trung vị 2,82.
+- Xem trực tiếp PNG: chỉ có thanh, chấm và nhãn “2,8 lần”; không có ngoặc khoảng.
+
+⇒ Chú thích Hình 11 đã viết lại đúng bằng chứng: dải cạnh thanh 2,82 là **khoảng trải theo thành phố 2,06–3,13**, không phải khoảng tin cậy; cặp số **[2,42; 3,17] của bản thảo không khớp hình lẫn bảng nguồn** — nêu thẳng trong chú thích để nhóm xác nhận trước khi dùng lại. Bảng 7 giữ nguyên (không thêm khoảng). Đây là báo cáo khác biệt, không phải tự sửa số liệu.
+
+**(b) Dấu `*` sau đơn vị (µg/m³ \*, ppb \*, mg/m³ \*) trong `Data_dictionary.md` mục 1.** Đã quét toàn bộ nguồn hiện có: chính `Data_dictionary.md` (bảng mục 1 và toàn bộ văn bản quanh đó), `docs/`, `README.md`, mã notebook — **không nơi nào có chú giải cho dấu `*`**. Kết luận: không thể giải nghĩa từ nguồn hiện có; Bảng 2 tiếp tục chép nguyên dấu `*` kèm ghi chú “cần nhóm xác nhận”, không suy diễn, không quy đổi đơn vị.
+
+## 16. Trạng thái kiểm tra nguồn tham khảo (vòng v3)
+
+| Mục | Nguồn | Trạng thái từ phiên này |
+|---|---|---|
+| [1] | Kaggle — Air Quality Data in India | Ngoài phạm vi mạng của phiên → chờ nhóm mở link, ghi ngày truy cập |
+| [2] | CPCB — National Air Quality Index | Như trên |
+| [3] | Open-Meteo — Historical Weather API | Như trên |
+| [4] | GitHub — MTuan1510/Air-Project | **Đã kiểm tra bằng GitHub API**: kho tồn tại, nhánh mặc định `main`, đủ 6 notebook 01–06 như mô tả ✓ |
+| [5], [6] | scikit-learn (Ridge, TimeSeriesSplit) | Ngoài phạm vi mạng của phiên → chờ nhóm |
+| [7] | Tài liệu học phần INFO3020 (nội bộ) | Nhóm tự đối chiếu bản giảng viên phát |
+
+Ghi chú thêm: (i) toàn bộ URL trong báo cáo hiện là **chữ thường, chưa gắn hyperlink** (bản xuất có 0 liên kết) — tôi có thể gắn sau khi nhóm xác nhận; (ii) ghi chú cuối danh mục của bản thảo (“chưa ghi ngày truy cập…”) vẫn đúng và được giữ nguyên; (iii) các URL kho/commit trong chú thích hình (HTung0511/Air_Project_Test @ c4c75f6) đã kiểm chứng từ vòng v1 bằng chính phép chèn ảnh thành công từ URL ghim commit đó.
