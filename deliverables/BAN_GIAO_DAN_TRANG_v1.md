@@ -7,6 +7,7 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 |---|---|---|
 | v1 | 13/11/2026 | Dàn trang lần đầu: 20 hình, 3 bảng native, đánh số lại Bảng 1–10, gắn heading, gỡ chỉ dẫn biên tập |
 | **v2** | 13/11/2026 | Theo phản hồi RA: sửa số baseline test, chuyển 5 hình mô hình về đúng tiểu mục và bỏ §3.3.7, chuyển **7 bảng dạng danh sách thành bảng native**, phân loại lại 4 khác biệt hình–văn bản, **sửa lỗi chú thích Hình 2–5 bị ảnh chèn xen** |
+| **v4** | 14/11/2026 | **Rút gọn chú thích theo chuẩn học thuật cho bản nộp**: bỏ tên tệp PNG, đường dẫn kho, commit, lịch sử dàn trang và câu “cần nhóm xác nhận” khỏi mọi chú thích/ghi chú; thêm **ghi chú chung** xác nhận bảng và biểu đồ do nhóm thực hiện; nguồn ngoài dẫn bằng số tham khảo; toàn bộ truy vết chi tiết chỉ còn trong hồ sơ này |
 | **v3** | 13–14/11/2026 | Chốt bảng & biểu đồ (không thêm hình); **kiểm tra khả năng đọc thực tế** của ảnh và chú thích bằng đo đạc + xem ảnh; vẽ lại **Hình 1 khổ hẹp** vì bản v1 chữ chỉ ~3 pt khi in ở 450 pt; thêm **keepWithNext** giữ ảnh liền chú thích và tên bảng liền bảng; **giải quyết khoảng [2,42; 3,17]** bằng đối chiếu Notebook 03; đối chiếu dấu `*` đơn vị; kiểm tra nguồn tham khảo trong phạm vi mạng của phiên; bàn giao thêm **bản Word** trên Drive |
 
 ---
@@ -18,14 +19,14 @@ Phạm vi: thiết kế, dàn trang, chèn hình, dựng bảng, đánh số hì
 | Bản dàn trang (Google Docs) | https://docs.google.com/document/d/1vxuomPCYI7acP9ZBFy7miLHwqLAK652Oc4lDjUliBIA/edit — “Báo cáo — Phân tích ô nhiễm không khí 8 TP Ấn Độ — Nhóm 25IT — BẢN DÀN TRANG v1” (nội dung đã ở vòng v2; tên tệp giữ nguyên để không vỡ liên kết) |
 | Bản gốc đối chiếu | https://docs.google.com/document/d/1wAbxQIyuAgvuOMF_tc4D4TDIjEG6Hsomi5yVfylp11o/edit (không chỉnh sửa) |
 | PDF | Không xuất (nhóm xác nhận không cần) |
-| Bản Word (.docx) | Tệp “Báo cáo … BẢN DÀN TRANG (bản Word).docx” trên Drive, id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H` — xuất từ bản Docs sau vòng v3, để nộp/đọc offline; bản chính vẫn là Google Docs |
+| Bản Word (.docx) | Tệp “Báo cáo … BẢN DÀN TRANG (bản Word).docx” trên Drive, id `1ccLSOBhK1phBKmo4sHRVDejHTHRoIDQR` — xuất từ bản Docs sau vòng v4, để nộp/đọc offline; bản vòng v3 đổi tên thành “…(bản Word, vòng v3).docx” (id `1BoNSJmOanFmnAE8gQ22OpsLNK9jLoF5H`); bản chính vẫn là Google Docs |
 | .docx | Chỉ xuất để **kiểm tra bố cục nội bộ** bằng script (đếm ảnh/bảng/đoạn, phát hiện ảnh chèn xen). Giao file nếu nhóm cần |
 | Payload tái lập | `deliverables/layout_assets/`: `gen_batches.py` + `batches.txt` (20 hình vòng v1), `gen_tables.py` + `tables_payload.json` (Bảng 2/5/7), **`tables_native_v2.json` (7 bảng chuyển từ danh sách, kèm vị trí và khổ cột cuối cùng)**, **`fix_figures_2_3_4_5.json` (payload dựng lại khối Hình 2–5)**, `make_flow_diagram.py` (Hình 1) |
 
 ## 2. Nguồn hình — một nguồn duy nhất, dùng nhất quán
 
 - Kho **`HTung0511/Air_Project_Test`**, nhánh **`main`**, commit **`c4c75f65c7fb39f843d397bec0ef6c54fd15c29e`**, thư mục `Air-Project-main/reports/figures/` (21 PNG; đã dùng 19). SHA-256 từng tệp đã đối chiếu khớp blob của commit.
-- Ảnh nhúng bằng URL công khai ghim theo commit: `https://raw.githubusercontent.com/HTung0511/Air_Project_Test/c4c75f65.../Air-Project-main/reports/figures/<tên>.png`; mỗi chú thích ghi tên tệp + kho + nhánh + commit.
+- Ảnh nhúng bằng URL công khai ghim theo commit: `https://raw.githubusercontent.com/HTung0511/Air_Project_Test/c4c75f65.../Air-Project-main/reports/figures/<tên>.png`. **Từ vòng v4, chuỗi tên tệp + kho + nhánh + commit chỉ ghi trong hồ sơ này (bảng mục 3); chú thích trong bản nộp rút gọn theo mục 17.**
 - **Hình 1** là sơ đồ vẽ lại từ nội dung §1.5 (không có số liệu mới). Vòng v3 vẽ lại **bản v2 khổ hẹp**: `deliverables/layout_assets/so_do_quy_trinh.png` (3200×616 px, dpi 400), Drive id `1iju2jG7Cb82wf-2vixwT0RaABNjyqI3W` (công khai “bất kỳ ai có liên kết – người đọc”); bản v1 (5331×765 px, Drive id `1H4MHzXLcSVLr9DURzsAfeqL9bHWLLUr8`) giữ trong repo (`so_do_quy_trinh_v1.png`) và trên Drive làm đối chiếu. Lý do vẽ lại ở mục 14.
 - **Không dùng**: hình/kết quả của PR #3 (`arena/b5aacef3`) và PR #4 – vòng Dev (`arena/5cb21c04`); không gom hình từ nhiều nhánh; không ảnh AI; không thay hình bản Dev/Test.
 - Kích thước: mọi ảnh **rộng 450 pt** (khổ A4 trừ lề ≈451 pt), chiều cao suy từ **aspect ratio gốc của từng tệp** → không kéo méo, không cắt mất trục/đơn vị/khoảng bất định/đường ngưỡng/cỡ mẫu. Đã kiểm lại bằng bản xuất: 20/20 ảnh đúng 450 pt và đúng tỷ lệ gốc (6,9565 · 2,2 · 1,5 · 3,25 · 1,8571 · 1,7778 · 1,7778 · 1,6667 · 2,0833 · 1,875 · 2,1739 · 2,5 · 1,6129 · 2,6136 · 1,9792 · 2,0408 · 1,4375 · 1,9 · 1,7857 · 2,3958).
@@ -178,6 +179,7 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 - Chỉ số dùng cho mọi thao tác sửa đều lấy từ `find_text` ngay trước khi sửa; các phép xoá/chèn trong một lô luôn theo thứ tự chỉ số giảm dần; mô hình chỉ số nội bộ được kiểm bằng 6 mốc neo khớp tuyệt đối.
 - Vòng v3: **20/20 đoạn chứa ảnh** và **10/10 đoạn tên bảng** đã bật `keepWithNext` (đo bằng bản xuất: ảnh không rơi xuống cuối trang rời chú thích; tên bảng không rời bảng).
 - Vòng v3: kiểm tra khả năng đọc thực tế bằng đo glyph + xem ảnh (mục 14); Hình 1 đã vẽ lại khổ hẹp và thay tại chỗ bằng `deleteContentRange` + `insertInlineImage` đúng 1 chỉ số, không dịch phần còn lại.
+- Vòng v4: sau khi rút gọn, bản xuất .docx còn **0** lần xuất hiện của `.png`, `commit c4c75f6`, `HTung0511`, `Data_dictionary.md`, “cần nhóm xác nhận”, “[2,42; 3,17]”; đủ 20 chú thích Hình 1→20, 11 bảng, 20 ảnh, 72 heading; chỉ số cuối 87.115 (giảm 3.924 ký tự truy vết).
 
 ## 14. Khả năng đọc thực tế của ảnh và chú thích (vòng v3 — đo đạc + xem ảnh, không chỉ cấu trúc XML)
 
@@ -237,3 +239,17 @@ Phát hiện nhờ kiểm tra cấu trúc bằng bản xuất .docx (không ph�
 | [7] | Tài liệu học phần INFO3020 (nội bộ) | Nhóm tự đối chiếu bản giảng viên phát |
 
 Ghi chú thêm: (i) toàn bộ URL trong báo cáo hiện là **chữ thường, chưa gắn hyperlink** (bản xuất có 0 liên kết) — tôi có thể gắn sau khi nhóm xác nhận; (ii) ghi chú cuối danh mục của bản thảo (“chưa ghi ngày truy cập…”) vẫn đúng và được giữ nguyên; (iii) các URL kho/commit trong chú thích hình (HTung0511/Air_Project_Test @ c4c75f6) đã kiểm chứng từ vòng v1 bằng chính phép chèn ảnh thành công từ URL ghim commit đó.
+
+## 17. Chính sách chú thích vòng v4 — bản nộp gọn, truy vết nằm ở hồ sơ
+
+**Nguyên tắc áp dụng cho bản nộp (Google Docs/Word):**
+
+1. **Ghi chú chung** (in nghiêng, đoạn thường, đặt ngay đầu Phần II — phần đầu tiên có bảng và hình của nhóm): *“Các bảng và biểu đồ trong báo cáo do nhóm thực hiện từ bộ dữ liệu nghiên cứu, trừ trường hợp có ghi chú khác.”* Nếu nhóm muốn đặt ở đầu Phần III như gợi ý ban đầu, chỉ cần cắt–dán một đoạn; nội dung không đổi.
+2. **Hình nhóm tự tạo (cả 20 hình hiện có)**: chú thích = số hình + tên mô tả + phạm vi/đơn vị/ngưỡng/cỡ mẫu khi cần; **không** còn tên tệp PNG, đường dẫn kho, nhánh, commit, URL Drive, hay mô tả lịch sử dàn trang.
+3. **Hình lấy nguyên từ bên ngoài**: dẫn nguồn ngắn bằng số tham khảo (hiện không có hình nào thuộc loại này; ảnh ứng dụng sắp chèn là sản phẩm của nhóm nên cũng theo mục 2).
+4. **Nguồn dữ liệu và phương pháp**: dẫn ngắn trong nội dung bằng số tham khảo ([1] Kaggle/CPCB, [3] Open-Meteo, [4] kho dự án, …); danh mục tham khảo tập trung cuối bài; từ điển dữ liệu được nhắc bằng cụm “từ điển dữ liệu của kho dự án [4]” thay vì tên tệp.
+5. **Giữ nguyên mọi thông tin giúp đọc đúng hình**: đơn vị, trục, chú giải, khoảng thời gian, ngưỡng (201, IQR×1,5, F2/166/160…), cỡ mẫu (n = 8.734; 1.947 cặp test; 5.741 cặp train…), và các cảnh báo diễn giải (test ≠ validation; dải chấm 2,06–3,13 không phải khoảng tin cậy; hai điểm vận hành khác ngưỡng; tiêu chí sắp xếp của Hình 18…).
+6. **Ghi chú dưới bảng**: bỏ tên tệp CSV/PNG và câu “cần nhóm xác nhận”; giữ nội dung diễn giải cách đọc bảng; nguồn ghi ngắn dạng “sổ tay tổng hợp của quy trình làm sạch trong hồ sơ dự án [4]”, “bảng kết quả của Notebook 06 [4]”.
+7. **Chỗ chờ ảnh ứng dụng**: còn hai ghi chú ngắn dạng “[Chờ ảnh ứng dụng] …” mô tả màn hình/tình huống cần chụp; khi có ảnh thật sẽ thay bằng chú thích số hình + tên giao diện, không kèm tên tệp HTML.
+
+**Nơi lưu truy vết đầy đủ (không nằm trong bản nộp):** bảng mục 3 của hồ sơ này (số hình ↔ tên tệp ↔ vị trí ↔ ghi chú), các payload trong `deliverables/layout_assets/` (URL ghim commit, kích thước, khổ cột bảng), mục 14–16 (đo khả năng đọc, đối chiếu nguồn). Nhóm cần đối chiếu ảnh gốc với kho thì dùng bảng mục 3; giảng viên đọc bản nộp không thấy bất kỳ chuỗi kỹ thuật nào.
