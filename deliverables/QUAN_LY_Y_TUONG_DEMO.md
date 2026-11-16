@@ -167,7 +167,7 @@ Theo yêu cầu người dùng, không giới hạn bản demo vào một bản 
 - **Y07, Y35, Y37:** kịch bản ba ca, lời dẫn ngắn và checklist trình chiếu dưới dạng tài liệu hỗ trợ, không nhồi vào giao diện.
 - **Y12, Y42:** tiếp cận, bàn phím, mục tiêu offline và đối soát dữ liệu là chất lượng nền; chỉ khẳng định đạt sau khi kiểm thử.
 - **Chế độ holdout:** người dùng đã chọn thêm để đối chiếu, giữ nguyên test. Điều kiện QA và cách diễn giải nêu ở mục quyết định holdout.
-- **Y45 — Mini map AQI:** người dùng yêu cầu bổ sung bản đồ trực quan cho các thành phố trong dữ liệu. Đồng bộ chọn thành phố/ngày với timeline; chú giải rõ giá trị và ngày đang hiển thị, phân biệt thiếu dữ liệu và không tiết lộ thực tế t+1 khi đang ẩn. Cần kiểm chứng tọa độ, thang màu và nguồn; không suy nội suy ra vùng ô nhiễm liên tục. Ưu tiên nhẹ, có lựa chọn thay thế không chỉ dựa vào màu và hỗ trợ offline sau kiểm thử.
+- **Y45 — Mini map AQI:** trên nền bản đồ Ấn Độ hiển thị đúng 8 chấm tròn đại diện 8 thành phố. Bấm chấm để chọn thành phố; chấm được chọn nổi bật bằng màu và thêm viền hoặc kích thước để không phụ thuộc riêng vào màu. Đồng bộ hai chiều với bộ chọn thành phố, timeline và giai đoạn; nếu tổ hợp thành phố/ngày thiếu dữ liệu, giữ lựa chọn và báo thiếu, không tự đổi ngày. Tách dấu hiệu chọn khỏi thang màu AQI; chú giải rõ loại giá trị và ngày, không tiết lộ thực tế t+1 khi đang ẩn. Kiểm chứng tọa độ, thang màu và nguồn; không suy rộng thành vùng ô nhiễm liên tục. Ưu tiên nhẹ, có lựa chọn thay thế, hỗ trợ bàn phím và offline sau kiểm thử.
 
 ### Tham khảo — có thể chọn thêm nếu phù hợp
 
@@ -216,3 +216,4 @@ Bản đầy đủ vẫn cần phân cấp thông tin và nhẹ khi trình chi�
 | 13/11/2026 | Chọn bổ sung chế độ holdout đối chiếu, giữ nguyên test | Người dùng | Quyết định ý tưởng; cần QA nguồn và kết quả trước khi triển khai. |
 | 13/11/2026 | Yêu cầu bản đầy đủ, phân ý tốt vào ưu tiên và phần còn lại vào tham khảo | Người dùng | Đã phân loại Y01–Y44; giữ điều kiện kiểm chứng và hai lớp thông tin. |
 | 13/11/2026 | Bổ sung mini map khu vực ô nhiễm vào demo | Người dùng | Ưu tiên Y45; thể hiện theo dữ liệu thành phố và ngày được kiểm chứng, không suy rộng thành bản đồ ô nhiễm liên tục. |
+| 13/11/2026 | Chốt mini map Ấn Độ với 8 chấm tròn có thể chọn, làm nổi bật thành phố và đồng bộ timeline | Người dùng | Bổ sung chi tiết tương tác cho Y45; cần kiểm chứng dữ liệu và tọa độ. |
