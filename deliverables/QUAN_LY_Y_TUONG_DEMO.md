@@ -167,10 +167,11 @@ Theo yêu cầu người dùng, không giới hạn bản demo vào một bản 
 - **Y07, Y35, Y37:** kịch bản ba ca, lời dẫn ngắn và checklist trình chiếu dưới dạng tài liệu hỗ trợ, không nhồi vào giao diện.
 - **Y12, Y42:** tiếp cận, bàn phím, mục tiêu offline và đối soát dữ liệu là chất lượng nền; chỉ khẳng định đạt sau khi kiểm thử.
 - **Chế độ holdout:** người dùng đã chọn thêm để đối chiếu, giữ nguyên test. Điều kiện QA và cách diễn giải nêu ở mục quyết định holdout.
+- **Y45 — Mini map AQI:** người dùng yêu cầu bổ sung bản đồ trực quan cho các thành phố trong dữ liệu. Đồng bộ chọn thành phố/ngày với timeline; chú giải rõ giá trị và ngày đang hiển thị, phân biệt thiếu dữ liệu và không tiết lộ thực tế t+1 khi đang ẩn. Cần kiểm chứng tọa độ, thang màu và nguồn; không suy nội suy ra vùng ô nhiễm liên tục. Ưu tiên nhẹ, có lựa chọn thay thế không chỉ dựa vào màu và hỗ trợ offline sau kiểm thử.
 
 ### Tham khảo — có thể chọn thêm nếu phù hợp
 
-- **Y09, Y17, Y20, Y33:** các cách chọn thành phố và trợ giúp; chọn thiết kế hữu ích, không thêm để trang trí.
+- **Y09, Y17, Y20, Y33:** các phương án chi tiết cho bộ chọn thành phố, bản đồ và trợ giúp; mini map Y45 đã được người dùng chọn, còn hình thức thể hiện cụ thể vẫn có thể tham khảo các ý này.
 - **Y10, Y21, Y24, Y25, Y32, Y34, Y36, Y39, Y40, Y41, Y43:** bổ sung phân tích sai số, ca hụt đỉnh, so sánh mô hình/ngưỡng, tín hiệu đầu vào, đồ họa cảnh báo, chênh lệch từng ca, phân tích theo tháng, độ nhạy và chuyển biến; chỉ đưa vào khi có dữ liệu và phương pháp kiểm chứng, tuân thủ caveat từng mục.
 - **Y15, Y16, Y28, Y38:** cách kể chuyện và tương tác thay thế; thử nếu tăng giá trị mà không tiết lộ kết quả hay làm rối luồng chính.
 - **Y11, Y30, Y31:** giải thích đóng góp đặc trưng và dải bất định/sai số chỉ mang tính nghiên cứu; không triển khai dưới dạng kết luận hay khoảng dự báo nếu chưa có phương pháp, dữ liệu và kiểm định phù hợp.
@@ -189,7 +190,7 @@ Bản đầy đủ vẫn cần phân cấp thông tin và nhẹ khi trình chi�
 
 ## Không nên thêm ngay
 
-- Bản đồ, bảng nhiều cột hoặc nhiều chỉ số cùng lúc nếu không hỗ trợ ca dự báo đang xem. Bản đồ không bị cấm tuyệt đối; chỉ chọn nếu kiểm chứng được giá trị sử dụng và không gây nặng.
+- Bản đồ chi tiết nặng, bảng nhiều cột hoặc nhiều chỉ số cùng lúc nếu không hỗ trợ ca đang xem. Mini map Y45 đã được người dùng chọn, cần giữ gọn và đúng phạm vi dữ liệu.
 - Nút kéo ngưỡng tùy ý ngay trên màn hình chính nếu chưa giải thích được cách so sánh và nguy cơ chọn kết quả theo test.
 - Nhiều hiệu ứng, animation liên tục hoặc ghi chú dài trên giao diện.
 - Dữ liệu demo giả được trình bày như dự báo dự án; tuyên bố nhân quả hoặc vận hành thời gian thực.
@@ -214,3 +215,4 @@ Bản đầy đủ vẫn cần phân cấp thông tin và nhẹ khi trình chi�
 | 13/11/2026 | Rà soát Argon High và Sonnet, bổ sung Y41–Y44; kiểm tra artifact R2_B04 | Trợ lý | Đã xác nhận 1.947 dòng test và 975 dòng holdout tại commit DA; chưa phê duyệt nguồn để triển khai. |
 | 13/11/2026 | Chọn bổ sung chế độ holdout đối chiếu, giữ nguyên test | Người dùng | Quyết định ý tưởng; cần QA nguồn và kết quả trước khi triển khai. |
 | 13/11/2026 | Yêu cầu bản đầy đủ, phân ý tốt vào ưu tiên và phần còn lại vào tham khảo | Người dùng | Đã phân loại Y01–Y44; giữ điều kiện kiểm chứng và hai lớp thông tin. |
+| 13/11/2026 | Bổ sung mini map khu vực ô nhiễm vào demo | Người dùng | Ưu tiên Y45; thể hiện theo dữ liệu thành phố và ngày được kiểm chứng, không suy rộng thành bản đồ ô nhiễm liên tục. |

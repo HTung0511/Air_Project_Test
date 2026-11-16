@@ -10,6 +10,7 @@ Dùng hồ sơ nội dung dự án, mã nguồn/báo cáo và `QUAN_LY_Y_TUONG_D
 
 - Giữ **hai lớp nội dung**: màn hình chính ngắn gọn, trực quan cho lúc thuyết trình; lớp chi tiết mở khi cần để giải thích số liệu, phương pháp và hạn chế. Khi đóng chi tiết, giữ nguyên thành phố/ngày/ngữ cảnh.
 - Trục thời gian là trung tâm: kéo/chọn ngày và có các mốc hoặc nút chọn nhanh ca tiêu biểu đã kiểm chứng. Cho chọn ngày tự do. Phân biệt rõ ngày đầu vào **t**, ngày dự báo **t+1** và kỳ đánh giá theo ngày đích; không tự nhảy qua ngày thiếu mà không thông báo.
+- Thêm **mini map các thành phố trong phạm vi dữ liệu dự án** để trực quan hóa mức AQI/ô nhiễm. Dùng vị trí đã kiểm chứng và chú giải rõ loại giá trị (AQI quan sát ngày t, dự báo t+1 hay thực tế t+1), ngày, thang màu và đơn vị; cho chọn thành phố trên bản đồ và đồng bộ với timeline. Mặc định có thể dùng AQI quan sát tại t; chỉ hiện thực tế t+1 sau khi người dùng mở đối chiếu, không để màu bản đồ tiết lộ kết quả trước đó. Thành phố thiếu giá trị cần nhãn riêng, không tô như AQI bằng 0. Không suy rộng từ dữ liệu theo thành phố thành vùng ô nhiễm liên tục hoặc bản đồ đo trực tiếp. Có bộ chọn thay thế và nhãn không phụ thuộc riêng vào màu; ưu tiên bản đồ nhẹ có thể dùng offline, chỉ xác nhận offline sau kiểm thử.
 - Luồng kể chuyện chính: chọn thành phố và ngày → xem dự báo t+1 cùng ngữ cảnh cần thiết → tùy chọn mở thực tế và baseline để đối chiếu. Có thể cho hiện ngay thay vì bắt buộc chờ. Khi ẩn thực tế, không để nhãn, màu, mốc hay thống kê vô tình tiết lộ kết quả của ca.
 - So sánh dự báo, thực tế và baseline rõ ràng, có thể thử thước hai làn như Y27 thay cho biểu đồ Y03, không mặc định vẽ cả hai. Giữ đúng tỷ lệ, phân vai ngưỡng, xử lý các điểm vượt trục và nêu giá trị thật.
 - Sau khi có thực tế, dùng nhãn tiếng Việt ngắn cho đúng một trong bốn trường hợp: báo đúng, bỏ sót, báo nhầm, không cảnh báo đúng. Trong chi tiết có thể dùng ma trận 2×2 giải thích. Không kết luận đúng/sai khi thiếu thông tin cần thiết.
@@ -29,7 +30,7 @@ Dùng hồ sơ nội dung dự án, mã nguồn/báo cáo và `QUAN_LY_Y_TUONG_D
 
 ## Ưu tiên và tham khảo
 
-Dùng mục **Phân loại tổng hợp cho bản demo đầy đủ** trong file quản lý làm danh sách chi tiết Y01–Y44. Thực hiện nhóm ưu tiên ở lớp giao diện hoặc tài liệu hỗ trợ phù hợp, sau khi đối soát dữ liệu. Các ý ở nhóm tham khảo có thể chọn thêm nếu làm rõ câu chuyện, không gây quá tải và đáp ứng caveat; không cần triển khai tất cả. Nếu một phần ưu tiên chưa đủ dữ liệu/phương pháp, đánh dấu rõ hạn chế thay vì bịa số hoặc khẳng định đã hoàn thành.
+Dùng mục **Phân loại tổng hợp cho bản demo đầy đủ** trong file quản lý làm danh sách chi tiết Y01–Y45. Thực hiện nhóm ưu tiên ở lớp giao diện hoặc tài liệu hỗ trợ phù hợp, sau khi đối soát dữ liệu. Các ý ở nhóm tham khảo có thể chọn thêm nếu làm rõ câu chuyện, không gây quá tải và đáp ứng caveat; không cần triển khai tất cả. Nếu một phần ưu tiên chưa đủ dữ liệu/phương pháp, đánh dấu rõ hạn chế thay vì bịa số hoặc khẳng định đã hoàn thành.
 
 ## Bàn giao và kiểm thử
 
