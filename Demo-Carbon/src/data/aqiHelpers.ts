@@ -15,7 +15,7 @@ export interface PredictionRecord {
   l1: number;     // Ridge L1 prediction
   l2: number;     // Ridge L2 prediction
   l3: number;     // Ridge L3 prediction (primary model)
-  l4: number;     // Ridge L4 prediction (upper bound with t+1 weather)
+  l4: number;     // Ridge L4 reference (uses target-day t+1 weather; reference only)
   hgb: number;    // HGB L3 prediction
   clim: number;   // Monthly median climatology baseline
   mean: number;   // City mean baseline
@@ -393,9 +393,9 @@ export interface StoryBookmark {
 export const STORY_BOOKMARKS: StoryBookmark[] = [
   {
     id: 'story-1-tp',
-    stepBadge: 'Ca 1 · Kịch bản chính',
-    titleNeutral: 'Gurugram 19/11 → 20/11/2019 (Đợt tăng vọt mùa đông)',
-    titleRevealed: 'Ca 1: Báo đúng — L3 bắt sớm đợt tăng nặng (Baseline bỏ sót)',
+    stepBadge: 'Ca 1',
+    titleNeutral: 'Ca 1 · Gurugram (t=19/11 → t+1=20/11/2019)',
+    titleRevealed: 'Ca 1: Báo đúng — L3 phát cảnh báo trước ngày vượt 201 (Baseline không báo)',
     city: 'Gurugram',
     dateInput: '2019-11-19',
     dateTarget: '2019-11-20',
@@ -403,12 +403,12 @@ export const STORY_BOOKMARKS: StoryBookmark[] = [
     category: 'TP',
     summaryNote: 'AQI(t)=148 (<160, Baseline không báo) · Dự báo L3=219,35 (≥166 & ≥201, Phát cảnh báo) · Thực tế t+1=223 (≥201, Ngày nặng).',
     presenterScript:
-      'Tại Gurugram ngày 19/11/2019, AQI hôm nay mới là 148 nên baseline "ngày mai = hôm nay" không phát cảnh báo. Nhờ nồng độ chất ô nhiễm và khí tượng ngày t, Ridge L3 dự báo AQI ngày mai lên 219,35 và cảnh báo sớm; thực tế ngày 20/11 tăng lên 223 (Báo đúng).',
+      'Tại Gurugram ngày đầu vào t = 19/11/2019, AQI(t) là 148 nên baseline "ngày mai = hôm nay" không phát cảnh báo. Từ tập đặc trưng đến hết ngày t, Ridge L3 dự báo AQI ngày đích t+1 = 20/11/2019 ở mức 219,35 (phát cảnh báo); thực tế ngày đích ghi nhận 223 (Báo đúng).',
   },
   {
     id: 'story-2-fn-near',
-    stepBadge: 'Ca 2 · Kịch bản chính',
-    titleNeutral: 'Amritsar 03/01 → 04/01/2020 (Ca biên sát ngưỡng 166)',
+    stepBadge: 'Ca 2',
+    titleNeutral: 'Ca 2 · Amritsar (t=03/01 → t+1=04/01/2020)',
     titleRevealed: 'Ca 2: Bỏ sót & Sát ngưỡng — Dự báo gốc 165,973826 < 166',
     city: 'Amritsar',
     dateInput: '2020-01-03',
@@ -417,77 +417,77 @@ export const STORY_BOOKMARKS: StoryBookmark[] = [
     category: 'FN',
     summaryNote: 'Dự báo gốc L3 = 165,973826 (< 166,000000 đúng 0,026 điểm). Xét trên giá trị gốc không làm tròn trước → Không báo · Thực tế t+1 = 221 (Bỏ sót).',
     presenterScript:
-      'Ca Amritsar 03/01/2020 minh họa nguyên tắc không làm tròn trước khi xét ngưỡng: dự báo gốc L3 là 165,973826. Nếu làm tròn hiển thị thành 166 sẽ gây hiểu nhầm là có báo, nhưng trên số gốc 165,973826 < 166 nên không cảnh báo; hôm sau AQI thực tế vọt lên 221 (Bỏ sót).',
+      'Ca Amritsar ngày đầu vào t = 03/01/2020 minh họa nguyên tắc phân loại trên số gốc chưa làm tròn: dự báo gốc L3 cho ngày đích t+1 = 04/01/2020 là 165,973826 (< 166) nên không phát cảnh báo, dù hiển thị làm tròn 1 chữ số là 166,0. Thực tế ngày đích là 221 (Bỏ sót ở chế độ F2).',
   },
   {
     id: 'story-3-fp',
-    stepBadge: 'Ca 3 · Kịch bản chính',
-    titleNeutral: 'Delhi 18/10 → 19/10/2019 (Sau ngày đang ô nhiễm nặng)',
-    titleRevealed: 'Ca 3: Báo nhầm — Khi không khí hôm sau giảm nhanh dưới 201',
+    stepBadge: 'Ca 3',
+    titleNeutral: 'Ca 3 · Delhi (t=18/10 → t+1=19/10/2019)',
+    titleRevealed: 'Ca 3: Báo nhầm — Dự báo vượt ngưỡng nhưng thực tế t+1 dưới 201',
     city: 'Delhi',
     dateInput: '2019-10-18',
     dateTarget: '2019-10-19',
     split: 'test',
     category: 'FP',
-    summaryNote: 'AQI(t)=265 · Dự báo L3=232,73 (≥166 & ≥201, Phát cảnh báo) · Thực tế t+1 giảm xuống 170 (<201) → Báo nhầm (cả L3 và Baseline).',
+    summaryNote: 'AQI(t)=265 · Dự báo L3=232,73 (≥166 & ≥201, Phát cảnh báo) · Thực tế t+1=170 (<201) → Báo nhầm (cả L3 và Baseline).',
     presenterScript:
-      'Ngày 18/10/2019 tại Delhi đang ô nhiễm nặng (AQI 265), cả Ridge L3 (232,73) và baseline đều phát cảnh báo cho ngày mai. Tuy nhiên ngày 19/10 AQI thực tế giảm nhanh xuống 170 (< 201), tạo thành một ca Báo nhầm — sự đánh đổi tất yếu khi ưu tiên bắt hết ngày nặng.',
+      'Tại Delhi ngày đầu vào t = 18/10/2019 (AQI ngày t = 265), cả Ridge L3 (dự báo 232,73) và baseline đều phát cảnh báo cho ngày đích t+1 = 19/10/2019. Thực tế ngày đích ghi nhận AQI = 170 (< 201), nên cả hai cùng rơi vào nhóm Báo nhầm.',
   },
   {
     id: 'story-4-tn-avoid-fp',
-    stepBadge: 'Ca 4 · Đối chiếu thêm',
-    titleNeutral: 'Delhi 15/07 → 16/07/2019 (Hôm nay 180, gió/mưa đổi)',
-    titleRevealed: 'Ca 4: Không cảnh báo đúng — L3 tránh được báo nhầm của Baseline',
+    stepBadge: 'Ca 4',
+    titleNeutral: 'Ca 4 · Delhi (t=15/07 → t+1=16/07/2019)',
+    titleRevealed: 'Ca 4: Không cảnh báo đúng — L3 không báo ở ca Baseline báo nhầm (chế độ F2)',
     city: 'Delhi',
     dateInput: '2019-07-15',
     dateTarget: '2019-07-16',
     split: 'test',
     category: 'TN',
-    summaryNote: 'AQI(t)=180 (≥160, Baseline báo nhầm ở chế độ F2) · Dự báo L3=144,04 (<166, Không báo) · Thực tế t+1=117 (<201) → L3 Không cảnh báo đúng.',
+    summaryNote: 'AQI(t)=180 (≥160, Baseline phát cảnh báo ở chế độ F2) · Dự báo L3=144,04 (<166, Không báo) · Thực tế t+1=117 (<201) → L3 Không cảnh báo đúng.',
     presenterScript:
-      'Tại sao ở chế độ ưu tiên recall F2, Ridge L3 có cùng recall ~96,9% như baseline nhưng lại giảm báo nhầm từ 143 xuống 113 ca? Đây là ví dụ: AQI hôm nay là 180 (≥160 nên baseline báo nhầm), nhưng L3 dự báo giảm còn 144,04 (<166) và thực tế ngày mai là 117.',
+      'Trong phép so sánh trên giai đoạn kiểm thử ở chế độ ngưỡng F2, L3 đạt recall 96,9% (377/389), baseline đạt 96,1% (374/389); L3 có ít báo nhầm hơn (113 so với 143). Các số liệu này chưa tự chứng minh chênh lệch recall có ý nghĩa thống kê. Ở ca minh họa này, AQI ngày t là 180 (≥160 nên baseline báo nhầm), L3 dự báo 144,04 (<166 nên không cảnh báo), và thực tế ngày t+1 là 117 (<201).',
   },
   {
     id: 'story-5-overflow',
-    stepBadge: 'Ca 5 · Vượt thang >500',
-    titleNeutral: 'Delhi 02/11 → 03/11/2019 (Đỉnh ô nhiễm cực đoan)',
-    titleRevealed: 'Ca 5: Điểm vượt trục 500 — Thực tế AQI(t+1) = 659,0',
+    stepBadge: 'Ca 5',
+    titleNeutral: 'Ca 5 · Delhi (t=02/11 → t+1=03/11/2019)',
+    titleRevealed: 'Ca 5: Điểm vượt mốc 500 — Thực tế AQI(t+1) = 659,0',
     city: 'Delhi',
     dateInput: '2019-11-02',
     dateTarget: '2019-11-03',
     split: 'test',
     category: 'OVERFLOW',
-    summaryNote: 'AQI(t)=473 · Dự báo L3=440,75 · Thực tế t+1=659,0 (vượt mốc 500 của thang chuẩn, được hiển thị trong vùng mở rộng >500, không cắt cụt).',
+    summaryNote: 'AQI(t)=473 · Dự báo L3=440,75 · Thực tế t+1=659,0 (vượt mốc 500 của thang chuẩn, hiển thị trong vùng mở rộng >500, không cắt trần).',
     presenterScript:
-      'Dự án không cắt trần nhãn AQI ở 500. Trong tập Test có 18 cặp có giá trị vượt 500; đỉnh cao nhất là Delhi ngày đích 03/11/2019 với AQI thực tế 659,0 (và ngày kế tiếp 04/11 dự báo L3 đạt 650,96). Thước hiển thị vùng vượt trục >500 kèm giá trị thật.',
+      'Dự án không cắt trần nhãn AQI ở 500. Trong giai đoạn kiểm thử có 18 cặp có giá trị vượt 500; cao nhất là Delhi ngày đích t+1 = 03/11/2019 với AQI thực tế 659,0 (ngày kế tiếp t+1 = 04/11 dự báo L3 đạt 650,96). Thước hiển thị vùng mở rộng >500 kèm giá trị số thật.',
   },
   {
     id: 'story-6-missing',
-    stepBadge: 'Ca 6 · Ngày thiếu DL',
-    titleNeutral: 'Amritsar 25/08 → 26/08/2019 (Kiểm tra trạng thái khuyết)',
-    titleRevealed: 'Ca 6: Thiếu dữ liệu phát lại — Giữ ngữ cảnh, không tự nhảy ngày',
+    stepBadge: 'Ca 6',
+    titleNeutral: 'Ca 6 · Amritsar (t=25/08 → t+1=26/08/2019)',
+    titleRevealed: 'Ca 6: Không có bản ghi dự báo trong artifact phát lại (Amritsar)',
     city: 'Amritsar',
     dateInput: '2019-08-25',
     dateTarget: '2019-08-26',
     split: 'test',
     category: 'MISSING',
-    summaryNote: 'Ngày t=25/08/2019 Amritsar có AQI(t)=80, nhưng ngày đích t+1=26/08/2019 khuyết AQI quan trắc (dự án không nội suy AQI) nên bị lọc khỏi R2_B04.',
+    summaryNote: 'Không có bản ghi dự báo trong artifact phát lại cho cặp ngày t=25/08/2019 → t+1=26/08/2019 tại Amritsar (bảng hồi cứu: AQI(t)=80, AQI(t+1) khuyết).',
     presenterScript:
-      'Dự án giữ nguyên tắc không nội suy nhãn AQI. Tại Amritsar, có 3 ngày khuyết AQI trong giai đoạn Test dẫn tới 5 cặp (t → t+1) không có trong bảng đánh giá R2_B04. Khi chọn vào ngày này, ứng dụng giữ nguyên thành phố/ngày và báo trạng thái thiếu trung thực.',
+      'Không có bản ghi dự báo trong artifact phát lại cho cặp ngày này. Ứng dụng giữ nguyên thành phố và cặp ngày đang chọn, chỉ hiển thị các trạng thái kiểm tra trực tiếp được từ dữ liệu mà không suy đoán nguyên nhân lọc dòng, đồng thời vẫn ẩn dữ liệu ngày đích t+1 khi đang ở chế độ giấu kết quả.',
   },
   {
     id: 'story-7-holdout',
-    stepBadge: 'Ca 7 · Đối chiếu Holdout',
-    titleNeutral: 'Lucknow 26/05 → 27/05/2020 (Giai đoạn giữ lại cuối)',
-    titleRevealed: 'Ca 7: Holdout (03–07/2020) — Cỡ mẫu ngày nặng nhỏ (18 cặp)',
+    stepBadge: 'Ca 7',
+    titleNeutral: 'Ca 7 · Lucknow (t=26/05 → t+1=27/05/2020 · Holdout)',
+    titleRevealed: 'Ca 7: Giai đoạn đánh giá bổ sung Holdout (18 cặp ngày nặng toàn kỳ)',
     city: 'Lucknow',
     dateInput: '2020-05-26',
     dateTarget: '2020-05-27',
     split: 'holdout',
     category: 'HOLDOUT',
-    summaryNote: 'Holdout (n=975, chỉ 18 cặp nặng): AQI(t)=147 · Dự báo L3=170,47 (≥166) · Thực tế t+1=205. Toàn tập holdout: ΔMAE = -1,02, KTC chứa 0.',
+    summaryNote: 'Holdout đánh giá bổ sung (n=975, 18 cặp nặng): AQI(t)=147 · Dự báo L3=170,47 · Thực tế t+1=205. Toàn kỳ: ΔMAE ≈ −1,02, KTC 95% [−2,70; +0,48] chứa 0.',
     presenterScript:
-      'Chuyển sang giai đoạn Holdout (đích 01/03 – 01/07/2020, gồm cả trước và từ ngày phong tỏa toàn quốc 25/03/2020): dù có ca bắt đúng như Lucknow 27/05, toàn tập chỉ có 18 cặp ngày nặng và chênh lệch MAE L3 so với baseline là -1,02 (KTC 95% [-2,70; +0,48] chứa 0 — chưa đủ bằng chứng về lợi thế).',
+      'Holdout (ngày đích t+1: 01/03 – 01/07/2020) là giai đoạn đánh giá bổ sung, không dùng để chọn ngưỡng hay mô hình. Toàn kỳ chỉ có 18 cặp ngày nặng; chênh lệch MAE L3 − baseline trên holdout khoảng −1,02 điểm AQI, khoảng tin cậy bootstrap 95% [−2,70; +0,48]. Khoảng chứa 0 nên chưa đủ bằng chứng kết luận L3 cải thiện MAE trên giai đoạn này.',
   },
 ];
 

@@ -94,7 +94,7 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
     return { prevValid, nextValid };
   };
 
-  // TRẠNG THÁI THIẾU DỮ LIỆU PHÁT LẠI (Y26, Y29) — Không tự nhảy ngày, không hiển thị số 0 hay số cũ
+  // TRẠNG THÁI THIẾU BẢN GHI DỰ BÁO TRONG ARTIFACT PHÁT LẠI (Y26, Y29) — Không suy diễn nguyên nhân, vẫn tôn trọng giấu kết quả t+1
   if (!record) {
     const { prevValid, nextValid } = findNearestValidDates();
     const hasAqiT = dailyT && dailyT.aqi !== null;
@@ -102,7 +102,7 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
 
     return (
       <section
-        aria-label="Trạng thái thiếu dữ liệu phát lại"
+        aria-label="Trạng thái thiếu bản ghi dự báo trong artifact phát lại"
         className="bg-white rounded-xl border-2 border-dashed border-rose-300 shadow-xs p-5"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-rose-100">
@@ -112,22 +112,35 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
             </div>
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-900 border border-rose-300 mb-1">
-                <span>Thiếu dữ liệu phát lại — Không kết luận đúng/sai</span>
+                <span>Không có bản ghi dự báo trong artifact phát lại cho cặp ngày này.</span>
               </div>
               <h2 className="text-base font-bold text-slate-900">
-                {selectedCity} · Ngày đầu vào <code className="font-mono">{formatDateVN(dateInput)}</code> → Ngày đích <code className="font-mono">{formatDateVN(dateTarget)}</code>
+                {selectedCity} · Ngày đầu vào <code className="font-mono">t={formatDateVN(dateInput)}</code> → Ngày đích <code className="font-mono">t+1={formatDateVN(dateTarget)}</code> ({split === 'test' ? 'Giai đoạn kiểm thử' : 'Holdout đánh giá bổ sung'})
               </h2>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onToggleReveal}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+                isRevealed
+                  ? 'bg-slate-800 hover:bg-slate-700 text-white'
+                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+              }`}
+              title="Bật/tắt hiển thị dữ liệu ngày đích t+1 trong bảng hồi cứu"
+            >
+              {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              <span>{isRevealed ? 'Ẩn trạng thái t+1' : 'Mở thực tế & Đối chiếu (t+1)'}</span>
+            </button>
             {prevValid && (
               <button
                 type="button"
                 onClick={() => onSelectDateTarget(prevValid)}
                 className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold cursor-pointer"
               >
-                ← Ngày có DL trước ({formatDateVN(prevValid)})
+                ← Ngày có bản ghi trước ({formatDateVN(prevValid)})
               </button>
             )}
             {nextValid && (
@@ -136,7 +149,7 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
                 onClick={() => onSelectDateTarget(nextValid)}
                 className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold cursor-pointer"
               >
-                Ngày có DL tiếp ({formatDateVN(nextValid)}) →
+                Ngày có bản ghi tiếp ({formatDateVN(nextValid)}) →
               </button>
             )}
           </div>
@@ -144,38 +157,59 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="font-bold text-slate-800 mb-1">
-              1. Trạng thái tại ngày đầu vào <code className="font-mono">t = {formatDateVN(dateInput)}</code>:
+            <div className="font-bold text-slate-800 mb-1.5">
+              1. Trạng thái kiểm tra trực tiếp tại ngày đầu vào <code className="font-mono">t = {formatDateVN(dateInput)}</code>:
             </div>
-            {hasAqiT ? (
-              <p className="text-slate-700 leading-relaxed">
-                Trong bảng <code className="font-mono">air_quality_8cities_weather.csv</code>, {selectedCity} <strong>có AQI quan trắc ngày t = {vnNum(dailyT?.aqi, 0)}</strong> (<code className="font-mono">AQI_was_missing = False</code>). Tuy nhiên do thiếu nhãn thực tế ngày đích <code className="font-mono">t+1</code>, hàm <code className="font-mono">build_dataset()</code> đã lọc cặp này khỏi tập đánh giá hồi cứu nên không xuất dự báo trong <code className="font-mono">R2_B04_baseline_predictions.csv</code>.
-              </p>
-            ) : (
-              <p className="text-slate-700 leading-relaxed">
-                Trong bảng <code className="font-mono">air_quality_8cities_weather.csv</code>, {selectedCity} <strong>khuyết AQI quan trắc ngày t ({formatDateVN(dateInput)})</strong> (<code className="font-mono">AQI_was_missing = True</code>). Theo quy ước bước 5 nhật ký làm sạch, dự án <strong>không nội suy AQI</strong> nên không tạo đầu vào <code className="font-mono">aqi_0</code> và không xuất dự báo cho cặp ngày này.
-              </p>
-            )}
+            <ul className="text-slate-700 leading-relaxed space-y-1">
+              <li>
+                • Bản ghi dự báo trong <code className="font-mono">R2_B04_baseline_predictions.csv</code>: <strong>Không có dòng cho cặp (t, t+1) này</strong>.
+              </li>
+              <li>
+                • Giá trị <code className="font-mono">AQI(t)</code> trong bảng dữ liệu hồi cứu: <strong>{hasAqiT ? vnNum(dailyT?.aqi, 0) : 'Khuyết (null)'}</strong>.
+              </li>
+              <li>
+                • Cờ thiếu gốc <code className="font-mono">AQI_was_missing(t)</code>: <code className="font-mono font-semibold">{dailyT ? String(dailyT.miss) : 'Không có dòng ngày t'}</code>.
+              </li>
+            </ul>
           </div>
 
           <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-            <div className="font-bold text-slate-800 mb-1">
-              2. Trạng thái tại ngày đích <code className="font-mono">t+1 = {formatDateVN(dateTarget)}</code>:
+            <div className="font-bold text-slate-800 mb-1.5">
+              2. Trạng thái kiểm tra trực tiếp tại ngày đích <code className="font-mono">t+1 = {formatDateVN(dateTarget)}</code>:
             </div>
-            {hasAqiT1 ? (
-              <p className="text-slate-700 leading-relaxed">
-                Ngày đích <code className="font-mono">{formatDateVN(dateTarget)}</code> có AQI quan trắc là <strong>{vnNum(dailyT1?.aqi, 0)}</strong>, nhưng vì ngày đầu vào hôm trước (<code className="font-mono">{formatDateVN(dateInput)}</code>) khuyết AQI nên không có dự báo phát lại để đối chiếu.
-              </p>
+            {!isRevealed ? (
+              <div className="text-slate-700 leading-relaxed space-y-2">
+                <p>
+                  Đang ở chế độ <strong>giấu kết quả ngày đích <code className="font-mono">t+1</code></strong> nên không hiển thị AQI thực tế ngày đích.
+                </p>
+                <label className="inline-flex items-center gap-1.5 cursor-pointer select-none text-[11px] text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={autoReveal}
+                    onChange={onToggleAutoReveal}
+                    className="rounded border-slate-400 accent-indigo-600"
+                  />
+                  <span>Tự động hiện thực tế khi đổi thành phố/ngày/split</span>
+                </label>
+              </div>
             ) : (
-              <p className="text-slate-700 leading-relaxed">
-                Ngày đích <code className="font-mono">{formatDateVN(dateTarget)}</code> <strong>khuyết AQI quan trắc</strong> (<code className="font-mono">AQI_was_missing = True</code>). Không có giá trị thực tế <code className="font-mono">y(t+1)</code> để chấm đúng/sai.
-              </p>
+              <ul className="text-slate-700 leading-relaxed space-y-1">
+                <li>
+                  • Giá trị <code className="font-mono">AQI(t+1)</code> trong bảng dữ liệu hồi cứu: <strong>{hasAqiT1 ? vnNum(dailyT1?.aqi, 0) : 'Khuyết (null)'}</strong>.
+                </li>
+                <li>
+                  • Cờ thiếu gốc <code className="font-mono">AQI_was_missing(t+1)</code>: <code className="font-mono font-semibold">{dailyT1 ? String(dailyT1.miss) : 'Không có dòng ngày t+1'}</code>.
+                </li>
+                <li>
+                  • Đối chiếu dự báo – thực tế: <strong>Không chấm đúng/sai do không có bản ghi dự báo trong artifact phát lại</strong>.
+                </li>
+              </ul>
             )}
           </div>
         </div>
 
         <p className="mt-3 text-[11px] text-slate-500">
-          *Đúng quy tắc thiết kế: Giao diện giữ nguyên thành phố ({selectedCity}) và ngày đang chọn ({formatDateVN(dateTarget)}), không tự động nhảy qua ngày thiếu và không hiển thị số 0 hay giữ kết quả của ngày cũ.
+          *Giao diện giữ nguyên thành phố ({selectedCity}) và cặp ngày đang chọn (<code className="font-mono">t={formatDateVN(dateInput)} → t+1={formatDateVN(dateTarget)}</code>), chỉ trình bày các trạng thái kiểm tra trực tiếp được trong dữ liệu mà không suy diễn nguyên nhân thiếu bản ghi.
         </p>
       </section>
     );
@@ -215,7 +249,7 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
               {selectedCity} · Dự báo từ <span className="font-mono text-slate-700">t={formatDateVN(dateInput)}</span> cho đích <span className="font-mono text-indigo-900">t+1={formatDateVN(dateTarget)}</span>
             </h2>
             <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-              {split === 'test' ? 'Tập Test' : 'Tập Holdout'}
+              {split === 'test' ? 'Giai đoạn kiểm thử (Test)' : 'Holdout đánh giá bổ sung'}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -354,7 +388,7 @@ export const TwoLaneRulerAndOutcome: React.FC<TwoLaneRulerAndOutcomeProps> = ({
           </div>
 
           <div className="text-[11px] text-indigo-900/80 flex items-center justify-between border-t border-indigo-200/70 pt-1.5">
-            <span>Ngưỡng vận hành L3: <strong className="font-mono">{thr.l3}</strong></span>
+            <span>Ngưỡng cảnh báo L3: <strong className="font-mono">{thr.l3}</strong></span>
             <span>
               Chênh so với hôm nay: <strong className="font-mono">{record.l3 - record.aqi >= 0 ? '+' : ''}{vnNum(record.l3 - record.aqi, 1)}</strong>
             </span>
