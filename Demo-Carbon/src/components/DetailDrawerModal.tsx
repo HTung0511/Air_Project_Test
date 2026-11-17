@@ -367,7 +367,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                     </div>
 
                     <div className="mt-3 pt-2.5 border-t border-slate-100 text-[11px] text-slate-500">
-                      Trên tập Test (389 cặp nặng): ở chế độ F2, L3 bắt <strong>377/389 (recall 96,9%)</strong> với <strong>113</strong> báo nhầm; Baseline bắt <strong>374/389 (recall 96,1%)</strong> với <strong>143</strong> báo nhầm.
+                      Trên giai đoạn kiểm thử (389 cặp nặng): ở chế độ F2, L3 bắt <strong>377/389 (recall 96,9%)</strong> với <strong>113</strong> báo nhầm; Baseline bắt <strong>374/389 (recall 96,1%)</strong> với <strong>143</strong> báo nhầm. Các số liệu này chưa tự chứng minh chênh lệch recall có ý nghĩa thống kê.
                     </div>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                         { name: 'Ridge L1 (Chỉ lịch sử AQI + mùa)', val: record.l1, note: 'alpha = 10' },
                         { name: 'Ridge L2 (+ 5 chất ô nhiễm ngày t)', val: record.l2, note: 'alpha = 0,1' },
                         { name: 'Ridge L3 (+ 9 biến thời tiết đến ngày t)', val: record.l3, note: 'Mô hình chính · alpha = 30', highlight: true },
-                        { name: 'Ridge L4 (Cận trên: + thời tiết ngày mai)', val: record.l4, note: 'Chỉ tham chiếu trần lý thuyết' },
+                        ...(isRevealed ? [{ name: 'Ridge L4 (+ thời tiết ngày đích t+1)', val: record.l4, note: 'Chỉ tham chiếu hồi cứu' }] : []),
                         { name: 'Cây tăng cường HGB L3', val: record.hgb, note: 'Mô hình phi tuyến đối chứng' },
                       ].map((m) => (
                         <div
@@ -451,7 +451,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                             {dailyT.aqi !== null ? vnNum(dailyT.aqi, 0) : 'Khuyết (NaN)'}
                           </div>
                           <div className="text-[10px] text-slate-500 mt-0.5">
-                            Trạng thái: {dailyT.miss ? 'Khuyết gốc (Không nội suy AQI)' : 'Quan trắc CPCB hợp lệ'}
+                            Cờ thiếu gốc AQI_was_missing: {String(dailyT.miss)}
                           </div>
                         </div>
 
@@ -461,13 +461,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                             {dailyT.pm25 !== null ? `${vnNum(dailyT.pm25, 2)} µg/m³` : 'Khuyết'}
                           </div>
                           <div className="text-[10px] text-slate-600 mt-0.5">
-                            {dailyT.pm25_miss ? (
-                              <span className="text-amber-800 font-semibold">
-                                Đã nội suy ở bước làm sạch → Đặt lại NaN + ffill≤2d khi dự báo
-                              </span>
-                            ) : (
-                              'Quan trắc trực tiếp (PM2.5_was_missing = False)'
-                            )}
+                            Cờ thiếu gốc PM2.5_was_missing: {String(dailyT.pm25_miss)}
                           </div>
                         </div>
 
@@ -497,7 +491,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                   </div>
 
                   <div className="mt-3 p-2.5 rounded-lg bg-slate-100 border border-slate-200 text-[11px] text-slate-600 leading-relaxed">
-                    <strong>Lưu ý diễn giải tín hiệu đầu vào (Y32):</strong> Các giá trị trên là số liệu mô tả tại ngày <code className="font-mono">t</code> (trong mô hình, các chất ô nhiễm được lấy <code className="font-mono">log(1+x)</code>, chuẩn hóa theo trung vị/độ lệch chuẩn của tập Train). Không coi các biến hiển thị ở đây là nguyên nhân trực tiếp hay giải thích đầy đủ cho dự báo.
+                    <strong>Lưu ý diễn giải (Y32):</strong> Giá trị ngữ cảnh từ bảng dữ liệu hồi cứu; không mặc định là đầu vào cuối cùng của mô hình. Các cờ <code className="font-mono">*_was_missing</code> chỉ cho biết tình trạng thiếu gốc theo định nghĩa của bộ dữ liệu, không xác nhận chất lượng quan trắc hay kết quả xử lý từng giá trị. Không coi các biến hiển thị là nguyên nhân trực tiếp hay giải thích đầy đủ cho dự báo.
                   </div>
                 </div>
               </div>
@@ -563,7 +557,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                   Bậc thang Giảm Sai số MAE trên Tập Test (n = 1.947 cặp · 389 cặp nặng) (Y19)
                 </h3>
                 <p className="text-xs text-slate-600 mb-4">
-                  Đối soát khớp 100% với <code className="font-mono">R2_B04_baseline_metrics.csv</code> và <code className="font-mono">V21_model_test_metrics.csv</code> (thấp hơn là tốt hơn).
+                  Các chỉ số theo artifact dự án; MAE thấp hơn là tốt hơn. Các phép kiểm demo tính lại một số chỉ số từ JSON, không tự đối chiếu các CSV nguồn.
                 </p>
 
                 <div className="space-y-2.5">
@@ -645,13 +639,13 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
              ===================================================================== */}
           {activeTab === 'tables' && (
             <div className="space-y-5">
-              {/* Khối so sánh Test vs Holdout + Giải trình 2 phiên bản CI Holdout */}
+              {/* Khối so sánh Test vs Holdout và khoảng tin cậy */}
               <div className="bg-white rounded-xl border border-slate-200 p-4">
                 <h3 className="text-sm font-bold text-slate-900 mb-1">
                   Bảng Bằng chứng Tập Test và Tập Holdout kèm Khoảng Tin Cậy (Y06 · Y22)
                 </h3>
                 <p className="text-xs text-slate-600 mb-3">
-                  Tách biệt hoàn toàn hai giai đoạn theo ngày đích <code className="font-mono">t+1</code>; không gộp chung kết quả. Lưu ý: Tập Test đã được dùng cho nhiều phân tích độ nhạy trong quá trình nghiên cứu.
+                  Tách biệt hai giai đoạn theo ngày đích <code className="font-mono">t+1</code>; ngày đầu vào là <code className="font-mono">t</code>. Holdout là giai đoạn đánh giá bổ sung, không dùng để chọn ngưỡng hay mô hình. Test đã được dùng cho nhiều phân tích độ nhạy trong quá trình nghiên cứu.
                 </p>
 
                 <div className="overflow-x-auto">
@@ -695,8 +689,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                         <td className="p-2 border border-slate-200 text-right font-mono font-bold text-indigo-900">13,78</td>
                         <td className="p-2 border border-slate-200 text-right font-mono font-bold">-1,02</td>
                         <td className="p-2 border border-slate-200 text-center font-mono">
-                          [-2,70; +0,48] <span className="text-[10px] text-slate-500">(RA/DA)</span><br />
-                          <span className="text-[10px] text-slate-500">hoặc [-2,80; +0,50] (script)</span>
+                          [-2,70; +0,48] <span className="text-[10px] text-slate-500">(RA/DA)</span>
                         </td>
                         <td className="p-2 border border-slate-200">
                           <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-950 font-bold">
@@ -727,16 +720,9 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                   </table>
                 </div>
 
-                {/* Hộp đối chiếu minh bạch 2 phiên bản KTC Holdout theo yêu cầu #4 của Prompt */}
+                {/* Diễn giải khoảng tin cậy Holdout từ artifact đã chọn */}
                 <div className="mt-3 p-3 rounded-lg bg-indigo-50 border border-indigo-200 text-xs text-indigo-950 leading-relaxed">
-                  <div className="font-bold mb-1">
-                    Đối chiếu phương pháp / phiên bản Khoảng tin cậy Holdout (Yêu cầu #4):
-                  </div>
-                  <p>
-                    • <strong>Báo cáo RA &amp; Artifact DA (<code className="font-mono">R2_B04_baseline_paired_mae.csv</code> / <code className="font-mono">V24</code>):</strong> cho <code className="font-mono font-bold">[-2,70; +0,48]</code> (chính xác <code className="font-mono">[-2,702124; +0,483098]</code>), tính bằng hàm <code className="font-mono">block_boot</code> chuẩn của dự án (<code className="font-mono">src/model_utils.py</code>: chia 9 khối lịch 14 ngày từ 01/03/2020, <code className="font-mono">B=4.000, seed=0</code>, lấy tổng sai số chia tổng số dòng thực tế trong mẫu bootstrap).<br />
-                    • <strong>Biến thể Script trong hồ sơ rà soát:</strong> cho <code className="font-mono font-bold">[-2,80; +0,50]</code> khi lấy trung bình không trọng số giữa các khối (do khối thứ 9 ở cuối kỳ và 9 ngày khuyết tại Amritsar có số dòng ít hơn các khối 14 ngày đầy đủ).<br />
-                    • <strong>Kết luận chung:</strong> Cả hai phiên bản đều chứa 0 (và cũng chứa 0 khi thử khối 7 ngày <code className="font-mono">[-2,59; +0,46]</code> hay 28 ngày <code className="font-mono">[-2,55; +0,53]</code> ở S06). Do đó cần diễn đạt chính xác là <strong>"chưa đủ bằng chứng về lợi thế trên holdout"</strong>, không kết luận hai mô hình tương đương hay mô hình chắc chắn vô ích.
-                  </p>
+                  Chênh lệch MAE L3 − baseline trên holdout khoảng −1,02 điểm AQI; khoảng tin cậy bootstrap 95% [−2,70; +0,48]. Khoảng chứa 0 nên chưa đủ bằng chứng kết luận L3 cải thiện MAE trên giai đoạn này. Điều này không chứng minh hai mô hình tương đương hay chắc chắn không có lợi ích.
                 </div>
               </div>
 
@@ -912,16 +898,16 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-teal-700" />
                     <h3 className="text-sm font-bold text-slate-900">
-                      Biên bản Đối soát Dữ liệu Demo với Nguồn Dự án (<code className="font-mono">scripts/verify_demo_data.py</code> · Y42)
+                      Phạm vi kiểm tra dữ liệu Demo &amp; nguồn dự án (Y42)
                     </h3>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-900 border border-teal-300">
-                    Đã kiểm thực tế: PASS 100%
+                    Các phép kiểm dữ liệu demo đã chạy đạt.
                   </span>
                 </div>
 
                 <p className="text-xs text-slate-600 mb-3">
-                  Mọi con số trong demo được trích xuất trực tiếp từ các artifact đã ghim commit dưới đây (không tự tạo dự báo thay thế dữ liệu thiếu). Lưu ý: Khớp artifact đảm bảo tính chính xác của bản phát lại, không đồng nghĩa đã đóng F01.
+                  (1) Script <code className="font-mono">verify_demo_data.py</code> tính lại các chỉ số và kiểm tra phạm vi từ JSON demo. (2) Đối chiếu CSV nguồn được RA thực hiện trước đây; script này không đọc lại CSV hoặc xác minh SHA, các SHA bên dưới chỉ là thông tin nguồn gốc. RA đã đối chiếu 2.922 bản ghi với R2_B04 tại commit 13e93ae. (3) Script không xác thực toàn bộ pipeline từ dữ liệu thô; F01 vẫn đang mở.
                 </p>
 
                 <div className="overflow-x-auto">
@@ -939,7 +925,7 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                         <td className="p-2 border border-slate-200 font-mono text-[11px]">
                           {DEMO_DATA.provenance.predictions_artifact}<br />
                           Commit: <strong>{DEMO_DATA.provenance.predictions_commit.slice(0, 12)}</strong><br />
-                          SHA256: {DEMO_DATA.provenance.predictions_sha256.slice(0, 24)}…
+                          SHA256 theo provenance (chưa xác minh bởi script): {DEMO_DATA.provenance.predictions_sha256.slice(0, 24)}…
                         </td>
                         <td className="p-2 border border-slate-200">
                           <strong>2.922 dòng</strong>: 1.947 cặp Test (đích 01/07/2019–29/02/2020, 389 nặng) + 975 cặp Holdout (đích 01/03/2020–01/07/2020, 18 nặng).
@@ -960,10 +946,10 @@ export const DetailDrawerModal: React.FC<DetailDrawerModalProps> = ({
                         <td className="p-2 border border-slate-200 font-mono text-[11px]">
                           {DEMO_DATA.provenance.daily_aq_artifact}<br />
                           Commit: <strong>{DEMO_DATA.provenance.daily_aq_commit}</strong><br />
-                          SHA256: {DEMO_DATA.provenance.daily_aq_sha256.slice(0, 24)}…
+                          SHA256 theo provenance (chưa xác minh bởi script): {DEMO_DATA.provenance.daily_aq_sha256.slice(0, 24)}…
                         </td>
                         <td className="p-2 border border-slate-200">
-                          Xác nhận đúng các ngày khuyết AQI tại Amritsar (3 ngày trong kỳ Test làm khuyết 5 cặp dự báo; 7 ngày trong kỳ Holdout làm khuyết 9 cặp dự báo). 7 thành phố còn lại đủ 100%.
+                          Amritsar có 3 ngày thiếu AQI trong kỳ Test và 7 ngày trong kỳ Holdout; artifact phát lại thiếu tương ứng 5 và 9 cặp dự báo theo kỳ. Đây là các số đếm riêng, không xác định nguyên nhân thiếu dự báo. 7 thành phố còn lại đủ các cặp trong lịch.
                         </td>
                       </tr>
                       <tr>

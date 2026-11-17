@@ -113,7 +113,7 @@ export const IndiaMiniMap: React.FC<IndiaMiniMapProps> = ({
       return {
         value: null,
         isMissing: true,
-        missingReason: `Thiếu AQI quan trắc ngày t (${formatDateVN(dateInput)})`,
+        missingReason: `Không có giá trị AQI tại ngày t (${formatDateVN(dateInput)}) trong bảng ngữ cảnh hồi cứu`,
       };
     }
 
@@ -124,7 +124,7 @@ export const IndiaMiniMap: React.FC<IndiaMiniMapProps> = ({
       return {
         value: null,
         isMissing: true,
-        missingReason: `Không có dự báo phát lại cho đích ${formatDateVN(dateTarget)}`,
+        missingReason: `Không có bản ghi dự báo trong artifact phát lại cho cặp ngày này (đích ${formatDateVN(dateTarget)})`,
       };
     }
 

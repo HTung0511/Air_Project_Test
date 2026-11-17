@@ -41,7 +41,6 @@ export function App() {
   const [thresholdMode, setThresholdMode] = useState<ThresholdMode>('f2');
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
   const [autoReveal, setAutoReveal] = useState<boolean>(false);
-  const [hideSpoilersOnBookmarks, setHideSpoilersOnBookmarks] = useState<boolean>(false);
   const [mapValueMode, setMapValueMode] = useState<MapValueMode>('aqi_t');
   const [activeBookmarkId, setActiveBookmarkId] = useState<string | null>('story-1-tp');
 
@@ -54,11 +53,39 @@ export function App() {
   const currentRecord = getPredictionRecord(selectedCity, dateTarget);
   const thrInfo = getThresholds(thresholdMode);
 
-  // Đổi thành phố (từ Mini Map hoặc bộ chọn): giữ nguyên ngày đích & giai đoạn đang xem
-  const handleSelectCity = useCallback((cityId: string) => {
-    setSelectedCity(cityId);
-    setActiveBookmarkId(null);
-  }, []);
+  // Reset nhất quán trạng thái hiện thực tế và chế độ bản đồ khi chưa bật tự động hiện
+  const resetRevealIfNeeded = useCallback(() => {
+    setIsRevealed(autoReveal);
+    if (!autoReveal) {
+      setMapValueMode((prev) => (prev === 'actual_t1' ? 'aqi_t' : prev));
+    }
+  }, [autoReveal]);
+
+  const handleToggleReveal = useCallback(() => {
+    setIsRevealed(!isRevealed);
+    if (isRevealed) {
+      setMapValueMode((m) => (m === 'actual_t1' ? 'aqi_t' : m));
+    }
+  }, [isRevealed]);
+
+  const handleToggleAutoReveal = useCallback(() => {
+    const next = !autoReveal;
+    setAutoReveal(next);
+    setIsRevealed(next);
+    if (!next) {
+      setMapValueMode((m) => (m === 'actual_t1' ? 'aqi_t' : m));
+    }
+  }, [autoReveal]);
+
+  // Đổi thành phố (từ Mini Map hoặc bộ chọn): giữ nguyên ngày đích & giai đoạn đang xem, reset reveal nếu không bật tự động hiện
+  const handleSelectCity = useCallback(
+    (cityId: string) => {
+      setSelectedCity(cityId);
+      setActiveBookmarkId(null);
+      resetRevealIfNeeded();
+    },
+    [resetRevealIfNeeded]
+  );
 
   // Đổi ngày đích trên timeline
   const handleChangeDateTarget = useCallback(
@@ -66,12 +93,9 @@ export function App() {
       setDateTarget(newDateTarget);
       setLastDateBySplit((prev) => ({ ...prev, [split]: newDateTarget }));
       setActiveBookmarkId(null);
-      if (!autoReveal) {
-        setIsRevealed(false);
-        setMapValueMode((prev) => (prev === 'actual_t1' ? 'aqi_t' : prev));
-      }
+      resetRevealIfNeeded();
     },
-    [split, autoReveal]
+    [split, resetRevealIfNeeded]
   );
 
   // Đổi giai đoạn đánh giá (Test <-> Holdout)
@@ -82,12 +106,9 @@ export function App() {
       const targetToUse = lastDateBySplit[newSplit] || DEMO_DATA.calendar[newSplit][0];
       setDateTarget(targetToUse);
       setActiveBookmarkId(null);
-      if (!autoReveal) {
-        setIsRevealed(false);
-        setMapValueMode((prev) => (prev === 'actual_t1' ? 'aqi_t' : prev));
-      }
+      resetRevealIfNeeded();
     },
-    [split, lastDateBySplit, autoReveal]
+    [split, lastDateBySplit, resetRevealIfNeeded]
   );
 
   // Chọn nhanh một ca tiêu biểu (từ thanh kịch bản hoặc ca riêng thành phố)
@@ -98,12 +119,9 @@ export function App() {
       setDateTarget(bmDateTarget);
       setLastDateBySplit((prev) => ({ ...prev, [bmSplit]: bmDateTarget }));
       setActiveBookmarkId(bookmarkId ?? null);
-      if (!autoReveal) {
-        setIsRevealed(false);
-        setMapValueMode((prev) => (prev === 'actual_t1' ? 'aqi_t' : prev));
-      }
+      resetRevealIfNeeded();
     },
-    [autoReveal]
+    [resetRevealIfNeeded]
   );
 
   // Mở lớp chi tiết ở tab chỉ định (giữ nguyên toàn bộ ngữ cảnh)
@@ -136,7 +154,7 @@ export function App() {
         if (idx >= 0 && idx < cal.length - 1) handleChangeDateTarget(cal[idx + 1]);
       } else if (e.key === ' ' && !isDetailOpen && !isGuideOpen) {
         e.preventDefault();
-        setIsRevealed((prev) => !prev);
+        handleToggleReveal();
       } else if ((e.key === 'd' || e.key === 'D') && !isGuideOpen) {
         e.preventDefault();
         setIsDetailOpen((prev) => !prev);
@@ -145,7 +163,7 @@ export function App() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [split, dateTarget, isDetailOpen, isGuideOpen, handleChangeDateTarget]);
+  }, [split, dateTarget, isDetailOpen, isGuideOpen, handleChangeDateTarget, handleToggleReveal]);
 
   const activeStory = STORY_BOOKMARKS.find(
     (b) => b.id === activeBookmarkId || (b.city === selectedCity && b.dateTarget === dateTarget && b.split === split)
@@ -164,35 +182,34 @@ export function App() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-sm sm:text-base font-extrabold tracking-tight">
-                  Air Project · Dự báo AQI Ngày hôm sau (<code className="font-mono text-amber-300">t → t+1</code>) cho 8 Thành phố Ấn Độ
+                  Air Project · Demo Phát lại Dự báo AQI Lịch sử (<code className="font-mono text-amber-300">t → t+1</code>) cho 8 Thành phố Ấn Độ
                 </h1>
                 <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-900/90 text-teal-200 border border-teal-700">
                   <CheckCircle2 className="w-3 h-3" />
-                  <span>Đã đối soát R2_B04 (13e93ae)</span>
+                  <span>Artifact phát lại: R2_B04 (13e93ae)</span>
                 </span>
               </div>
               <p className="text-[11px] text-slate-300 hidden sm:block">
-                Phát lại hồi cứu · Đối chiếu <strong>Ridge L3</strong> với Baseline <strong>“Ngày mai = hôm nay”</strong> · Cảnh báo sớm ngày nặng <code className="font-mono">AQI(t+1) ≥ 201</code>
+                Phát lại dự báo hồi cứu (không phải hệ dự báo thời gian thực) · Đối chiếu <strong>Ridge L3</strong> với Baseline <strong>“Ngày mai = hôm nay”</strong> · Ngày nặng <code className="font-mono">AQI(t+1) ≥ 201</code>
               </p>
             </div>
           </div>
 
           {/* Cụm nút điều khiển Lớp 2 (Chi tiết & Phương pháp) + Chế độ ẩn kết quả + Tài liệu thuyết trình */}
           <div className="flex flex-wrap items-center gap-2">
-            {/* Công tắc Ẩn/Hiện nhãn đáp án trên nút chọn nhanh */}
+            {/* Công tắc Chế độ Giấu kết quả vs Chế độ khám phá (tự động hiện) */}
             <button
               type="button"
-              onClick={() => setHideSpoilersOnBookmarks((prev) => !prev)}
+              onClick={handleToggleAutoReveal}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition flex items-center gap-1 cursor-pointer ${
-                hideSpoilersOnBookmarks
+                !autoReveal
                   ? 'bg-slate-800 text-amber-300 border-amber-400/50'
-                  : 'bg-slate-800/70 text-slate-300 border-slate-700 hover:text-white'
+                  : 'bg-teal-900/80 text-teal-100 border-teal-500/60 hover:text-white'
               }`}
-              title="Khi bật, tên các nút chọn nhanh ca tiêu biểu sẽ dùng nhãn trung tính cho tới khi bạn bấm Mở thực tế t+1"
+              title="Mặc định giấu kết quả ngày đích t+1 và nhãn đáp án cho tới khi bấm Mở thực tế; bật Chế độ khám phá để tự động hiện kết quả khi đổi thành phố/ngày/split/ca"
             >
-              {hideSpoilersOnBookmarks ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-              <span className="hidden xl:inline">Nhãn ca:</span>
-              <span>{hideSpoilersOnBookmarks ? 'Giấu đáp án' : 'Hiện tên ca'}</span>
+              {!autoReveal ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              <span>{!autoReveal ? 'Chế độ: Giấu kết quả' : 'Chế độ khám phá: Tự hiện'}</span>
             </button>
 
             {/* Nút mở Tài liệu lời nói & Checklist riêng (Y07, Y35) */}
@@ -230,7 +247,6 @@ export function App() {
           dateTarget={dateTarget}
           thresholdMode={thresholdMode}
           isRevealed={isRevealed}
-          hideSpoilersOnBookmarks={hideSpoilersOnBookmarks}
           onSelectBookmark={handleSelectBookmark}
           onChangeSplit={handleChangeSplit}
           onChangeDateTarget={handleChangeDateTarget}
@@ -264,15 +280,9 @@ export function App() {
               thresholdMode={thresholdMode}
               onChangeThresholdMode={setThresholdMode}
               isRevealed={isRevealed}
-              onToggleReveal={() => setIsRevealed((prev) => !prev)}
+              onToggleReveal={handleToggleReveal}
               autoReveal={autoReveal}
-              onToggleAutoReveal={() => {
-                setAutoReveal((prev) => {
-                  const next = !prev;
-                  if (next) setIsRevealed(true);
-                  return next;
-                });
-              }}
+              onToggleAutoReveal={handleToggleAutoReveal}
               onOpenDetailLayer={handleOpenDetailLayer}
               onSelectDateTarget={handleChangeDateTarget}
             />
@@ -293,11 +303,11 @@ export function App() {
                 {activeStory ? (
                   <div className="text-slate-700">
                     <span className="font-bold text-slate-900">{activeStory.stepBadge}:</span>{' '}
-                    <span>{isRevealed ? activeStory.summaryNote : `Đang xem dự báo tại cuối ngày t=${formatDateVN(dateInput)}. Bấm "Mở thực tế & Đối chiếu (t+1)" để xem kết quả.`}</span>
+                    <span>{isRevealed ? activeStory.summaryNote : `Đang xem dự báo tại cuối ngày đầu vào t=${formatDateVN(dateInput)} (đích t+1=${formatDateVN(dateTarget)}). Bấm "Mở thực tế & Đối chiếu (t+1)" để xem kết quả.`}</span>
                   </div>
                 ) : (
                   <div className="text-slate-700">
-                    <strong>Tổng hợp dự án:</strong> Test (n=1.947): MAE Ridge L3 <strong>19,52</strong> vs Baseline <strong>23,47</strong> (<code className="font-mono">Δ=-3,95 [-5,40; -2,56]</code>). Holdout (n=975): MAE L3 <strong>13,78</strong> vs <strong>14,80</strong> (<code className="font-mono">Δ=-1,02</code>, KTC chứa 0: <em>chưa đủ bằng chứng về lợi thế</em>).
+                    <strong>Tổng hợp dự án:</strong> Giai đoạn kiểm thử (n=1.947): MAE Ridge L3 <strong>19,52</strong> vs Baseline <strong>23,47</strong> (<code className="font-mono">Δ=-3,95 [-5,40; -2,56]</code>). Holdout đánh giá bổ sung (n=975): chênh lệch MAE L3 − baseline khoảng <strong>−1,02</strong> điểm AQI, KTC bootstrap 95% <code className="font-mono">[-2,70; +0,48]</code> chứa 0 nên <em>chưa đủ bằng chứng kết luận L3 cải thiện MAE trên giai đoạn này</em>.
                   </div>
                 )}
               </div>
@@ -316,7 +326,7 @@ export function App() {
                   onClick={() => handleOpenDetailLayer('tables')}
                   className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold inline-flex items-center gap-1 cursor-pointer"
                 >
-                  <span>Bảng Test / Holdout &amp; Nhóm TP</span>
+                  <span>Bảng Kiểm thử / Holdout &amp; Nhóm TP</span>
                 </button>
                 <button
                   type="button"
@@ -324,7 +334,7 @@ export function App() {
                   className="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-200 font-semibold inline-flex items-center gap-1 cursor-pointer"
                 >
                   <ShieldAlert className="w-3.5 h-3.5 text-amber-700" />
-                  <span>Hạn chế F01 &amp; Đối soát</span>
+                  <span>Hạn chế F01 &amp; Kiểm dữ liệu</span>
                 </button>
               </div>
             </div>
@@ -336,7 +346,7 @@ export function App() {
       <footer className="bg-white border-t border-slate-200 px-4 py-2 text-[11px] text-slate-500">
         <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-2">
           <span>
-            <strong>Nguồn dữ liệu:</strong> CPCB qua Kaggle (<code className="font-mono">city_day.csv</code>) &amp; Open-Meteo ERA5 (CC BY 4.0) · Artifact dự báo: <code className="font-mono">R2_B04_baseline_predictions.csv</code> (commit <code className="font-mono">13e93ae</code>, khớp <code className="font-mono">V21</code> tại <code className="font-mono">0dfc715</code>).
+            <strong>Nguồn dữ liệu:</strong> CPCB qua Kaggle (<code className="font-mono">city_day.csv</code>) &amp; Open-Meteo ERA5 (CC BY 4.0) · Artifact phát lại: <code className="font-mono">R2_B04_baseline_predictions.csv</code> (commit <code className="font-mono">13e93ae</code>; hạn chế F01 vẫn đang mở).
           </span>
           <span>
             <strong>Phím tắt trình chiếu:</strong> <kbd className="px-1 py-0.2 bg-slate-100 border border-slate-300 rounded font-mono">←</kbd> <kbd className="px-1 py-0.2 bg-slate-100 border border-slate-300 rounded font-mono">→</kbd> Đổi ngày · <kbd className="px-1 py-0.2 bg-slate-100 border border-slate-300 rounded font-mono">Space</kbd> Mở/Ẩn thực tế · <kbd className="px-1 py-0.2 bg-slate-100 border border-slate-300 rounded font-mono">D</kbd> Lớp chi tiết
@@ -358,11 +368,12 @@ export function App() {
         thresholdMode={thresholdMode}
         onChangeThresholdMode={setThresholdMode}
         isRevealed={isRevealed}
-        onToggleReveal={() => setIsRevealed((prev) => !prev)}
+        onToggleReveal={handleToggleReveal}
       />
 
       {/* ================= MODAL TÀI LIỆU LỜI NÓI & CHECKLIST RIÊNG (Y07, Y35) ================= */}
       <PresenterGuideModal
+        isRevealed={isRevealed}
         isOpen={isGuideOpen}
         onClose={() => setIsGuideOpen(false)}
         onLoadCase={(city, bmSplit, bmDateTarget, bmId) => {

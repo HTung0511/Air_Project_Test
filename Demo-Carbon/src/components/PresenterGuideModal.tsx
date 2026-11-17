@@ -5,12 +5,14 @@ import { STORY_BOOKMARKS, SplitType, formatDateVN } from '../data/aqiHelpers';
 interface PresenterGuideModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isRevealed: boolean;
   onLoadCase: (city: string, split: SplitType, dateTarget: string, bookmarkId: string) => void;
 }
 
 export const PresenterGuideModal: React.FC<PresenterGuideModalProps> = ({
   isOpen,
   onClose,
+  isRevealed,
   onLoadCase,
 }) => {
   const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>({});
@@ -22,7 +24,7 @@ export const PresenterGuideModal: React.FC<PresenterGuideModalProps> = ({
     'Kiểm tra độ phân giải máy chiếu (1280×720 / 1920×1080): xác nhận hai làn của Thước quyết định AQI và cụm phóng to NCR (Delhi – Gurugram) đọc rõ, không chồng chữ.',
     'Xác nhận chế độ khởi động Chống lộ đáp án (Anti-spoiler): nút "Ẩn thực tế t+1" đang bật và Mini Map đang để ở "AQI ngày t" để màu bản đồ không tiết lộ kết quả ngày mai.',
     'Kiểm tra phím tắt bàn phím: phím ← / → để đổi ngày lịch, phím Space để Mở/Ẩn thực tế t+1, phím D để mở/đóng Lớp Chi Tiết mà vẫn giữ nguyên thành phố & ngày.',
-    'Nắm vững 4 điểm trung thực phương pháp khi vấn đáp: (1) F01 chưa đóng (as_of cắt bảng đã làm sạch hồi cứu); (2) Holdout ΔMAE = -1,02, KTC [-2,70; +0,48] (RA/DA) hoặc [-2,80; +0,50] (script) đều chứa 0 → chưa đủ bằng chứng về lợi thế; (3) Quy ước <30 ngày nặng cho nhóm thành phố; (4) Không diễn giải nhân quả giữa L1, L2, L3.',
+    'Nắm vững 4 điểm trung thực phương pháp khi vấn đáp: (1) F01 chưa đóng (as_of cắt bảng đã làm sạch hồi cứu); (2) Holdout ΔMAE = -1,02, KTC [-2,70; +0,48] chứa 0 → chưa đủ bằng chứng kết luận L3 cải thiện MAE, không chứng minh tương đương; (3) Quy ước <30 ngày nặng cho nhóm thành phố; (4) Không diễn giải nhân quả giữa L1, L2, L3.',
   ];
 
   return (
@@ -75,18 +77,18 @@ export const PresenterGuideModal: React.FC<PresenterGuideModalProps> = ({
                         {bm.stepBadge}
                       </span>
                       <span className="font-bold text-slate-900 text-xs">
-                        {bm.titleRevealed}
+                        {isRevealed ? bm.titleRevealed : bm.titleNeutral}
                       </span>
                       <span className="font-mono text-[11px] text-slate-600">
                         ({bm.city}: t={formatDateVN(bm.dateInput)} → t+1={formatDateVN(bm.dateTarget)})
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 font-medium">
-                      <strong>Số liệu:</strong> {bm.summaryNote}
-                    </p>
-                    <p className="text-xs text-indigo-950 bg-indigo-50/80 px-2.5 py-1.5 rounded border border-indigo-200/80 italic">
-                      “{bm.presenterScript}”
-                    </p>
+                    {isRevealed ? (
+                      <>
+                        <p className="text-[11px] text-slate-600 font-medium"><strong>Số liệu:</strong> {bm.summaryNote}</p>
+                        <p className="text-xs text-indigo-950 bg-indigo-50/80 px-2.5 py-1.5 rounded border border-indigo-200/80 italic">“{bm.presenterScript}”</p>
+                      </>
+                    ) : <p className="text-[11px] text-slate-600">Nội dung ca được ẩn cho đến khi mở kết quả.</p>}
                   </div>
 
                   <button

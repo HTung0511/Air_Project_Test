@@ -29,7 +29,6 @@ interface TimelineCenterProps {
   dateTarget: string;
   thresholdMode: ThresholdMode;
   isRevealed: boolean;
-  hideSpoilersOnBookmarks: boolean;
   onSelectBookmark: (city: string, split: SplitType, dateTarget: string, bookmarkId?: string) => void;
   onChangeSplit: (newSplit: SplitType) => void;
   onChangeDateTarget: (newDateTarget: string) => void;
@@ -43,7 +42,6 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
   dateTarget,
   thresholdMode,
   isRevealed,
-  hideSpoilersOnBookmarks,
   onSelectBookmark,
   onChangeSplit,
   onChangeDateTarget,
@@ -92,9 +90,9 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
                   : 'text-slate-700 hover:text-slate-900 font-medium'
               }`}
             >
-              <span>Tập Test chính</span>
+              <span>Giai đoạn kiểm thử (Test)</span>
               <span className={`text-[10px] px-1.5 py-0.5 rounded ${split === 'test' ? 'bg-slate-700 text-amber-300' : 'bg-slate-200 text-slate-600'}`}>
-                01/07/2019–29/02/2020 · n=1.947 (389 nặng)
+                t+1: 01/07/2019–29/02/2020 · n=1.947 (389 nặng)
               </span>
             </button>
             <button
@@ -106,9 +104,9 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
                   : 'text-slate-700 hover:text-slate-900 font-medium'
               }`}
             >
-              <span>Holdout đối chiếu</span>
+              <span>Holdout đánh giá bổ sung</span>
               <span className={`text-[10px] px-1.5 py-0.5 rounded ${split === 'holdout' ? 'bg-indigo-800 text-indigo-100' : 'bg-slate-200 text-slate-600'}`}>
-                01/03–01/07/2020 · n=975 (18 nặng)
+                t+1: 01/03–01/07/2020 · n=975 (18 nặng)
               </span>
             </button>
           </div>
@@ -133,7 +131,7 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
               <span>{formatDateVN(dateTarget)}</span>
               {isCurrentMissing && (
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300 font-sans font-bold">
-                  Khuyết DL
+                  Thiếu bản ghi dự báo
                 </span>
               )}
             </div>
@@ -145,7 +143,7 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
       {split === 'holdout' && (
         <div className="mt-2.5 px-3 py-1.5 rounded-lg bg-indigo-50/90 border border-indigo-200 text-indigo-950 text-xs flex flex-wrap items-center justify-between gap-2">
           <span>
-            <strong>Chế độ Holdout (Giai đoạn giữ lại cuối):</strong> Chỉ dùng đối chiếu hồi cứu, <em>không dùng để chọn mô hình hay ngưỡng</em>. Lưu ý: 01/03–24/03/2020 là <strong>trước phong tỏa toàn quốc</strong> (n=190, 6 cặp nặng); từ <strong>25/03/2020</strong> mới bắt đầu phong tỏa toàn quốc (n=785, 12 cặp nặng).
+            <strong>Holdout (ngày đích t+1: 01/03–01/07/2020, ngày đầu vào t: 29/02–30/06/2020):</strong> Là giai đoạn đánh giá bổ sung, <em>không dùng để chọn ngưỡng hay mô hình</em>. Lưu ý: đích 01/03–24/03/2020 là <strong>trước phong tỏa toàn quốc</strong> (n=190, 6 cặp nặng); từ <strong>25/03/2020</strong> bắt đầu phong tỏa toàn quốc (n=785, 12 cặp nặng).
           </span>
           <span className="font-mono text-[11px] bg-white px-2 py-0.5 rounded border border-indigo-200 font-semibold">
             {dateTarget < '2020-03-25' ? 'Đang xem: Trước phong tỏa (01–24/03)' : 'Đang xem: Từ ngày phong tỏa (≥25/03)'}
@@ -265,7 +263,7 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Kịch bản thuyết trình (Báo đúng → Bỏ sót → Báo nhầm + Ca biên)</span>
+                <span>Các ca minh họa chọn sẵn (Ca 1 – Ca 7)</span>
               </button>
               <button
                 type="button"
@@ -275,14 +273,14 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
                 }`}
               >
                 <Bookmark className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Ca minh họa riêng của {selectedCity} ({split === 'test' ? 'Test' : 'Holdout'})</span>
+                <span>Ca minh họa riêng của {selectedCity} ({split === 'test' ? 'Kiểm thử' : 'Holdout'})</span>
               </button>
             </div>
           </div>
 
           <span className="text-[11px] text-slate-500 italic flex items-center gap-1">
             <AlertCircle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>Các ca dưới đây là ví dụ minh họa có thật đã kiểm chứng, <strong>không đại diện toàn bộ tập</strong>.</span>
+            <span>Các ca dưới đây là ví dụ minh họa trích xuất từ artifact phát lại, <strong>không đại diện toàn bộ tập</strong>.</span>
           </span>
         </div>
 
@@ -292,7 +290,7 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
               const isActive =
                 activeBookmarkId === bm.id ||
                 (selectedCity === bm.city && dateTarget === bm.dateTarget && split === bm.split);
-              const showNeutral = hideSpoilersOnBookmarks && !isRevealed;
+              const showNeutral = !isRevealed;
 
               return (
                 <button
@@ -327,10 +325,10 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
             {(
               [
-                { key: 'TP', label: '✓ Báo đúng (TP)', rec: cityQuick.TP, desc: `Dự báo ≥ ${thrInfo.l3} & Thực tế ≥ 201` },
-                { key: 'FN', label: '▲ Bỏ sót (FN)', rec: cityQuick.FN, desc: `Dự báo < ${thrInfo.l3} nhưng Thực tế ≥ 201` },
-                { key: 'FP', label: '! Báo nhầm (FP)', rec: cityQuick.FP, desc: `Dự báo ≥ ${thrInfo.l3} nhưng Thực tế < 201` },
-                { key: 'TN', label: '○ Không cảnh báo đúng (TN)', rec: cityQuick.TN, desc: `Dự báo < ${thrInfo.l3} & Thực tế < 201` },
+                { key: 'TP', neutralLabel: 'Ca 1', label: '✓ Báo đúng (TP)', rec: cityQuick.TP, desc: `Dự báo ≥ ${thrInfo.l3} & Thực tế ≥ 201` },
+                { key: 'FN', neutralLabel: 'Ca 2', label: '▲ Bỏ sót (FN)', rec: cityQuick.FN, desc: `Dự báo < ${thrInfo.l3} nhưng Thực tế ≥ 201` },
+                { key: 'FP', neutralLabel: 'Ca 3', label: '! Báo nhầm (FP)', rec: cityQuick.FP, desc: `Dự báo ≥ ${thrInfo.l3} nhưng Thực tế < 201` },
+                { key: 'TN', neutralLabel: 'Ca 4', label: '○ Không cảnh báo đúng (TN)', rec: cityQuick.TN, desc: `Dự báo < ${thrInfo.l3} & Thực tế < 201` },
               ] as const
             ).map((item) => {
               const r = item.rec;
@@ -353,10 +351,16 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
                 >
                   <div>
                     <div className="text-xs font-bold">
-                      {hideSpoilersOnBookmarks && !isRevealed ? `Ca mẫu (${item.key}) tại ${selectedCity}` : item.label}
+                      {!isRevealed ? `${item.neutralLabel} · ${selectedCity}` : item.label}
                     </div>
                     <div className={`text-[10px] mt-0.5 ${isSel ? 'text-slate-300' : 'text-slate-500'}`}>
-                      {r ? item.desc : `Không có ca ${item.key} cho ${selectedCity} ở tập ${split}`}
+                      {!isRevealed
+                        ? r
+                          ? 'Đang giấu kết quả ngày đích t+1'
+                          : 'Không có ca tương ứng trong giai đoạn này'
+                        : r
+                          ? item.desc
+                          : `Không có ca ${item.key} cho ${selectedCity} ở giai đoạn này`}
                     </div>
                   </div>
                   {r && (
@@ -386,11 +390,11 @@ export const TimelineCenter: React.FC<TimelineCenterProps> = ({
               }`}
             >
               <div>
-                <div className="text-xs font-bold">⊘ Ngày khuyết phát lại</div>
+                <div className="text-xs font-bold">⊘ Cặp ngày thiếu bản ghi dự báo</div>
                 <div className={`text-[10px] mt-0.5 ${dateTarget === cityQuick.missingTargetDate ? 'text-rose-200' : 'text-slate-500'}`}>
                   {cityQuick.missingTargetDate
-                    ? `${selectedCity} có ${missingDatesForCity.length} ngày đích khuyết ở ${split}`
-                    : `${selectedCity} đủ 100% ngày ở tập ${split}`}
+                    ? `${selectedCity} có ${missingDatesForCity.length} cặp ngày không có bản ghi dự báo`
+                    : `${selectedCity} có đủ bản ghi dự báo theo lịch`}
                 </div>
               </div>
               {cityQuick.missingTargetDate && (

@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""
-Script đối soát dữ liệu Demo AQI (Y42) với nguồn bằng chứng dự án:
-- R2_B04_baseline_predictions.csv (commit DA 13e93ae12c483f01a573ee51ef9562a315e45068)
-- V21_model_test_predictions.csv (commit DA 0dfc71568d439b3b2e9dae9a9093f23bcf379969)
-- air_quality_8cities_weather.csv (commit befd3be)
+"""Kiểm tra dữ liệu demo: tính lại một số chỉ số và kiểm tra cỡ mẫu từ JSON.
 
-Lưu ý học thuật: Khớp dữ liệu artifact chứng minh tính trung thực của bản phát lại hồi cứu (replay),
-KHÔNG chứng minh tái lập toàn bộ pipeline từ raw hay đã đóng hạn chế rò rỉ dữ liệu F01.
+Đối chiếu với CSV nguồn do RA thực hiện trước đây là một mức kiểm tra riêng;
+script này không đọc CSV nguồn hay xác minh SHA. Script cũng không xác thực toàn
+bộ pipeline từ dữ liệu thô; F01 vẫn đang mở.
 """
 import json
-import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,7 +27,7 @@ def main():
     records = data["records"]
     cities = data["cities"]
 
-    print("=== 1. KIỂM TRA NGUỒN GỐC & CỠ MẪU (PROVENANCE & COHORT) ===")
+    print("=== 1. KIỂM TRA CỠ MẪU TỪ JSON DEMO ===")
     assert len(cities) == 8, "Phải có đúng 8 thành phố"
     assert len(records) == 2922, f"Tổng số dòng phải là 2922, thực tế: {len(records)}"
 
@@ -103,11 +99,13 @@ def main():
     assert amr["y"] == 221.0, "AQI thực tế t+1 phải là 221.0"
     print(f"[PASS] Ca biên Amritsar t=2020-01-03: pred_L3={amr['l3']:.6f} (<166) -> Bỏ sót (FN), thực tế y={amr['y']}")
 
-    print("\n=== 6. KIỂM TRA SHA-256 & PROVENANCE ===")
+    print("\n=== 6. THÔNG TIN PROVENANCE ĐƯỢC GHI TRONG JSON (KHÔNG XÁC MINH SHA HAY CSV) ===")
     print(f"[INFO] Artifact dự báo: {prov['predictions_artifact']} @ commit {prov['predictions_commit']}")
-    print(f"[INFO] SHA-256 R2_B04:  {prov['predictions_sha256']}")
-    print(f"[INFO] Đối chiếu V21:   {prov['v21_crosscheck_artifact']} @ commit {prov['v21_crosscheck_commit']} (max diff={prov['v21_max_abs_diff']})")
-    print("\n=> TẤT CẢ PHÉP ĐỐI SOÁT DỮ LIỆU DEMO ĐỀU ĐẠT (100% PASS).")
+    print(f"[INFO] SHA-256 R2_B04 theo provenance:  {prov['predictions_sha256']}")
+    print(f"[INFO] Đối chiếu V21 đã ghi trong provenance:   {prov['v21_crosscheck_artifact']} @ commit {prov['v21_crosscheck_commit']} (max diff={prov['v21_max_abs_diff']})")
+    print("[INFO] Đối chiếu CSV nguồn của RA là kiểm tra trước đây, không được thực hiện bởi script này.")
+    print("[INFO] Chưa xác thực toàn bộ pipeline từ dữ liệu thô; F01 vẫn đang mở.")
+    print("\n=> Các phép kiểm dữ liệu demo đã chạy đạt.")
 
 
 if __name__ == "__main__":
